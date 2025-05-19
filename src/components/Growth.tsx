@@ -100,12 +100,12 @@ export default function GrowthSection() {
 
     return (
         <section className="max-w-5xl mx-auto px-6 py-20">
-            <h2 className="text-4xl font-extrabold font-sans text-brand-purple mb-8">
+            <h2 className="text-4xl font-extrabold font-sans text-brand-purple mb-8 flex justify-center">
                 Our growth over the years
             </h2>
 
             {/* Year buttons */}
-            <div className="flex space-x-4 mb-10">
+            <div className="flex space-x-4 mb-10 justify-center">
                 {years.map((year) => {
                     const isActive = year === selectedYear;
                     return (

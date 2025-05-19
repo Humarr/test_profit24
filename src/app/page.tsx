@@ -8,6 +8,7 @@ import Infrastructure from "@/components/Infrastructure";
 import Navbar from "@/components/navbar";
 import Pricing from "@/components/Pricing";
 import Standout from "@/components/Standout";
+import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Pricing />
       <Calculation />
       <GrowthSection/>
+      <Testimonials/>
       {/* Rest of your page like Hero, Pricing, etc. */}
     </main>
   )
