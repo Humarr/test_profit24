@@ -52,9 +52,12 @@ export default function Testimonials() {
     return (
         <section className="py-16">
             {/* Small heading with light purple bg */}
-            <div className="bg-brand-cream text-brand-purple text-sm font-semibold px-6 py-2 inline-block rounded-full mb-6">
-                Testimonials
+            <div className="flex justify-center mb-6">
+                <div className="bg-brand-cream text-brand-purple text-sm font-semibold px-6 py-2 rounded-full">
+                    Testimonials
+                </div>
             </div>
+
 
             {/* Big main heading */}
             <h2 className="text-4xl font-bold mb-10 text-center text-brand-purple">

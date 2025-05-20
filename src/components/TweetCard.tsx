@@ -11,7 +11,7 @@ type TweetCardProps = {
 export default function TweetCard({
     username,
     handle,
-    avatarUrl = `https://ui-avatars.com/api/?name=John+Doe&background=72007f&color=fff&size=128`,
+   avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg",
     date,
     content,
 }: TweetCardProps) {

@@ -105,7 +105,7 @@ export default function GrowthSection() {
             </h2>
 
             {/* Year buttons */}
-            <div className="flex space-x-4 mb-10 justify-center">
+            <div className="flex space-x-4 mb-10 justify-center mx-8">
                 {years.map((year) => {
                     const isActive = year === selectedYear;
                     return (
