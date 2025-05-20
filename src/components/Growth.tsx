@@ -100,21 +100,21 @@ export default function GrowthSection() {
 
     return (
         <section className="max-w-5xl mx-auto px-6 py-20">
-            <h2 className="text-4xl font-extrabold font-sans text-brand-purple mb-8 flex justify-center">
+            <h2 className="text-4xl font-extrabold font-sans text-brand-purple mb-8 flex justify-center text-center">
                 Our growth over the years
             </h2>
 
             {/* Year buttons */}
-            <div className="flex space-x-4 mb-10 justify-center mx-8">
+            <div className="flex overflow-x-auto space-x-4 mb-10 px-4 scrollbar-hide">
                 {years.map((year) => {
                     const isActive = year === selectedYear;
                     return (
                         <button
                             key={year}
                             onClick={() => setSelectedYear(year)}
-                            className={`px-5 py-2 rounded-md font-semibold transition-colors ${isActive
-                                ? "bg-brand-purple text-white"
-                                : "bg-[#d8b4fe] border border-brand-purple text-brand-purple"
+                            className={`flex-shrink-0 px-5 py-2 rounded-md font-semibold transition-colors ${isActive
+                                    ? "bg-brand-purple text-white"
+                                    : "bg-[#d8b4fe] border border-brand-purple text-brand-purple"
                                 }`}
                         >
                             {year}
@@ -122,6 +122,8 @@ export default function GrowthSection() {
                     );
                 })}
             </div>
+
+
 
             {/* Chart container */}
             <div className="bg-white p-6 rounded-lg shadow-lg">

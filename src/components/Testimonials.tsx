@@ -67,14 +67,14 @@ export default function Testimonials() {
             {/* Responsive testimonial rows */}
             <div className="space-y-8 px-6">
                 {/* Top row */}
-                <div className="flex flex-col md:flex-row md:space-x-6 md:overflow-x-auto md:no-scrollbar md:px-0 space-y-6 md:space-y-0">
+                <div className="flex flex-col md:flex-row md:space-x-6 md:overflow-x-auto md:scrollbar-hide md:px-0 space-y-6 md:space-y-0">
                     {tweetsTopRow.map((tweet, i) => (
                         <TweetCard key={i} {...tweet} />
                     ))}
                 </div>
 
                 {/* Bottom row */}
-                <div className="flex flex-col md:flex-row md:space-x-6 md:overflow-x-auto md:no-scrollbar md:px-0 space-y-6 md:space-y-0 md:translate-x-12">
+                <div className="flex flex-col md:flex-row md:space-x-6 md:overflow-x-auto md:scrollbar-hide md:px-0 space-y-6 md:space-y-0 md:translate-x-12">
                     {tweetsBottomRow.map((tweet, i) => (
                         <TweetCard key={i} {...tweet} />
                     ))}
