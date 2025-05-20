@@ -8,6 +8,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts";
+import YearSelector from "./YearSelector";
 
 // Define a type for one month’s data
 type MonthData = {
@@ -105,23 +106,32 @@ export default function GrowthSection() {
             </h2>
 
             {/* Year buttons */}
-            <div className="flex overflow-x-auto space-x-4 mb-10 px-4 scrollbar-hide justify-center">
-                {years.map((year) => {
-                    const isActive = year === selectedYear;
-                    return (
-                        <button
-                            key={year}
-                            onClick={() => setSelectedYear(year)}
-                            className={`flex-shrink-0 px-5 py-2 rounded-md font-semibold transition-colors ${isActive
-                                ? "bg-brand-purple text-white"
-                                : "bg-[#d8b4fe] border border-brand-purple text-brand-purple"
-                                }`}
-                        >
-                            {year}
-                        </button>
-                    );
-                })}
-            </div>
+            {/* <div className="mb-10">
+                <div className="overflow-x-auto scrollbar-hide px-4">
+                    <div className="flex space-x-4 w-max">
+                        {years.map((year) => {
+                            const isActive = year === selectedYear;
+                            return (
+                                <button
+                                    key={year}
+                                    onClick={() => setSelectedYear(year)}
+                                    className={`flex-shrink-0 px-5 py-2 rounded-md font-semibold transition-colors ${isActive
+                                            ? "bg-brand-purple text-white"
+                                            : "bg-[#d8b4fe] border border-brand-purple text-brand-purple"
+                                        }`}
+                                >
+                                    {year}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div> */}
+
+            <YearSelector   years={years}
+    selectedYear={selectedYear}
+    setSelectedYear={setSelectedYear} />
+
 
 
 
