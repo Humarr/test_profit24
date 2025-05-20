@@ -9,6 +9,7 @@ import Infrastructure from "@/components/Infrastructure";
 import Navbar from "@/components/navbar";
 import Pricing from "@/components/Pricing";
 import Standout from "@/components/Standout";
+import SupportCard from "@/components/Support";
 import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       <GrowthSection/>
       <Testimonials/>
       <FAQSection/>
+      <SupportCard/>
       {/* Rest of your page like Hero, Pricing, etc. */}
     </main>
   )
