@@ -2,6 +2,7 @@
 
 import BotCards from "@/components/BotCards";
 import Calculation from "@/components/Calculation";
+import FAQSection from "@/components/Faqs";
 import GrowthSection from "@/components/Growth";
 import Hero from "@/components/hero";
 import Infrastructure from "@/components/Infrastructure";
@@ -22,6 +23,7 @@ export default function Home() {
       <Calculation />
       <GrowthSection/>
       <Testimonials/>
+      <FAQSection/>
       {/* Rest of your page like Hero, Pricing, etc. */}
     </main>
   )

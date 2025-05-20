@@ -13,7 +13,7 @@ export default function Hero() {
             <Link
                 href="#signup"
                 aria-label="Get started with Profit24"
-                className="bg-brand-purple text-white hover:bg-brand-purple-dark px-6 py-3 rounded-xl font-sans text-xs md:text-sm lg:text-base shadow-lg transition duration-300 ease-in-out inline-block"
+                className="bg-brand-purple text-white hover:bg-brand-purple-dark px-6 py-3 rounded-xl font-sans text-sm md:text-md lg:text-lg shadow-lg transition duration-300 ease-in-out inline-block"
             >
                 Get Started
             </Link>
