@@ -11,6 +11,7 @@ import Pricing from "@/components/Pricing";
 import Standout from "@/components/Standout";
 import SupportCard from "@/components/Support";
 import Testimonials from "@/components/Testimonials";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       <Testimonials/>
       <FAQSection/>
       <SupportCard/>
+      <Footer />
       {/* Rest of your page like Hero, Pricing, etc. */}
     </main>
   )
