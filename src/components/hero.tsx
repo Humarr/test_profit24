@@ -52,7 +52,7 @@ export default function Hero() {
 
         {/* CTA */}
         <Link
-          href="#signup"
+          href="/dashboard"
           aria-label="Get started with Profit24"
           className="bg-brand-purple-500 text-brand-white hover:bg-brand-purple-600 px-6 py-3 rounded-xl font-sans text-sm md:text-md lg:text-lg shadow-lg transition duration-300 ease-in-out inline-block"
         >
