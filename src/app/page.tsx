@@ -1,6 +1,6 @@
 // import Image from "next/image";
 
-import BotCards from "@/components/BotCards";
+// import BotCards from "@/components/BotCards";
 // import Calculation from "@/components/Calculation";
 import FAQSection from "@/components/Faqs";
 import GrowthSection from "@/components/Growth";
@@ -8,11 +8,12 @@ import Hero from "@/components/hero";
 import Infrastructure from "@/components/Infrastructure";
 import Navbar from "@/components/navbar";
 import Pricing from "@/components/Pricing";
-import Standout from "@/components/Standout";
+// import Standout from "@/components/Standout";
 import SupportCard from "@/components/Support";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import InvestmentCalculator from "@/components/InvestmentCalculator";
+import WhyUs from "@/components/WhyUs";
 
 export default function Home() {
   return (
@@ -20,8 +21,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Infrastructure />
-      <Standout />
-      <BotCards />
+      {/* <Standout /> */}
+      <WhyUs />
       <Pricing />
       <InvestmentCalculator />
       {/* <Calculation /> */}
