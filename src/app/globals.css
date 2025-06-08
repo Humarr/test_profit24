@@ -167,12 +167,12 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   background: white;
-  border: 2px solid var(--brand-purple);
+  border: 2px solid var(--brand-purple-200);
   border-radius: 9999px;
-  margin-top: -7px; /* Adjust to align thumb vertically */
+  margin-top: -12px; /* Adjust to align thumb vertically */
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -189,11 +189,12 @@ input[type="range"]::-moz-range-track {
 
 /* Firefox Thumb */
 input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   background: white;
-  border: 2px solid var(--brand-purple);
+  border: 2px solid var(--brand-purple-200);
   border-radius: 9999px;
+  margin-top: -12px; /* Adjust to align thumb vertically */
   cursor: pointer;
   transition: transform 0.2s ease;
 }
