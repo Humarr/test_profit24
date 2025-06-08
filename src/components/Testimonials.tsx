@@ -51,7 +51,6 @@ export default function Testimonials() {
       clearInterval(bottomInterval);
     };
 
-    // Pause on touch or hover
     const attachEvents = (el: HTMLDivElement) => {
       el.addEventListener('mouseenter', stopAutoScroll);
       el.addEventListener('mouseleave', startAutoScroll);
@@ -72,7 +71,8 @@ export default function Testimonials() {
 
   return (
     <section className="py-16 bg-brand-cream-100 overflow-hidden">
-      <div className="text-center mb-6">
+      {/* Centered Testimonials label */}
+      <div className="flex justify-center mb-6">
         <div className="bg-brand-purple-100 text-brand-purple-500 text-sm font-semibold font-sans px-6 py-2 rounded-full">
           Testimonials
         </div>
@@ -83,11 +83,10 @@ export default function Testimonials() {
         <span className="md:hidden">You&apos;re in safe hands</span>
       </h2>
 
-      {/* Top Row */}
+      {/* Top Row (No scroll-smooth) */}
       <div
         ref={topRowRef}
-        className="w-full overflow-x-auto flex gap-6 scroll-smooth scrollbar-hide"
-        // className="w-full overflow-x-auto flex gap-6 snap-x snap-mandatory scroll-smooth scrollbar-hide"
+        className="w-full overflow-x-auto flex gap-6 scrollbar-hide"
       >
         {[...mockTweets, ...mockTweets].map((tweet, i) => (
           <div
@@ -99,10 +98,10 @@ export default function Testimonials() {
         ))}
       </div>
 
-      {/* Bottom Row */}
+      {/* Bottom Row (No scroll-smooth) */}
       <div
         ref={bottomRowRef}
-        className="w-full overflow-x-auto flex gap-6 scroll-smooth scrollbar-hide mt-10"
+        className="w-full overflow-x-auto flex gap-6 scrollbar-hide mt-10"
       >
         {[...mockTweets, ...mockTweets].map((tweet, i) => (
           <div
