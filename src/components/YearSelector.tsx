@@ -60,8 +60,8 @@ export default function YearSelector({
                             }}
                             onClick={() => setSelectedYear(year)}
                             className={`flex-shrink-0 snap-center px-5 py-2 mx-2 rounded-md font-semibold transition-colors ${isActive
-                                    ? "bg-brand-purple text-white"
-                                    : "bg-[#d8b4fe] border border-brand-purple text-brand-purple"
+                                    ? "bg-brand-purple-500 text-white"
+                                    : "bg-brand-purple-100 border border-brand-purple-500 text-brand-purple-500"
                                 }`}
                         >
                             {year}

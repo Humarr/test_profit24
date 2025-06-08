@@ -101,7 +101,7 @@ export default function GrowthSection() {
 
     return (
         <section className="max-w-5xl mx-auto px-6 py-20">
-            <h2 className="text-4xl font-extrabold font-sans text-brand-purple mb-8 flex justify-center text-center">
+            <h2 className="text-4xl font-extrabold font-sans text-brand-purple-500 mb-8 flex justify-center text-center">
                 Our growth over the years
             </h2>
 
@@ -139,10 +139,10 @@ export default function GrowthSection() {
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 {/* Legends */}
                 <div className="flex justify-between mb-4">
-                    <div className="font-semibold text-brand-purple">
+                    <div className="font-semibold text-brand-purple-500">
                         Our growth over the years
                     </div>
-                    <div className="font-semibold text-brand-purple">{selectedYear}</div>
+                    <div className="font-semibold text-brand-purple-500">{selectedYear}</div>
                 </div>
 
                 <ResponsiveContainer width="100%" height={300}>

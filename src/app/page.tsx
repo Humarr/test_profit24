@@ -1,7 +1,7 @@
 // import Image from "next/image";
 
 import BotCards from "@/components/BotCards";
-import Calculation from "@/components/Calculation";
+// import Calculation from "@/components/Calculation";
 import FAQSection from "@/components/Faqs";
 import GrowthSection from "@/components/Growth";
 import Hero from "@/components/hero";
@@ -12,17 +12,19 @@ import Standout from "@/components/Standout";
 import SupportCard from "@/components/Support";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import InvestmentCalculator from "@/components/InvestmentCalculator";
 
 export default function Home() {
   return (
-    <main className="bg-brand-white ">
+    <main className="bg-brand-white">
       <Navbar />
       <Hero />
       <Infrastructure />
       <Standout />
       <BotCards />
       <Pricing />
-      <Calculation />
+      <InvestmentCalculator />
+      {/* <Calculation /> */}
       <GrowthSection/>
       <Testimonials/>
       <FAQSection/>

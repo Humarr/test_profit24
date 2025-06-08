@@ -32,10 +32,10 @@ export default function Infrastructure() {
             </div>
 
             <div className="text-center mt-16 max-w-3xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-bold text-brand-slate font-sans mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-brand-slate-500 font-sans mb-4">
                     Why choose Profit24?
                 </h2>
-                <p className="text-brand-slate text-lg font-sans">
+                <p className="text-brand-slate-500 text-lg font-sans">
                     Unlock Endless Possibilities With Our Bots
                 </p>
             </div>

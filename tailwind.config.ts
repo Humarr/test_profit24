@@ -13,6 +13,7 @@ module.exports = {
         "brand-slate": "#36454f",
         "brand-cream": "#f5f5dc",
         "brand-white": "#ffffff",
+        
       },
       fontFamily: {
         // sans: ["var(--font-dm-sans)", "sans-serif"],

@@ -39,11 +39,11 @@ export default function Calculation() {
 
     return (
         <section className="max-w-5xl mx-auto px-6 pb-20 pt-8">
-            <h2 className="text-4xl font-extrabold font-sans text-brand-purple mb-6 text-center">
+            <h2 className="text-4xl font-extrabold font-sans text-brand-purple-500 mb-6 text-center">
                 Get your calculation
             </h2>
 
-            <div className=" flex text-sm text-brand-slate mb-2 justify-center">If you invested</div>
+            <div className=" flex text-sm text-brand-slate-500 mb-2 justify-center">If you invested</div>
 
             {/* Currency + Amount */}
             <div className="flex items-center justify-center gap-2 mb-6">
@@ -94,7 +94,7 @@ export default function Calculation() {
                 <select
                     value={period}
                     onChange={(e) => setPeriod(e.target.value)}
-                    className="px-4 py-2  rounded-md cursor-pointer font-semibold text-brand-purple text-sm"
+                    className="px-4 py-2  rounded-md cursor-pointer font-semibold text-brand-purple-500 text-sm"
                 >
                     {periods.map((p) => (
                         <option key={p} value={p}>
@@ -106,7 +106,7 @@ export default function Calculation() {
                 <select
                     value={yearsAgo}
                     onChange={(e) => setYearsAgo(e.target.value)}
-                    className="px-4 py-2  rounded-md cursor-pointer font-semibold text-brand-purple text-sm"
+                    className="px-4 py-2  rounded-md cursor-pointer font-semibold text-brand-purple-500 text-sm"
                 >
                     {yearsAgoOptions.map((y) => (
                         <option key={y} value={y}>
@@ -138,7 +138,7 @@ export default function Calculation() {
             />
 
             {/* Result */}
-            <p className="mt-6 text-sm text-brand-slate flex justify-center">Today, you&#39;d have</p>
+            <p className="mt-6 text-sm text-brand-slate-500 flex justify-center">Today, you&#39;d have</p>
             {/* <div className="flex justify-center">
                 <p className="text-sm text-brand-slate">Based on {period} returns</p>
                 <span className="text-sm text-brand-slate font-bold mx-1">|</span>

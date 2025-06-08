@@ -11,8 +11,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Profit24",
-  description: "The bots trading platform for everyone",
+  title: 'Profit24 SCALPER',
+  description: 'Automated trading platform',
+
 };
 
 export default function RootLayout({

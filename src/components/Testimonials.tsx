@@ -1,118 +1,147 @@
 'use client';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import TweetCard from './TweetCard';
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 
 interface Tweet {
-    username: string;
-    handle: string;
-    date: string;
-    content: string;
-    avatarUrl: string;
+  username: string;
+  handle: string;
+  date: string;
+  content: string;
+  avatarUrl: string;
 }
 
-const tweetsTopRow: Tweet[] = [
-    {
-        username: 'Jane Doe',
-        handle: 'janedoe',
-        date: 'May 10',
-        content: 'Profit24 bots have seriously transformed my trading game! Highly recommend for beginners and pros alike.',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/1.jpg',
-    },
-    {
-        username: 'Trader Joe',
-        handle: 'traderjoe',
-        date: 'May 12',
-        content: 'Automated bots with AI precision — the future of trading is here. Thanks, Profit24!',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg',
-    },
-    {
-        username: 'Crypto Queen',
-        handle: 'cryptoqueen',
-        date: 'May 14',
-        content: 'The accuracy and ease of use are unmatched. My portfolio has never looked better.',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/4.jpg',
-    },
-];
-
-const tweetsBottomRow: Tweet[] = [
-    {
-        username: 'Finance Guru',
-        handle: 'financeguru',
-        date: 'May 11',
-        content: 'Great platform with incredible support. The bots do the heavy lifting for me!',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/6.jpg',
-    },
-    {
-        username: 'Market Master',
-        handle: 'marketmaster',
-        date: 'May 13',
-        content: "If you're serious about trading, Profit24 is the way to go. Automated and reliable.",
-        avatarUrl: 'https://randomuser.me/api/portraits/men/9.jpg',
-    },
-    {
-        username: 'Investor X',
-        handle: 'investorx',
-        date: 'May 15',
-        content: 'Saw amazing returns with minimal effort. Love the UI and bot options.',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/11.jpg',
-    },
-];
+const mockTweets: Tweet[] = Array.from({ length: 10 }, (_, i) => ({
+  username: `User ${i + 1}`,
+  handle: `user${i + 1}`,
+  date: `May ${10 + i}`,
+  content: `This is a sample testimonial tweet number ${i + 1} praising the product for its usefulness.`,
+  avatarUrl: `https://randomuser.me/api/portraits/${i % 2 === 0 ? 'men' : 'women'}/${i + 10}.jpg`,
+}));
 
 export default function Testimonials() {
-    return (
-        <section className="py-16 bg-brand-cream">
-            {/* Heading */}
-            <div className="flex justify-center mb-6">
-                <div className="bg-white text-brand-purple text-sm font-semibold px-6 py-2 rounded-full">
-                    Testimonials
-                </div>
-            </div>
+  const topRowRef = useRef<HTMLDivElement>(null);
+  const bottomRowRef = useRef<HTMLDivElement>(null);
 
-            <h2 className="text-4xl font-bold mb-10 text-center text-brand-purple">
-                You&#39;re in safe hands
-            </h2>
+  useEffect(() => {
+    const topRow = topRowRef.current;
+    const bottomRow = bottomRowRef.current;
 
-            {/* Testimonial Rows */}
-            <div className="space-y-12 px-6">
-                {/* Top Row (desktop) */}
-                <div className="hidden md:flex md:flex-row md:space-x-6 justify-center">
-                    {tweetsTopRow.map((tweet, i) => (
-                        <TweetCard key={i} {...tweet} />
-                    ))}
-                </div>
+    let topInterval: NodeJS.Timeout;
+    let bottomInterval: NodeJS.Timeout;
 
-                {/* Mobile Swiper */}
-                <div className="md:hidden">
-                    <Swiper spaceBetween={16} slidesPerView={1.2}>
-                        {tweetsTopRow.map((tweet, i) => (
-                            <SwiperSlide key={i}>
-                                <TweetCard {...tweet} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
+    const scrollContent = (container: HTMLDivElement, speed: number) => {
+      return setInterval(() => {
+        if (!container) return;
+        container.scrollLeft += 1;
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
+      }, speed);
+    };
 
-                {/* Bottom Row (desktop, staggered) */}
-                <div className="hidden md:relative md:flex md:flex-row md:space-x-6 justify-center overflow-hidden">
-                    <div className="md:translate-x-12 flex gap-6">
-                        {tweetsBottomRow.map((tweet, i) => (
-                            <TweetCard key={i} {...tweet} />
-                        ))}
-                    </div>
-                </div>
+    const startAutoScroll = () => {
+      if (topRow && bottomRow) {
+        topInterval = scrollContent(topRow, 20);
+        bottomInterval = scrollContent(bottomRow, 30);
+      }
+    };
 
-                {/* Mobile Swiper */}
-                <div className="md:hidden">
-                    <Swiper spaceBetween={16} slidesPerView={1.2}>
-                        {tweetsBottomRow.map((tweet, i) => (
-                            <SwiperSlide key={i}>
-                                <TweetCard {...tweet} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
-            </div>
-        </section>
-    );
+    const stopAutoScroll = () => {
+      clearInterval(topInterval);
+      clearInterval(bottomInterval);
+    };
+
+    // Pause on touch or hover
+    const attachEvents = (el: HTMLDivElement) => {
+      el.addEventListener('mouseenter', stopAutoScroll);
+      el.addEventListener('mouseleave', startAutoScroll);
+      el.addEventListener('touchstart', stopAutoScroll);
+      el.addEventListener('touchend', startAutoScroll);
+    };
+
+    if (topRow && bottomRow) {
+      attachEvents(topRow);
+      attachEvents(bottomRow);
+      startAutoScroll();
+    }
+
+    return () => {
+      stopAutoScroll();
+    };
+  }, []);
+
+  return (
+    <section className="py-16 bg-brand-cream-100 overflow-hidden">
+      <div className="text-center mb-6">
+        <div className="bg-brand-purple-100 text-brand-purple-500 text-sm font-semibold font-sans px-6 py-2 rounded-full">
+          Testimonials
+        </div>
+      </div>
+
+      <h2 className="text-4xl font-bold mb-10 text-center text-brand-slate-500">
+        <span className="hidden md:inline">Winning Trades. Happy Traders.</span>
+        <span className="md:hidden">You&apos;re in safe hands</span>
+      </h2>
+
+      {/* Top Row */}
+      <div
+        ref={topRowRef}
+        className="w-full overflow-x-auto flex gap-6 scroll-smooth scrollbar-hide"
+        // className="w-full overflow-x-auto flex gap-6 snap-x snap-mandatory scroll-smooth scrollbar-hide"
+      >
+        {[...mockTweets, ...mockTweets].map((tweet, i) => (
+          <div
+            key={`top-${i}`}
+            className="w-[280px] md:w-[320px] flex-shrink-0 snap-center"
+          >
+            <TweetCard {...tweet} />
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom Row */}
+      <div
+        ref={bottomRowRef}
+        className="w-full overflow-x-auto flex gap-6 scroll-smooth scrollbar-hide mt-10"
+      >
+        {[...mockTweets, ...mockTweets].map((tweet, i) => (
+          <div
+            key={`bottom-${i}`}
+            className="w-[280px] md:w-[320px] flex-shrink-0 snap-center"
+          >
+            <TweetCard {...tweet} />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TweetCard({
+  username,
+  handle,
+  date,
+  content,
+  avatarUrl,
+}: Tweet) {
+  return (
+    <div className="bg-white rounded-xl shadow-md p-4 w-full h-full">
+      <div className="flex items-center gap-3 mb-3">
+        <Image
+          src={avatarUrl}
+          alt={username}
+          width={40}
+          height={40}
+          className="w-10 h-10 rounded-full"
+        />
+        <div>
+          <p className="font-bold text-sm text-brand-slate-700">{username}</p>
+          <p className="text-xs text-brand-slate-400">
+            @{handle} · {date}
+          </p>
+        </div>
+      </div>
+      <p className="text-sm text-brand-slate-600">{content}</p>
+    </div>
+  );
 }

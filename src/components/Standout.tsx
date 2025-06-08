@@ -17,7 +17,7 @@ export default function Standout() {
                 </div>
 
                 {/* Right: Gradient Content */}
-                <div className="md:w-1/2 w-full bg-gradient-to-br from-brand-purple to-brand-purple-dark text-white p-8 flex flex-col justify-center">
+                <div className="md:w-1/2 w-full bg-gradient-to-br from-brand-purple-400 to-brand-purple-600 text-white p-8 flex flex-col justify-center">
                     <h3 className="text-2xl md:text-3xl font-bold mb-6 font-sans text-white">
                         What Makes Us Stand Out
                     </h3>

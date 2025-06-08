@@ -32,17 +32,17 @@ export default function FAQSection() {
     };
 
     return (
-        <section className="bg-brand-purple/10 py-16 px-6 md:px-20" id="faqs">
+        <section className="bg-brand-purple-50/10 py-16 px-6 md:px-20" id="faqs">
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
                 {/* Left Text Column */}
                 <div className="flex flex-col justify-center">
-                    <p className="text-sm font-semibold text-brand-purple mb-2 uppercase">
+                    <p className="text-sm font-semibold text-brand-purple-500 mb-2 uppercase">
                         Got Questions?
                     </p>
-                    <h2 className="text-4xl font-extrabold text-brand-purple mb-6">
+                    <h2 className="text-4xl font-extrabold text-brand-purple-500 mb-6">
                         Frequently Asked Questions
                     </h2>
-                    <p className="text-brand-slate text-base max-w-md">
+                    <p className="text-brand-slate-500 text-base max-w-md">
                         If you have further questions, please don&#39;t hesitate to reach out to{" "}
                         <a
                             href="mailto:support@profit24.com"
@@ -66,7 +66,7 @@ export default function FAQSection() {
                             >
                                 <button
                                     onClick={() => toggleAccordion(idx)}
-                                    className="w-full flex justify-between items-center p-4 text-left text-brand-slate font-semibold 
+                                    className="w-full flex justify-between items-center p-4 text-left text-brand-slate-500 font-semibold 
                                     font-sans focus:outline-none"
                                     aria-expanded={isOpen}
                                     aria-controls={`faq-panel-${idx}`}
@@ -93,7 +93,7 @@ export default function FAQSection() {
                                         id={`faq-panel-${idx}`}
                                         role="region"
                                         aria-labelledby={`faq-header-${idx}`}
-                                        className="p-4 text-brand-slate font-sans"
+                                        className="p-4 text-brand-slate-500 font-sans"
                                     >
                                         {faq.answer}
                                     </div>
