@@ -28,7 +28,15 @@ export default function WhyUs() {
 
     return (
         <section className="w-full px-4 sm:px-6 mb-16 mt-4 bg-white" id="bots">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div className="text-center mt-16 max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-brand-slate-500 font-sans mb-4">
+                    Why choose Profit24?
+                </h2>
+                <p className="text-brand-slate-500 text-lg font-sans">
+                    Unlock Endless Possibilities With Our Bots
+                </p>
+            </div>
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
                 {cards.map((card, index) => (
                     <div 
                         key={index}

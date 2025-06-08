@@ -5,7 +5,7 @@
 import FAQSection from "@/components/Faqs";
 import GrowthSection from "@/components/Growth";
 import Hero from "@/components/hero";
-import Infrastructure from "@/components/Infrastructure";
+// import Infrastructure from "@/components/Infrastructure";
 import Navbar from "@/components/navbar";
 import Pricing from "@/components/Pricing";
 // import Standout from "@/components/Standout";
@@ -20,7 +20,7 @@ export default function Home() {
     <main className="bg-brand-white">
       <Navbar />
       <Hero />
-      <Infrastructure />
+      {/* <Infrastructure /> */}
       {/* <Standout /> */}
       <WhyUs />
       <Pricing />
