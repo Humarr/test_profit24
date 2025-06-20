@@ -7,6 +7,33 @@ import { useState } from 'react'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        // Redirect to dashboard or home page
+        window.location.href = '/dashboard';
+      } else {
+        setError(data.error);
+      }
+    } catch (error) {
+      console.error('LOGIN_ERROR:', error);
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto">
@@ -17,14 +44,18 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </div>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
             <button 
               onClick={() => setShowPassword(!showPassword)}
@@ -39,11 +70,13 @@ export default function LoginPage() {
               Reset Password
             </Link>
           </div>
-          <Link href="/dashboard">
-          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans cursor-pointer">
-            Login
+          <button
+            onClick={handleSubmit}
+            className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans cursor-pointer"
+          >
+            {loading ? 'Logging in...' : 'Login'}
           </button>
-          </Link>
+          {error && <p className="text-red-500 text-sm mt-2 font-sans text-center">{error}</p>}
           <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
             Don't have an account?{' '}
             <Link href="/auth/register" className="text-brand-purple-600 underline cursor-pointer font-bold">
