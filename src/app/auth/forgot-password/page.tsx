@@ -1,3 +1,4 @@
+// forgot-password
 import Link from 'next/link'
 
 export default function ForgotPasswordPage() {

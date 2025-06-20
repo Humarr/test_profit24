@@ -15,7 +15,7 @@ import {
   ChevronDown
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function DashboardLayout({
@@ -25,6 +25,13 @@ export default function DashboardLayout({
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch('/api/logout', { method: 'POST' });
+    router.push('/auth/login');
+  };
 
   const navLinks = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -166,7 +173,7 @@ export default function DashboardLayout({
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 hidden group-hover:block border border-brand-cream-200">
                   <a href="#" className="block px-4 py-2 text-sm text-brand-slate-700 hover:bg-brand-purple-50">Profile</a>
                   <a href="#" className="block px-4 py-2 text-sm text-brand-slate-700 hover:bg-brand-purple-50">Settings</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-brand-slate-700 hover:bg-brand-purple-50">Sign out</a>
+                  <button onClick={handleLogout} className="block px-4 py-2 text-sm text-brand-slate-700 hover:bg-brand-purple-50">Sign out</button>
                 </div>
               </div>
             </div>
