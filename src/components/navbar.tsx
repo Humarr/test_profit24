@@ -25,13 +25,13 @@ export default function Navbar() {
                     Testimonials
                 </Link>
                 <Link
-                    href="#login"
+                    href="/auth/login"
                     className="border border-brand-purple-500 text-brand-purple-500 bg-brand-cream hover:bg-brand-purple/10 px-4 py-2 rounded-xl font-medium font-sans"
                 >
                     Login
                 </Link>
                 <Link
-                    href="#signup"
+                    href="/auth/register"
                     className="bg-brand-purple-500 text-brand-white hover:bg-brand-purple-600 px-4 py-2 rounded-xl font-medium font-sans"
                 >
                     Sign Up
@@ -48,7 +48,7 @@ export default function Navbar() {
             {/* Mobile Menu */}
             {isOpen && (
                 <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start px-6 py-4 space-y-4 md:hidden z-50">
-                    <Link href="#home" className="text-brand-slate-500 hover:text-brand-purple-500 font-medium font-sans">
+                    <Link href="/" className="text-brand-slate-500 hover:text-brand-purple-500 font-medium font-sans">
                         Home
                     </Link>
                     <Link href="#pricing" className="text-brand-slate-500 hover:text-brand-purple-500 font-medium font-sans">
@@ -58,13 +58,13 @@ export default function Navbar() {
                         Testimonials
                     </Link>
                     <Link
-                        href="#login"
+                        href="/auth/login"
                         className="border border-brand-purple-500 text-brand-purple-500 bg-brand-cream hover:bg-brand-purple/10 px-4 py-2 rounded-xl font-medium font-sans w-full text-center"
                     >
                         Login
                     </Link>
                     <Link
-                        href="#signup"
+                        href="/auth/register"
                         className="bg-brand-purple-500 text-brand-white hover:bg-brand-purple-600 px-4 py-2 rounded-xl font-medium font-sans w-full text-center"
                     >
                         Sign Up
