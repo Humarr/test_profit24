@@ -61,7 +61,7 @@ export default function RegisterPage() {
             className={`px-4 py-2 rounded-lg font-medium ${
               activeStep === index
                 ? 'bg-brand-purple-500 text-white'
-                : 'bg-white text-brand-slate-700 border border-brand-cream-300'
+                : 'bg-white text-brand-slate-300 border border-brand-cream-300'
             }`}
           >
             {step}
@@ -79,7 +79,7 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
               </div>
               <div className="flex items-start">
@@ -88,12 +88,13 @@ export default function RegisterPage() {
                   I agree to the <Link href="#" className="text-brand-purple-600 underline font-bold">Profit24 Scalper User Agreement</Link> and <Link href="#" className="text-brand-purple-600 underline font-bold">Privacy Policy</Link>
                 </label>
               </div>
-              <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition">
+
+              <button onClick={() => setActiveStep(1)} className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition cursor-pointer font-sans">
                 Proceed
               </button>
-              <div className="text-center text-sm">
+              <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-brand-purple-600 underline">
+                <Link href="/auth/login" className="text-brand-purple-600 underline font-bold">
                   Login
                 </Link>
               </div>
@@ -117,14 +118,14 @@ export default function RegisterPage() {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                    className="w-12 h-12 text-center text-xl border border-brand-cream-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                    className="w-12 h-12 text-center text-xl border border-brand-cream-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                   />
                 ))}
               </div>
-              <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition">
+              <button onClick={() => setActiveStep(2)} className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition cursor-pointer font-sans">
                 Verify email
               </button>
-              <button className="w-full py-3 bg-white text-brand-slate-700 rounded-lg font-medium border border-brand-cream-300 hover:bg-brand-purple-50 transition">
+              <button onClick={() => setActiveStep(0)} className="w-full py-3 bg-white text-brand-slate-700 rounded-lg font-medium border border-brand-cream-300 hover:bg-brand-purple-50 transition cursor-pointer font-sans">
                 Change email
               </button>
               <div className="flex items-center justify-center gap-2 text-brand-slate-500">
@@ -133,9 +134,9 @@ export default function RegisterPage() {
               </div>
               <div className="text-center">
                 Haven't received the code?{' '}
-                <Link href="/auth/login" className="text-brand-purple-600 underline">
+                <button className="text-brand-purple-600 underline font-bold cursor-pointer">
                   Resend new code
-                </Link>
+                </button>
               </div>
             </div>
           </>
@@ -147,7 +148,7 @@ export default function RegisterPage() {
             <div className="space-y-4">
               <div>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 appearance-none">
+                  <select className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700 appearance-none">
                     <option value="">Trading experience</option>
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
@@ -160,35 +161,35 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   placeholder="Referral ID (optional)"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
               </div>
               <div>
                 <input
                   type="text"
                   placeholder="How much do you want to trade with?"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
               </div>
               <div>
                 <input
                   type="text"
                   placeholder="Enter your name"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
               </div>
               <div>
                 <input
                   type="tel"
                   placeholder="Enter your phone number"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
               </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
                 <button 
                   onClick={() => setShowPassword(!showPassword)}
@@ -201,7 +202,7 @@ export default function RegisterPage() {
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm your password"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
                 <button 
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}

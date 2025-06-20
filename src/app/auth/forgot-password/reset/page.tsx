@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
             />
             <button 
               onClick={() => setShowPassword(!showPassword)}
@@ -29,7 +29,7 @@ export default function ResetPasswordPage() {
             <input
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm your password"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
             />
             <button 
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -38,11 +38,11 @@ export default function ResetPasswordPage() {
               {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
           </div>
-          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition">
+          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans">
             Save new password
           </button>
-          <div className="text-center text-sm">
-            <Link href="/auth/login" className="text-brand-purple-600 underline">
+          <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
+            <Link href="/auth/login" className="text-brand-purple-600 font-bold underline">
               Back to Login
             </Link>
           </div>

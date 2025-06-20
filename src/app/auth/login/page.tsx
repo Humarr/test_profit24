@@ -16,14 +16,14 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
             />
           </div>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
             />
             <button 
               onClick={() => setShowPassword(!showPassword)}
@@ -32,15 +32,18 @@ export default function LoginPage() {
               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
           </div>
-          <div className="text-right">
+          <div className="text-left flex gap-2">
+            <p className="text-sm font-sans text-brand-slate-400">Forgot Password?</p>
             <Link href="/auth/forgot-password" className="text-brand-purple-600 underline text-sm">
-              Forgot Password? Reset Password
+              Reset Password
             </Link>
           </div>
-          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition">
+          <Link href="/auth/login">
+          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans">
             Login
           </button>
-          <div className="text-center text-sm">
+          </Link>
+          <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
             Don't have an account?{' '}
             <Link href="/auth/register" className="text-brand-purple-600 underline">
               Create account now

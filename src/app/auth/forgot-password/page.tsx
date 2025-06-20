@@ -10,15 +10,17 @@ export default function ForgotPasswordPage() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
+              className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400"
             />
           </div>
-          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition">
+          <Link href="/auth/forgot-password/reset">
+          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans">
             Get Reset Link
           </button>
-          <div className="text-center text-sm">
+          </Link>
+          <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
             Remember your password?{' '}
-            <Link href="/auth/login" className="text-brand-purple-600 underline">
+            <Link href="/auth/login" className="text-brand-purple-600 font-bold underline">
               Login
             </Link>
           </div>
