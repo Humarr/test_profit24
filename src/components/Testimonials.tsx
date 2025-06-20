@@ -70,7 +70,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-16 bg-brand-cream-100 overflow-hidden">
+    <section id="testimonials" className="py-16 bg-brand-cream-100 overflow-hidden">
       {/* Centered Testimonials label */}
       <div className="flex justify-center mb-6">
         <div className="bg-brand-purple-100 text-brand-purple-500 text-sm font-semibold font-sans px-6 py-2 rounded-full">
