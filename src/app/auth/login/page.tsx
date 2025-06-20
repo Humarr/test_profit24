@@ -34,7 +34,7 @@ export default function LoginPage() {
           </div>
           <div className="text-left flex gap-2">
             <p className="text-sm font-sans text-brand-slate-400">Forgot Password?</p>
-            <Link href="/auth/forgot-password" className="text-brand-purple-600 underline text-sm">
+            <Link href="/auth/forgot-password" className="text-brand-purple-600 underline text-sm cursor-pointer font-bold">
               Reset Password
             </Link>
           </div>
@@ -45,7 +45,7 @@ export default function LoginPage() {
           </Link>
           <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
             Don't have an account?{' '}
-            <Link href="/auth/register" className="text-brand-purple-600 underline">
+            <Link href="/auth/register" className="text-brand-purple-600 underline cursor-pointer font-bold">
               Create account now
             </Link>
           </div>

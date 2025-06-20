@@ -218,12 +218,14 @@ export default function RegisterPage() {
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
-              <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition mt-6">
+              <Link href="/auth/login">
+              <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition mt-6 cursor-pointer">
                 Create Account
               </button>
-              <div className="text-center text-sm">
+              </Link>
+              <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-brand-purple-600 underline">
+                <Link href="/auth/login" className="text-brand-purple-600 underline font-bold cursor-pointer">
                   Login
                 </Link>
               </div>
