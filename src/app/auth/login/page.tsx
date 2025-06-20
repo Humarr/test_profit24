@@ -38,8 +38,8 @@ export default function LoginPage() {
               Reset Password
             </Link>
           </div>
-          <Link href="/auth/login">
-          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans">
+          <Link href="/dashboard">
+          <button className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 transition font-sans cursor-pointer">
             Login
           </button>
           </Link>
