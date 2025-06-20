@@ -132,9 +132,16 @@ export default function RegisterPage() {
                 <Clock className="w-4 h-4" />
                 <span>{formatTime(timeLeft)}</span>
               </div>
-              <div className="text-center">
+              <div className="text-center font-sans mt-4 text-brand-slate-400">
                 Haven't received the code?{' '}
-                <button className="text-brand-purple-600 underline font-bold cursor-pointer">
+                <button 
+                  onClick={() => {
+                    setTimeLeft(300); // Reset timer to 5 minutes
+                    // TODO: Add resend code logic here
+                  }}
+                  className={`text-brand-purple-600 underline font-bold ${timeLeft > 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                  disabled={timeLeft > 0}
+                >
                   Resend new code
                 </button>
               </div>
