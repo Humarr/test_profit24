@@ -27,19 +27,23 @@ model User {
 }
 
 
+
 model Bot {
-  id          String           @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String
   tier        String
+  minAmount   String
+  performance String
+  fee         String
   imageUrl    String?
-  stats       Json
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  bgColor     String   @default("bg-white")
+  stats       Json     @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   activations BotActivation[] 
 }
-
 
 
 model BotActivation {
