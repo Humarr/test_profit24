@@ -71,44 +71,6 @@ export default function RegisterPage() {
       .padStart(2, "0")}`;
   };
 
-  //   const handleSubmit = async (e: React.FormEvent) => {
-  //     e.preventDefault()
-
-  //     if (password !== confirmPassword) {
-  //       alert('Passwords do not match')
-  //       return
-  //     }
-
-  //     try {
-  //       const body = {
-  //         name,
-  //         email,
-  //         password,
-  //         experience,
-  //         referralId,
-  //         tradingAmount,
-  //         phone,
-  //       }
-
-  //       const response = await fetch('/api/register', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify(body),
-  //       })
-
-  //       const data = await response.json()
-
-  //       if (response.ok) {
-  //         setActiveStep(3) // Registration complete
-  //       } else {
-  //         console.error('REGISTER_ERROR:', data.error)
-  //         alert('Registration failed: ' + data.error)
-  //       }
-  //     } catch (error) {
-  //       console.error('REGISTER_ERROR:', error)
-  //       alert('Registration failed')
-  //     }
-  //   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -159,11 +121,11 @@ export default function RegisterPage() {
         addToast("Registration successful!", "success");
         setActiveStep(3);
       } else {
-        console.error("REGISTER_ERROR:", data.error);
+        console.log("REGISTER_ERROR:", data.error);
         addToast("Registration failed: " + data.error, "error");
       }
     } catch (error) {
-      console.error("REGISTER_ERROR:", error);
+      console.log("REGISTER_ERROR:", error);
       addToast("Something went wrong. Please try again.", "error");
     } finally {
       setLoading(false);
@@ -359,21 +321,7 @@ export default function RegisterPage() {
               Complete your registration
             </h2>
             <div className="space-y-4">
-              {/* <div className="relative">
-                <select
-                  value={formData.experience}
-                 
-                  onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 appearance-none text-brand-slate-700"
-                >
-                  <option className="text-brand-slate-400" value="">Trading experience</option>
-                  <option className="text-brand-slate-700" value="beginner">Beginner</option>
-                  <option className="text-brand-slate-700" value="intermediate">Intermediate</option>
-                  <option className="text-brand-slate-700" value="advanced">Advanced</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-slate-400" />
-              </div> */}
-
+             
               <CustomSelect
                 placeholder="Trading experience"
                 value={formData.experience}
@@ -495,6 +443,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
+                onClick={handleSubmit}
                 className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 mt-6 flex items-center justify-center"
               >
                 {loading ? (
