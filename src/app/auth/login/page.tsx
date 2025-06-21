@@ -4,12 +4,14 @@
 import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
+import { useToast } from '@/components/toast/useToast'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const addToast = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,14 +24,15 @@ export default function LoginPage() {
       });
       const data = await response.json();
       if (response.ok) {
+        addToast('Login successful!', 'success');
         // Redirect to dashboard or home page
         window.location.href = '/dashboard';
       } else {
-        setError(data.error);
+        addToast(data.error, 'error');
       }
     } catch (error) {
       console.error('LOGIN_ERROR:', error);
-      setError('Something went wrong. Please try again.');
+      addToast('Something went wrong. Please try again.', 'error');
     } finally {
       setLoading(false);
     }
@@ -76,7 +79,8 @@ export default function LoginPage() {
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
-          {error && <p className="text-red-500 text-sm mt-2 font-sans text-center">{error}</p>}
+
+          
           <div className="text-center text-sm font-sans mt-4 text-brand-slate-400">
             Don't have an account?{' '}
             <Link href="/auth/register" className="text-brand-purple-600 underline cursor-pointer font-bold">

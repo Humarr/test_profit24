@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 export interface AuthPayload {
   id: string;
   email: string;
+  name?: string;
 }
 
 export function verifyToken(token: string): AuthPayload | null {
