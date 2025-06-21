@@ -1,4 +1,5 @@
 // components/toast/ToastProvider.tsx
+"use client"
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { Toast as ToastType, ToastType as ToastVariant } from "./types";
 import ToastContainer from "./ToastContainer";

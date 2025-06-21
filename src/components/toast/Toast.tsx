@@ -1,4 +1,5 @@
 // components/toast/Toast.tsx
+"use client"
 import React, { useEffect, useState } from "react";
 import { Toast as ToastType } from "./types";
 import { X } from "lucide-react";

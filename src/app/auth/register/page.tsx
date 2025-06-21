@@ -156,6 +156,7 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (response.ok) {
+        addToast("Registration successful!", "success");
         setActiveStep(3);
       } else {
         console.error("REGISTER_ERROR:", data.error);
