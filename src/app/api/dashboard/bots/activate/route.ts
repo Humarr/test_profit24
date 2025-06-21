@@ -1,61 +1,89 @@
-// /src/app/api/dashboard/bots/activate/route.ts
+// app/api/bots/activate/route.ts
 
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { getAuthUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
+const BOT_LIMITS = {
+  Standard: 1,
+  Premium: 5,
+  Enterprise: 999, // Treat as unlimited
+};
+
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user?.email) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const { botId } = await req.json();
-
-  if (!botId) {
-    return NextResponse.json({ error: 'Missing bot ID' }, { status: 400 });
-  }
-
   try {
-    // Optional: Check if bot exists
-    const bot = await prisma.bot.findUnique({ where: { id: botId } });
-    if (!bot) {
-      return NextResponse.json({ error: 'Bot not found' }, { status: 404 });
+    const user = await getAuthUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Optional: Prevent duplicate activations
-    const existingActivation = await prisma.botActivation.findFirst({
+    const { botId } = await req.json();
+    if (!botId) {
+      return NextResponse.json({ error: 'Bot ID is required' }, { status: 400 });
+    }
+
+    // 1. Check active subscription
+    const subscription = await prisma.subscription.findFirst({
       where: {
-        user: { email: session.user.email },
+        userId: user.id,
+        active: true,
+        expiresAt: { gte: new Date() },
+      },
+    });
+
+    if (!subscription) {
+      return NextResponse.json(
+        { error: 'No active subscription. Please subscribe to activate bots.' },
+        { status: 403 }
+      );
+    }
+
+    const plan = subscription.plan as keyof typeof BOT_LIMITS;
+    const allowedBots = BOT_LIMITS[plan];
+
+    // 2. Check how many bots the user has already activated
+    const activeCount = await prisma.botActivation.count({
+      where: {
+        userId: user.id,
+        active: true,
+      },
+    });
+
+    if (activeCount >= allowedBots) {
+      return NextResponse.json(
+        { error: `You've reached the limit of ${allowedBots} bot(s) for your plan.` },
+        { status: 403 }
+      );
+    }
+
+    // 3. Prevent duplicate activation
+    const existing = await prisma.botActivation.findUnique({
+      where: {
+        userId_botId: {
+          userId: user.id,
+          botId: botId,
+        },
+      },
+    });
+
+    if (existing) {
+      return NextResponse.json(
+        { error: 'This bot has already been activated.' },
+        { status: 409 }
+      );
+    }
+
+    // 4. Create activation
+    await prisma.botActivation.create({
+      data: {
+        userId: user.id,
         botId: botId,
       },
     });
 
-    if (existingActivation) {
-      return NextResponse.json({ error: 'Bot already activated' }, { status: 409 });
-    }
-
-    // Get user
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-
-    const activation = await prisma.botActivation.create({
-      data: {
-        userId: user.id,
-        botId,
-      },
-    });
-
-    return NextResponse.json({ success: true, activation });
-  } catch (error) {
-    console.error('Bot Activation Error:', error);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('[BOT_ACTIVATION_ERROR]', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

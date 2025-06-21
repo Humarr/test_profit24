@@ -1,17 +1,12 @@
 'use client';
-
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
-import { useToast } from "@/components/toast/useToast";
 
-export default function Pricing({ external }: { external?: boolean }) {
+export default function Pricing({external}: {external?: boolean}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-
-  const toast = useToast();
 
   const plans = [
     {
@@ -60,35 +55,7 @@ export default function Pricing({ external }: { external?: boolean }) {
     },
   ];
 
-  const handleSubscribe = async (plan: string) => {
-    try {
-      setLoadingPlan(plan);
-      const res = await fetch('/api/user/subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Subscription failed');
-      }
-
-      toast("Subscription activated!", "success", 5000);
-
-      // Redirect to WhatsApp
-      setTimeout(() => {
-        window.location.href = "https://wa.me/YOUR_WHATSAPP_NUMBER";
-      }, 1000);
-    } catch (err) {
-      const error = err as Error;
-      toast(error.message, "error", 5000);
-    } finally {
-      setLoadingPlan(null);
-    }
-  };
-
+  // Scroll to card by index
   const scrollToCard = (index: number) => {
     const card = cardRefs.current[index];
     const scrollContainer = scrollRef.current;
@@ -103,6 +70,7 @@ export default function Pricing({ external }: { external?: boolean }) {
     }
   };
 
+  // Track current card index during scroll
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -133,24 +101,27 @@ export default function Pricing({ external }: { external?: boolean }) {
 
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
-      {!external && (
-        <>
-          <div className="max-w-6xl mx-auto mb-4 flex justify-center">
-            <p className="inline-block px-4 py-1 text-sm font-semibold font-sans text-brand-purple-500 bg-brand-purple-100 rounded-full">
-              Pricing
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-4xl font-extrabold font-sans text-brand-slate-700 mb-4">
-              Choose your plan
-            </h2>
-            <p className="text-lg text-brand-slate-500 font-medium font-sans">
-              Unlock endless possibilities with our bot
-            </p>
-          </div>
-        </>
-      )}
+      {/* Header */}
+     {(!external) &&( 
+      <>
+      <div className="max-w-6xl mx-auto mb-4 flex justify-center">
+        <p className="inline-block px-4 py-1 text-sm font-semibold font-sans text-brand-purple-500 bg-brand-purple-100 rounded-full">
+          Pricing
+        </p>
+      </div>
 
+      <div className="max-w-4xl mx-auto text-center mb-12">
+        <h2 className="text-4xl font-extrabold font-sans text-brand-slate-700 mb-4">
+          Choose your plan
+        </h2>
+        <p className="text-lg text-brand-slate-500 font-medium font-sans">
+          Unlock endless possibilities with our bot
+        </p>
+      </div>
+      </>)
+      }
+
+      {/* Mobile Plan Buttons */}
       <div className="md:hidden flex justify-center mb-8 gap-2">
         {plans.map((plan, idx) => (
           <button
@@ -167,6 +138,7 @@ export default function Pricing({ external }: { external?: boolean }) {
         ))}
       </div>
 
+      {/* Card Container */}
       <div className="relative max-w-6xl mx-auto">
         <div
           ref={scrollRef}
@@ -209,22 +181,15 @@ export default function Pricing({ external }: { external?: boolean }) {
                 ))}
               </ul>
 
-              <button
-                disabled={loadingPlan === title}
-                onClick={() => handleSubscribe(title)}
-                className={`mt-auto rounded-lg px-6 py-3 w-full font-semibold transition ${
-                  loadingPlan === title
-                    ? "bg-brand-purple-300 text-white cursor-not-allowed"
-                    : "bg-brand-purple-500 text-white hover:bg-brand-purple-600"
-                }`}
-              >
-                {loadingPlan === title ? "Activating..." : "Activate Plan"}
+              <button className="mt-auto bg-brand-purple-500 text-white rounded-lg px-6 py-3 w-full font-semibold hover:bg-brand-purple-600 transition cursor-pointer">
+                Activate Plan
               </button>
             </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Dot Pagination (Mobile only) */}
       <div className="md:hidden flex justify-center mt-6 gap-2 scrollbar-hide">
         {plans.map((_, idx) => (
           <button

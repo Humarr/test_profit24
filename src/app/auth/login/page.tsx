@@ -25,6 +25,7 @@ export default function LoginPage() {
       const data = await response.json();
       if (response.ok) {
         addToast('Login successful!', 'success');
+        addToast('Taking you to your dashboard', 'info');
         // Redirect to dashboard or home page
         window.location.href = '/dashboard';
       } else {
