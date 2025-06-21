@@ -13,7 +13,7 @@ export default function AuthLayout({
           <Link href="/" className="text-2xl font-bold text-brand-purple-600">
             Profit24 SCALPER
           </Link>
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <Link 
               href="/auth/login" 
               className="px-4 py-2 border border-brand-purple-500 text-brand-purple-500 rounded-lg font-medium hover:bg-brand-purple-50 transition"
@@ -26,7 +26,7 @@ export default function AuthLayout({
             >
               Register
             </Link>
-          </div>
+          </div> */}
         </div>
       </header>
       
