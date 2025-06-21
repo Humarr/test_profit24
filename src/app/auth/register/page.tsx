@@ -3,8 +3,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, Eye, EyeOff, Clock } from "lucide-react";
+import { Eye, EyeOff, Clock } from "lucide-react";
 import { useToast } from "@/components/toast/useToast";
+import CustomSelect from "@/components/CustomSelect";
 
 export default function RegisterPage() {
   const [activeStep, setActiveStep] = useState(0);
@@ -248,12 +249,25 @@ export default function RegisterPage() {
               </div>
               <button
                 onClick={() => {
-                    if (formData.email && agreement) {
-                        setActiveStep(1)
-                        handleSendOtp()
-                    } else {
-                        addToast('Please enter an email address.', 'error')
-                    }
+                  if (!formData.email && !agreement) {
+                    addToast("Please enter an email address and agree to the terms.", "error");
+                    return;
+                  }
+                  
+                  if (!formData.email) {
+                    addToast("Please enter an email address.", "error");
+                    return;
+                  }
+                  
+                  if (!agreement) {
+                    addToast("You must agree to the terms.", "error");
+                    return;
+                  }
+                  
+                  setActiveStep(1);
+                  handleSendOtp();
+                  
+
                 }}
                 className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
               >
@@ -340,19 +354,31 @@ export default function RegisterPage() {
               Complete your registration
             </h2>
             <div className="space-y-4">
-              <div className="relative">
+              {/* <div className="relative">
                 <select
                   value={formData.experience}
+                 
                   onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700 appearance-none"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 appearance-none text-brand-slate-700"
                 >
                   <option className="text-brand-slate-400" value="">Trading experience</option>
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
+                  <option className="text-brand-slate-700" value="beginner">Beginner</option>
+                  <option className="text-brand-slate-700" value="intermediate">Intermediate</option>
+                  <option className="text-brand-slate-700" value="advanced">Advanced</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-slate-400" />
-              </div>
+              </div> */}
+
+<CustomSelect
+  placeholder="Trading experience"
+  value={formData.experience}
+  onChange={(val) => setFormData({ ...formData, experience: val })}
+  options={[
+    { label: "Beginner", value: "beginner" },
+    { label: "Intermediate", value: "intermediate" },
+    { label: "Advanced", value: "advanced" },
+  ]}
+/>
               <input
                 type="text"
                 value={formData.referralId}
