@@ -22,7 +22,7 @@ type User = {
   id: string;
   name: string;
   email: string;
-};
+} | null;
 
 export default function DashboardLayout({ children, user }: { children: React.ReactNode; user: User }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
