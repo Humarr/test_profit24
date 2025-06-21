@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Eye, EyeOff, Clock } from "lucide-react";
 import { useToast } from "@/components/toast/useToast";
 import CustomSelect from "@/components/CustomSelect";
+import CurrencyAmountInput from "@/components/CurrencyAmountInput";
 
 export default function RegisterPage() {
   const [activeStep, setActiveStep] = useState(0);
@@ -15,9 +16,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const otpInputs = useRef<(HTMLInputElement | null)[]>([]);
 
-
   const addToast = useToast();
-
 
   // Form state
   // const [name, setName] = useState("");
@@ -29,20 +28,20 @@ export default function RegisterPage() {
   // const [tradingAmount, setTradingAmount] = useState("");
   // const [phone, setPhone] = useState("");
   // const [loading, setLoading] = useState(false);
-  
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    experience: '',
-    referralId: '',
-    tradingAmount: '',
-    phone: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    experience: "",
+    referralId: "",
+    tradingAmount: "",
+    currency: "NGN", // default currency
+    phone: "",
   });
   const [loading, setLoading] = useState(false);
   const [agreement, setAgreement] = useState(false);
-  
 
   const handleOtpChange = (index: number, value: string) => {
     if (value && !/^[0-9]$/.test(value)) return;
@@ -171,10 +170,7 @@ export default function RegisterPage() {
     }
   };
 
-
-  const handleSendOtp = () => {
-    
-  }
+  const handleSendOtp = () => {};
 
   const handleResendOtp = () => {
     if (timeLeft > 0) return;
@@ -220,13 +216,21 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="Enter your email"
                   className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
               </div>
               <div className="flex items-start">
-                <input type="checkbox" id="agreement" className="mt-1 mr-2" checked={agreement} onChange={(e) => setAgreement(e.target.checked)}/>
+                <input
+                  type="checkbox"
+                  id="agreement"
+                  className="mt-1 mr-2"
+                  checked={agreement}
+                  onChange={(e) => setAgreement(e.target.checked)}
+                />
                 <label
                   htmlFor="agreement"
                   className="text-sm text-brand-slate-500"
@@ -250,24 +254,25 @@ export default function RegisterPage() {
               <button
                 onClick={() => {
                   if (!formData.email && !agreement) {
-                    addToast("Please enter an email address and agree to the terms.", "error");
+                    addToast(
+                      "Please enter an email address and agree to the terms.",
+                      "error"
+                    );
                     return;
                   }
-                  
+
                   if (!formData.email) {
                     addToast("Please enter an email address.", "error");
                     return;
                   }
-                  
+
                   if (!agreement) {
                     addToast("You must agree to the terms.", "error");
                     return;
                   }
-                  
+
                   setActiveStep(1);
                   handleSendOtp();
-                  
-
                 }}
                 className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
               >
@@ -310,11 +315,11 @@ export default function RegisterPage() {
               </div>
               <button
                 onClick={() => {
-                    if (otp.every((digit) => digit !== '')) {
-                        setActiveStep(2)
-                    } else {
-                        addToast('Please enter all OTP digits.', 'error')
-                    }
+                  if (otp.every((digit) => digit !== "")) {
+                    setActiveStep(2);
+                  } else {
+                    addToast("Please enter all OTP digits.", "error");
+                  }
                 }}
                 className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
               >
@@ -369,41 +374,67 @@ export default function RegisterPage() {
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-slate-400" />
               </div> */}
 
-<CustomSelect
-  placeholder="Trading experience"
-  value={formData.experience}
-  onChange={(val) => setFormData({ ...formData, experience: val })}
-  options={[
-    { label: "Beginner", value: "beginner" },
-    { label: "Intermediate", value: "intermediate" },
-    { label: "Advanced", value: "advanced" },
-  ]}
-/>
+              <CustomSelect
+                placeholder="Trading experience"
+                value={formData.experience}
+                onChange={(val) =>
+                  setFormData({ ...formData, experience: val })
+                }
+                options={[
+                  { label: "Beginner", value: "beginner" },
+                  { label: "Intermediate", value: "intermediate" },
+                  { label: "Advanced", value: "advanced" },
+                ]}
+              />
               <input
                 type="text"
                 value={formData.referralId}
-                onChange={(e) => setFormData({ ...formData, referralId: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, referralId: e.target.value })
+                }
                 placeholder="Referral ID (optional)"
                 className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
-              <input
+              <CurrencyAmountInput
+                value={formData.tradingAmount}
+                onChange={(val) =>
+                  setFormData({ ...formData, tradingAmount: val })
+                }
+                currency={formData.currency}
+                onCurrencyChange={(val) =>
+                  setFormData({ ...formData, currency: val })
+                }
+                currencies={[
+                  { label: "USD", value: "USD" },
+                  { label: "EUR", value: "EUR" },
+                  { label: "GBP", value: "GBP" },
+                  { label: "BTC", value: "BTC" },
+                  { label: "Naira (₦)", value: "NGN" }, // <-- Naira added here
+                ]}
+              />
+
+              {/* <input
                 type="text"
                 value={formData.tradingAmount}
                 onChange={(e) => setFormData({ ...formData, tradingAmount: e.target.value })}
                 placeholder="How much do you want to trade with?"
                 className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
-              />
+              /> */}
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 placeholder="Enter your name"
                 className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
               <input
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
                 placeholder="Enter your phone number"
                 className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
@@ -411,7 +442,9 @@ export default function RegisterPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                   placeholder="Enter your password"
                   className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
@@ -431,7 +464,12 @@ export default function RegisterPage() {
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
-                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
                   placeholder="Confirm your password"
                   className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
