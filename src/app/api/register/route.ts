@@ -46,14 +46,17 @@ export async function POST(req: Request) {
         name,
         password: hashedPassword,
         experience,
-        referralId,
         tradingAmount,
         phone,
+        referralId: referralId || null, // if user signed up via referral
+        myReferralCode: crypto.randomUUID(), // their unique code
+
       },
     });
 
+    // localStorage.setItem('referral_code', user.myReferralCode)
     return NextResponse.json(
-      { message: 'User created successfully', user: { email: user.email, id: user.id } },
+      { message: 'User created successfully', user: { email: user.email, id: user.id, myReferralCode: user.myReferralCode } },
       { status: 201 }
     );
   } catch (error) {

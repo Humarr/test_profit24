@@ -119,6 +119,7 @@ export default function RegisterPage() {
 
       if (response.ok) {
         addToast("Registration successful!", "success");
+        localStorage.setItem("referral_code", data.user.myReferralCode);
         setActiveStep(3);
       } else {
         console.log("REGISTER_ERROR:", data.error);
