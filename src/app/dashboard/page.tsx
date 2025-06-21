@@ -2,13 +2,13 @@ import Pricing from '@/components/Pricing'
 import { Bot, Stars } from 'lucide-react'
 import Link from 'next/link'
 // import Pricing from '@/components/pricing'
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+// import { getServerSession } from 'next-auth';
+// import { authOptions } from '@/lib/auth';
 
 export default async function DashboardPage() {
   const isLoggedIn = true // This would come from your auth system
 
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
   if (!isLoggedIn) {
     return (
@@ -59,9 +59,9 @@ export default async function DashboardPage() {
     // Logged in state
     return (
       <div className="max-w-7xl mx-auto scrollbar-hide">
-             <pre className="mt-4 bg-gray-100 p-4 rounded text-black">
+             {/* <pre className="mt-4 bg-gray-100 p-4 rounded text-black">
         {JSON.stringify(session, null, 2)}
-      </pre>
+      </pre> */}
         {/* Subscription Card */}
         <div className="bg-gradient-to-r from-brand-purple-50 to-brand-purple-100 rounded-xl p-6 mb-8 max-w-3xl">
           <h2 className="text-xl font-bold font-sans text-brand-slate-700 mb-4">Your subscription plan</h2>
