@@ -346,7 +346,7 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700 appearance-none"
                 >
-                  <option value="">Trading experience</option>
+                  <option className="text-brand-slate-400" value="">Trading experience</option>
                   <option value="beginner">Beginner</option>
                   <option value="intermediate">Intermediate</option>
                   <option value="advanced">Advanced</option>
@@ -358,28 +358,28 @@ export default function RegisterPage() {
                 value={formData.referralId}
                 onChange={(e) => setFormData({ ...formData, referralId: e.target.value })}
                 placeholder="Referral ID (optional)"
-                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
               <input
                 type="text"
                 value={formData.tradingAmount}
                 onChange={(e) => setFormData({ ...formData, tradingAmount: e.target.value })}
                 placeholder="How much do you want to trade with?"
-                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Enter your name"
-                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="Enter your phone number"
-                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+                className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
               />
               <div className="relative">
                 <input
@@ -387,7 +387,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
                 <button
                   type="button"
@@ -407,7 +407,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   placeholder="Confirm your password"
-                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
+                  className="w-full px-4 py-3 rounded-lg border border-brand-cream-300 focus:outline-none focus:ring-2 focus:ring-brand-purple-200  font-sans bg-brand-slate-50/50 placeholder:text-brand-slate-400 text-brand-slate-700"
                 />
                 <button
                   type="button"
