@@ -4,6 +4,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { ChevronDown, Eye, EyeOff, Clock } from "lucide-react";
+import { useToast } from "@/components/toast/useToast";
 
 export default function RegisterPage() {
   const [activeStep, setActiveStep] = useState(0);
@@ -12,6 +13,10 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const otpInputs = useRef<(HTMLInputElement | null)[]>([]);
+
+
+  const addToast = useToast();
+
 
   // Form state
   // const [name, setName] = useState("");
@@ -36,7 +41,6 @@ export default function RegisterPage() {
   });
   const [loading, setLoading] = useState(false);
   const [agreement, setAgreement] = useState(false);
-  const [error, setError] = useState('');
   
 
   const handleOtpChange = (index: number, value: string) => {
@@ -118,17 +122,15 @@ export default function RegisterPage() {
       !formData.tradingAmount ||
       !formData.phone
     ) {
-      setError("Please fill in all required fields.");
-      return;
+      addToast("Please fill in all required fields.", "error");
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long.");
-      return;
+      addToast("Password must be at least 6 characters long.", "error");
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
+      addToast("Passwords do not match.", "error");
       return;
     }
 
@@ -157,11 +159,11 @@ export default function RegisterPage() {
         setActiveStep(3);
       } else {
         console.error("REGISTER_ERROR:", data.error);
-        setError("Registration failed: " + data.error);
+        addToast("Registration failed: " + data.error, "error");
       }
     } catch (error) {
       console.error("REGISTER_ERROR:", error);
-      setError("Something went wrong. Please try again.");
+      addToast("Something went wrong. Please try again.", "error");
     } finally {
       setLoading(false);
     }
@@ -180,7 +182,7 @@ export default function RegisterPage() {
 
     // Simulate resend API
     console.log("OTP resend triggered for", formData.email);
-    setError("A new OTP has been sent to your email.");
+    addToast("A new OTP has been sent to your email.", "success");
   };
 
   return (
@@ -249,14 +251,13 @@ export default function RegisterPage() {
                         setActiveStep(1)
                         handleSendOtp()
                     } else {
-                        setError('Please enter an email address.')
+                        addToast('Please enter an email address.', 'error')
                     }
                 }}
                 className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
               >
                 Proceed
               </button>
-              {error && <p className="text-red-500 mt-0 text-sm font-sans text-center">{error}</p>} 
               <div className="text-center text-sm text-brand-slate-400 mt-4">
                 Already have an account?{" "}
                 <Link
@@ -297,14 +298,13 @@ export default function RegisterPage() {
                     if (otp.every((digit) => digit !== '')) {
                         setActiveStep(2)
                     } else {
-                        setError('Please enter all OTP digits.')
+                        addToast('Please enter all OTP digits.', 'error')
                     }
                 }}
                 className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
               >
                 Verify email
               </button>
-              {error && <p className="text-red-500 mt-0 text-sm font-sans text-center">{error}</p>} 
               <button
                 onClick={() => setActiveStep(0)}
                 className="w-full py-3 bg-white text-brand-slate-700 rounded-lg font-medium border border-brand-cream-300 hover:bg-brand-purple-50"
@@ -455,8 +455,6 @@ export default function RegisterPage() {
                 ) : null}
                 {loading ? "Creating..." : "Create Account"}
               </button>
-              {error && <p className="text-red-500 mt-2 text-sm font-sans text-center">{error}</p>}
-
               <div className="text-center text-sm mt-4 text-brand-slate-400">
                 Already have an account?{" "}
                 <Link
