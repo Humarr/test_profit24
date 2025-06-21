@@ -22,6 +22,9 @@ type User = {
   id: string;
   name: string;
   email: string;
+  createdAt: Date;
+  updatedAt: Date;
+  phone: string | null;
 } | null;
 
 export default function DashboardLayout({ children, user }: { children: React.ReactNode; user: User }) {
