@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Bot, Stars } from 'lucide-react'
 import Pricing from '@/components/Pricing'
 import { format } from 'date-fns'
+import ActivatedBots from './ActivatedBots'
 
 export default async function DashboardPage() {
   const dashboardData = await getUserDashboardData()
@@ -105,6 +106,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* We can dynamically load bots preview later, but leave as-is for now */}
+      <ActivatedBots />
     </div>
   )
 }

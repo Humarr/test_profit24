@@ -4,6 +4,35 @@ import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { getAuthUser } from '@/lib/auth' 
 
+
+
+
+export async function GET() {
+  try {
+    const bots = await prisma.bot.findMany({
+      orderBy: { createdAt: 'desc' },
+    })
+
+    return NextResponse.json({ bots })
+  } catch (err) {
+    console.error('[GET_BOTS_ERROR]', err)
+    return NextResponse.json({ error: 'Failed to fetch bots' }, { status: 500 })
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function POST(req: Request) {
   try {
     const user = await getAuthUser()
@@ -40,3 +69,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }
+
+
