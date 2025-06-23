@@ -38,7 +38,7 @@ export default function BotsLabPage() {
 
 
 
-  
+
   const handleStartCopying = async (botId: string, botName: string) => {
     if (loading) return;
 
@@ -46,14 +46,20 @@ export default function BotsLabPage() {
       return router.push("/dashboard/offers");
     }
 
+    
     try {
       const res = await fetch("/api/user/activate-bot", {
         method: "POST",
         body: JSON.stringify({ botId }),
       });
-
+      
       const result = await res.json();
-
+      
+      if (res.status === 403) {
+        // No active subscription → redirect client-side
+        router.push('/dashboard/offers');
+        return;
+      }
       if (!res.ok) {
         throw new Error(result.error || "Something went wrong");
       }

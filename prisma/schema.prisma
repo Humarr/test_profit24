@@ -22,6 +22,8 @@ model User {
 
   activations   BotActivation[] 
   subscriptions Subscription[]
+  pendingPayments PendingPayment[]
+
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -67,4 +69,16 @@ model Subscription {
   active     Boolean  @default(true)
   expiresAt  DateTime
   createdAt  DateTime @default(now())
+}
+
+
+model PendingPayment {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  plan      String
+  amount    String
+  status    String   @default("pending") // 'pending', 'approved', 'rejected'
+  evidence  String   // file path or URL
+  createdAt DateTime @default(now())
 }

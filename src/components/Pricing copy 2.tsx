@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import { useToast } from "@/components/toast/useToast";
 import BankTransferModal from "./BankTransferModal";
-import PaymentMethodModal from "./PaymentMethodModal";
-import CryptoPaymentModal from "./CryptoPaymentModal";
 
 export default function Pricing({ external }: { external?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -14,13 +12,15 @@ export default function Pricing({ external }: { external?: boolean }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
-  // Modals state
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isBankTransferModalOpen, setIsBankTransferModalOpen] = useState(false);
-  const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false);
-
   const [selectedPlan, setSelectedPlan] = useState<string>('');
   const [selectedAmount, setSelectedAmount] = useState<string>('');
+
+  const handleSubscribeClick = (plan: string, amount: string) => {
+    setSelectedPlan(plan)
+    setSelectedAmount(amount)
+    setIsBankTransferModalOpen(true)
+  }
 
   const toast = useToast();
 
@@ -88,6 +88,7 @@ export default function Pricing({ external }: { external?: boolean }) {
 
       toast("Subscription activated!", "success", 5000);
 
+      // Redirect to WhatsApp
       setTimeout(() => {
         window.location.href = "https://wa.me/YOUR_WHATSAPP_NUMBER";
       }, 1000);
@@ -98,27 +99,6 @@ export default function Pricing({ external }: { external?: boolean }) {
       setLoadingPlan(null);
     }
   };
-
-  const handleBankPaymentSuccess = () => {
-    setIsBankTransferModalOpen(false);
-    setSelectedPlan('');
-    setSelectedAmount('');
-    setIsPaymentModalOpen(false);
-    handleSubscribe(selectedPlan);
-  };
-  
-  const handleCryptoPaymentSuccess = () => {
-    setIsCryptoModalOpen(false);
-    setSelectedPlan('');
-    setSelectedAmount('');
-    setIsPaymentModalOpen(false);
-    handleSubscribe(selectedPlan);
-  };
-  
-
-
-
-  // Scroll handling code remains the same...
 
   const scrollToCard = (index: number) => {
     const card = cardRefs.current[index];
@@ -161,22 +141,6 @@ export default function Pricing({ external }: { external?: boolean }) {
     container.addEventListener("scroll", handleScroll, { passive: true });
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // New: open PaymentMethodModal when activating a plan
-  const handleActivateClick = (plan: string, amount: string) => {
-    setSelectedPlan(plan);
-    setSelectedAmount(amount);
-    setIsPaymentModalOpen(true);
-  };
-
-  // Handlers to open corresponding payment modals
-  const handleBankTransferSelect = () => {
-    setIsBankTransferModalOpen(true);
-  };
-
-  const handleCryptoSelect = () => {
-    setIsCryptoModalOpen(true);
-  };
 
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
@@ -237,61 +201,68 @@ export default function Pricing({ external }: { external?: boolean }) {
                   Popular
                 </span>
               )}
-              <h3 className="text-2xl font-extrabold mb-2 font-sans text-brand-slate-700">{title}</h3>
-              <p className="mb-6 font-medium text-sm text-brand-purple-700">{subtitle}</p>
-              <div className="text-brand-purple-600 font-bold text-3xl mb-6">
-                ${price}
-                <span className="text-base font-normal text-brand-purple-700"> / month</span>
+
+              <h3 className="text-2xl font-bold font-sans mb-1 text-brand-slate-700">{title}</h3>
+              <p className="text-sm font-sans text-brand-slate-500 mb-6">{subtitle}</p>
+
+              <div className="mb-8 flex items-baseline gap-1">
+                <sup className="text-lg font-semibold text-brand-slate-700">$</sup>
+                <span className="text-5xl font-extrabold font-sans text-brand-slate-700">{price}</span>
+                <span className="text-base text-brand-slate-500 font-semibold ml-1">/mo</span>
               </div>
-              <ul className="mb-6 flex-grow space-y-3 font-medium text-brand-purple-800 text-sm">
+
+              <ul className="mt-8 space-y-3 flex-1 mb-8">
                 {features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <ShieldCheck size={20} className="text-brand-purple-500" />
-                    {feature}
+                  <li key={idx} className="font-sans text-brand-slate-600 text-sm flex items-start gap-2">
+                    <ShieldCheck className="w-4 h-4 text-brand-purple-500 mt-0.5 flex-shrink-0" />
+                    <span>{feature}</span>
                   </li>
                 ))}
               </ul>
+
               <button
-                onClick={() => handleActivateClick(title, price.toString())}
                 disabled={loadingPlan === title}
-                className={`mt-auto rounded-lg px-6 py-3 w-full font-semibold transition cursor-pointer ${
+                onClick={() => handleSubscribe(title)}
+                className={`mt-auto rounded-lg px-6 py-3 w-full font-semibold transition ${
                   loadingPlan === title
-                    ? "bg-gray-400 cursor-not-allowed"
+                    ? "bg-brand-purple-300 text-white cursor-not-allowed"
                     : "bg-brand-purple-500 text-white hover:bg-brand-purple-600"
                 }`}
               >
-                {loadingPlan === title ? "Processing..." : "Activate Plan"}
+                {loadingPlan === title ? "Activating..." : "Activate Plan"}
+              </button>
+
+              <button
+                onClick={() => handleSubscribeClick(title, price.toString())}
+                className="mt-auto rounded-lg px-6 py-3 w-full font-semibold transition bg-brand-purple-600 text-white hover:bg-brand-purple-700"
+              >
+                Pay via Bank Transfer
               </button>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Modals */}
-      <PaymentMethodModal
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        plan={selectedPlan}
-        amount={selectedAmount}
-        onBankTransferSelect={handleBankTransferSelect}
-        onCryptoSelect={handleCryptoSelect}
-      />
+      <div className="md:hidden flex justify-center mt-6 gap-2 scrollbar-hide">
+        {plans.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => scrollToCard(idx)}
+            className={`h-2 w-2 rounded-full transition-all ${
+              activeIndex === idx ? "bg-brand-purple-500 w-3" : "bg-brand-purple-200"
+            }`}
+          />
+        ))}
+      </div>
+    
 
-      <BankTransferModal
-        isOpen={isBankTransferModalOpen}
-        onClose={() => setIsBankTransferModalOpen(false)}
-        plan={selectedPlan}
-        amount={selectedAmount}
-        onSuccess={handleBankPaymentSuccess}
-      />
+<BankTransferModal
+  isOpen={isBankTransferModalOpen}
+  onClose={() => setIsBankTransferModalOpen(false)}
+  plan={selectedPlan}
+  amount={selectedAmount}
+/>
 
-      <CryptoPaymentModal
-        isOpen={isCryptoModalOpen}
-        onClose={() => setIsCryptoModalOpen(false)}
-        plan={selectedPlan}
-        amount={selectedAmount}
-        onSuccess={handleCryptoPaymentSuccess}
-      />
     </section>
   );
 }
