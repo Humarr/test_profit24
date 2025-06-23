@@ -8,18 +8,13 @@ import BankTransferModal from "./BankTransferModal";
 import PaymentMethodModal from "./PaymentMethodModal";
 import CryptoPaymentModal from "./CryptoPaymentModal";
 
-// Helper to convert USD to Naira (₦1,500 per USD)
-// const formatNaira = (usd: number) => {
-//   const rate = 1500;
-//   return `₦${(usd * rate).toLocaleString()}`;
-// };
-
 export default function Pricing({ external }: { external?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
+  // Modals state
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isBankTransferModalOpen, setIsBankTransferModalOpen] = useState(false);
   const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false);
@@ -33,44 +28,44 @@ export default function Pricing({ external }: { external?: boolean }) {
     {
       id: 1,
       title: "Standard",
-      subtitle: "Great for beginners wanting simple automated trading",
+      subtitle: "Perfect for beginners who want a simple guided way to start trading with automation",
       price: 0,
       features: [
-        "Basic trading bot",
+        "Basic trading bot functionality",
         "Pre-configured strategies",
         "Email support",
         "Community access",
-        "Up to 5 trades/day",
+        "Limited to 5 trades/day"
       ],
       popular: false,
     },
     {
       id: 2,
       title: "Premium",
-      subtitle: "Best for small businesses with serious automation needs",
-      price: 43500,
+      subtitle: "Perfect for small businesses in need of significant bot capabilities",
+      price: 29,
       features: [
         "All Standard features",
-        "Advanced strategies",
+        "Advanced trading strategies",
         "Priority email support",
-        "Custom bot parameters",
+        "Customizable bot parameters",
         "Up to 50 trades/day",
-        "Basic analytics dashboard",
+        "Basic analytics dashboard"
       ],
       popular: true,
     },
     {
       id: 3,
       title: "Enterprise",
-      subtitle: "Ideal for power users and AI-driven trading",
-      price: 148500,
+      subtitle: "For personal use and exploration of AI trading",
+      price: 99,
       features: [
         "All Premium features",
         "Unlimited trades",
-        "24/7 VIP support",
+        "24/7 priority support",
         "Advanced analytics",
-        "Custom bot dev",
-        "Dedicated account manager",
+        "Custom bot development",
+        "Dedicated account manager"
       ],
       popular: false,
     },
@@ -79,20 +74,26 @@ export default function Pricing({ external }: { external?: boolean }) {
   const handleSubscribe = async (plan: string) => {
     try {
       setLoadingPlan(plan);
-      const res = await fetch("/api/user/subscription", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/user/subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan }),
       });
+
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Subscription failed");
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Subscription failed');
+      }
 
       toast("Subscription activated!", "success", 5000);
+
       setTimeout(() => {
         window.location.href = "https://wa.me/YOUR_WHATSAPP_NUMBER";
       }, 1000);
     } catch (err) {
-      toast((err as Error).message, "error", 5000);
+      const error = err as Error;
+      toast(error.message, "error", 5000);
     } finally {
       setLoadingPlan(null);
     }
@@ -100,83 +101,115 @@ export default function Pricing({ external }: { external?: boolean }) {
 
   const handleBankPaymentSuccess = () => {
     setIsBankTransferModalOpen(false);
-    setSelectedPlan("");
-    setSelectedAmount("");
+    setSelectedPlan('');
+    setSelectedAmount('');
     setIsPaymentModalOpen(false);
-    // handleSubscribe(selectedPlan);
+    handleSubscribe(selectedPlan);
   };
-
+  
   const handleCryptoPaymentSuccess = () => {
     setIsCryptoModalOpen(false);
-    setSelectedPlan("");
-    setSelectedAmount("");
+    setSelectedPlan('');
+    setSelectedAmount('');
     setIsPaymentModalOpen(false);
-    // handleSubscribe(selectedPlan);
+    handleSubscribe(selectedPlan);
   };
+  
+
+
+
+  // Scroll handling code remains the same...
 
   const scrollToCard = (index: number) => {
     const card = cardRefs.current[index];
-    const container = scrollRef.current;
-    if (card && container) {
-      const left = card.offsetLeft;
-      const cw = container.offsetWidth;
-      const cwid = card.offsetWidth;
-      const pos = left - (cw - cwid) / 2;
-      container.scrollTo({ left: pos, behavior: "smooth" });
+    const scrollContainer = scrollRef.current;
+
+    if (card && scrollContainer) {
+      const cardLeft = card.offsetLeft;
+      const containerWidth = scrollContainer.offsetWidth;
+      const cardWidth = card.offsetWidth;
+      const scrollPosition = cardLeft - (containerWidth - cardWidth) / 2;
+
+      scrollContainer.scrollTo({ left: scrollPosition, behavior: "smooth" });
     }
   };
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
-    const onScroll = () => {
-      const center = container.scrollLeft + container.offsetWidth / 2;
-      let closest = 0;
-      let dist = Infinity;
-      cardRefs.current.forEach((card, i) => {
+
+    const handleScroll = () => {
+      const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      cardRefs.current.forEach((card, idx) => {
         if (card) {
-          const cc = card.offsetLeft + card.offsetWidth / 2;
-          const d = Math.abs(center - cc);
-          if (d < dist) {
-            dist = d;
-            closest = i;
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const distance = Math.abs(containerCenter - cardCenter);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = idx;
           }
         }
       });
-      setActiveIndex(closest);
+
+      setActiveIndex(closestIndex);
     };
-    container.addEventListener("scroll", onScroll, { passive: true });
-    return () => container.removeEventListener("scroll", onScroll);
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // New: open PaymentMethodModal when activating a plan
   const handleActivateClick = (plan: string, amount: string) => {
     setSelectedPlan(plan);
     setSelectedAmount(amount);
     setIsPaymentModalOpen(true);
   };
 
+  // Handlers to open corresponding payment modals
+  const handleBankTransferSelect = () => {
+    setIsBankTransferModalOpen(true);
+  };
+
+  const handleCryptoSelect = () => {
+    setIsCryptoModalOpen(true);
+  };
+
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
       {!external && (
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <p className="inline-block px-4 py-1 text-sm font-semibold text-brand-purple-500 bg-brand-purple-100 rounded-full">Pricing</p>
-          <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">Choose your plan</h2>
-          <p className="mt-2 text-lg text-brand-slate-500">Unlock endless possibilities with our bot</p>
-        </div>
+        <>
+          <div className="max-w-6xl mx-auto mb-4 flex justify-center">
+            <p className="inline-block px-4 py-1 text-sm font-semibold font-sans text-brand-purple-500 bg-brand-purple-100 rounded-full">
+              Pricing
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-4xl font-extrabold font-sans text-brand-slate-700 mb-4">
+              Choose your plan
+            </h2>
+            <p className="text-lg text-brand-slate-500 font-medium font-sans">
+              Unlock endless possibilities with our bot
+            </p>
+          </div>
+        </>
       )}
 
       <div className="md:hidden flex justify-center mb-8 gap-2">
-        {plans.map((p, i) => (
+        {plans.map((plan, idx) => (
           <button
-            key={p.id}
-            onClick={() => scrollToCard(i)}
-            className={`px-4 py-2 rounded-lg font-medium ${
-              activeIndex === i
+            key={plan.id}
+            onClick={() => scrollToCard(idx)}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              activeIndex === idx
                 ? "bg-brand-purple-500 text-white"
                 : "bg-brand-purple-100 text-brand-purple-500 hover:bg-brand-purple-200"
-            } transition`}
+            }`}
           >
-            {p.title}
+            {plan.title}
           </button>
         ))}
       </div>
@@ -184,46 +217,44 @@ export default function Pricing({ external }: { external?: boolean }) {
       <div className="relative max-w-6xl mx-auto">
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4 md:overflow-visible scrollbar-hide"
+          id="card-scroll"
+          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4 md:flex-row md:overflow-visible md:snap-none scrollbar-hide"
         >
-          {plans.map(({ id, title, subtitle, price, features, popular }, idx) => (
+          {plans.map(({ id, title, subtitle, price, features, popular }, index) => (
             <motion.div
               key={id}
               ref={(el) => {
-                cardRefs.current[idx] = el;
+                cardRefs.current[index] = el;
               }}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: id * 0.1 }}
-              className="snap-center shrink-0 min-w-[300px] sm:min-w-[360px] md:flex-1 bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
+              className="snap-center shrink-0 w-[85%] sm:w-[70%] md:w-full bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
             >
               {popular && (
-                <div className="absolute top-4 right-4 bg-brand-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Popular</div>
+                <span className="absolute top-4 right-4 bg-brand-orange-500 text-white px-3 py-1 text-xs font-semibold rounded-full">
+                  Popular
+                </span>
               )}
-
-              <h3 className="text-2xl font-extrabold mb-2 text-brand-slate-700">{title}</h3>
-              <p className="mb-6 text-sm font-medium text-brand-purple-700">{subtitle}</p>
-
+              <h3 className="text-2xl font-extrabold mb-2 font-sans text-brand-slate-700">{title}</h3>
+              <p className="mb-6 font-medium text-sm text-brand-purple-700">{subtitle}</p>
               <div className="text-brand-purple-600 font-bold text-3xl mb-6">
-                {price === 0 ? "Free" : price.toLocaleString()}
-                {/* {price === 0 ? "Free" : formatNaira(price)} */}
+                ${price}
                 <span className="text-base font-normal text-brand-purple-700"> / month</span>
               </div>
-
-              <ul className="flex-1 mb-6 space-y-3 text-sm font-medium text-brand-purple-800">
-                {features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <ShieldCheck size={20} className="text-brand-purple-500 mt-0.5" />
-                    {f}
+              <ul className="mb-6 flex-grow space-y-3 font-medium text-brand-purple-800 text-sm">
+                {features.map((feature, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <ShieldCheck size={20} className="text-brand-purple-500" />
+                    {feature}
                   </li>
                 ))}
               </ul>
-
               <button
                 onClick={() => handleActivateClick(title, price.toString())}
                 disabled={loadingPlan === title}
-                className={`mt-auto px-6 py-3 w-full font-semibold rounded-lg transition ${
+                className={`mt-auto rounded-lg px-6 py-3 w-full font-semibold transition cursor-pointer ${
                   loadingPlan === title
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-brand-purple-500 text-white hover:bg-brand-purple-600"
@@ -242,8 +273,8 @@ export default function Pricing({ external }: { external?: boolean }) {
         onClose={() => setIsPaymentModalOpen(false)}
         plan={selectedPlan}
         amount={selectedAmount}
-        onBankTransferSelect={() => setIsBankTransferModalOpen(true)}
-        onCryptoSelect={() => setIsCryptoModalOpen(true)}
+        onBankTransferSelect={handleBankTransferSelect}
+        onCryptoSelect={handleCryptoSelect}
       />
 
       <BankTransferModal

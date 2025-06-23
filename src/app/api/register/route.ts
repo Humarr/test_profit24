@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         experience,
         tradingAmount,
         phone,
+        role: 'user',
         referralId: referralId || null, // if user signed up via referral
         myReferralCode: crypto.randomUUID(), // their unique code
 
@@ -56,7 +57,7 @@ export async function POST(req: Request) {
 
     // localStorage.setItem('referral_code', user.myReferralCode)
     return NextResponse.json(
-      { message: 'User created successfully', user: { email: user.email, id: user.id, myReferralCode: user.myReferralCode } },
+      { message: 'User created successfully', user: { email: user.email, id: user.id, myReferralCode: user.myReferralCode, role: user.role } },
       { status: 201 }
     );
   } catch (error) {

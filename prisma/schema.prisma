@@ -16,6 +16,7 @@ model User {
   tradingAmount  String?
   referralId     String?
   experience     String?
+  role           String   @default("user") // Can be "user" or "admin"
   myReferralCode      String   @unique @default(uuid()) 
   referredUsers       User[]    @relation("UserReferrals", fields: [], references: [])
   referredBy          User?     @relation("UserReferrals", fields: [referralId], references: [myReferralCode])
@@ -23,6 +24,7 @@ model User {
   activations   BotActivation[] 
   subscriptions Subscription[]
   pendingPayments PendingPayment[]
+  transactions Transaction[]
 
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -82,3 +84,16 @@ model PendingPayment {
   evidence  String   // file path or URL
   createdAt DateTime @default(now())
 }
+
+model Transaction {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  plan       String
+  amount     Int
+  reference  String   @unique
+  status     String   @default("initialized") // initialized, success, failed
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+

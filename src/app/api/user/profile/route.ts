@@ -23,6 +23,7 @@ export async function GET() {
         tradingAmount: true,
         experience: true,
         createdAt: true,
+        role: true,
       },
     })
 
@@ -55,6 +56,7 @@ export async function PATCH(req: Request) {
         experience,
         referralId,
         
+        
       } = body
   
       const updatedUser = await prisma.user.update({
@@ -75,7 +77,8 @@ export async function PATCH(req: Request) {
           referralId: true,
           tradingAmount: true,
           experience: true,
-          updatedAt: true
+          updatedAt: true,
+          role: true,
         }
       })
   

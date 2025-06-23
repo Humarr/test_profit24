@@ -3,7 +3,11 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import prisma from './prisma';
+
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import { compare } from 'bcryptjs';
+
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -11,12 +15,8 @@ export interface AuthPayload {
   id: string;
   email: string;
   name?: string;
-  role?: string; // optional: useful if you support roles
 }
 
-/**
- * Verify a JWT token and return the payload
- */
 export function verifyToken(token: string): AuthPayload | null {
   try {
     return jwt.verify(token, JWT_SECRET) as AuthPayload;
@@ -25,49 +25,27 @@ export function verifyToken(token: string): AuthPayload | null {
   }
 }
 
-/**
- * Get the authenticated user from cookie-based auth_token
- */
+
+
+
 export async function getAuthUser() {
-  const token = cookies().get('auth_token')?.value;
-
-  if (!token) return null;
-
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
-    });
-    return user;
-  } catch (error) {
-    console.error("Auth token verification failed:", error);
-    return null;
-  }
-}
-
-/**
- * Get admin user (checks role)
- */
-export async function getAdminUser() {
   const token = (await cookies()).get('auth_token')?.value;
 
   if (!token) return null;
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    console.log('Decoded token:', decoded);
     const user = await prisma.user.findUnique({
       where: { id: decoded.id },
     });
 
-    if (!user || user.role !== 'admin') return null;
-
     return user;
   } catch (error) {
-    console.error("Admin token verification failed:", error);
+    console.log(error);
     return null;
   }
 }
-
 
 
 
