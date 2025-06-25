@@ -107,3 +107,18 @@ model Webinar {
   videoUrl  String
   createdAt DateTime @default(now())
 }
+
+
+model Resource {
+  id        String           @id @default(uuid())
+  title     String
+  fileUrl   String
+  category  ResourceCategory
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+enum ResourceCategory {
+  LEARN_WITH_US
+  FOREX_SIGNAL
+}
