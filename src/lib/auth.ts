@@ -29,7 +29,7 @@ export function verifyToken(token: string): AuthPayload | null {
  * Get the authenticated user from cookie-based auth_token
  */
 export async function getAuthUser() {
-  const token = cookies().get('auth_token')?.value;
+  const token = (await cookies()).get('auth_token')?.value;
 
   if (!token) return null;
 
@@ -49,7 +49,7 @@ export async function getAuthUser() {
  * Get admin user (checks role)
  */
 export async function getAdminUser() {
-  const token = (await cookies()).get('auth_token')?.value;
+  const token = (await cookies()).get('admin_token')?.value;
 
   if (!token) return null;
 
@@ -74,7 +74,8 @@ export async function getAdminUser() {
 
 
 
-
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 
 export const authOptions: NextAuthOptions = {

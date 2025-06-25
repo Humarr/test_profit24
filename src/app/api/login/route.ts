@@ -37,14 +37,25 @@ export async function POST(req: Request) {
 
     const response = NextResponse.json({ success: true });
 
-    response.cookies.set('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
+    // if (user.role === 'admin') {
+    //   response.cookies.set('admin_token', token, {
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === 'production',
+    //     sameSite: 'strict',
+    //     path: '/',
+    //     maxAge: 60 * 60 * 24 * 7, // 7 days
+    //   });
+    // }
 
+    if (user.role === 'user') {
+      response.cookies.set('auth_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+      });
+    }
     return response;
   } catch (err) {
     console.error('Login error:', err);

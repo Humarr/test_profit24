@@ -21,6 +21,7 @@ export async function getCurrentUser() {
       createdAt: true,
       updatedAt: true,
       phone: true,
+      role: true,
       
     },
   });

@@ -16,21 +16,53 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
+      // addToast('Login attempt detected!', 'info');
+      // console.log("email : ", form.email, "admin email : ", process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+      // Check for admin email
+      if (form.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+        addToast('Admin login attempt detected!', 'info');
+        const response = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        });
+        console.log("Admin response: ", response);
+  
+        const data = await response.json();
+        console.log("Admin data: ", data);
+  
+        if (response.ok) {
+          console.log("Admin data: ", data);
+          addToast(`${data.name} login successful!`, 'success');
+          addToast('Taking you to your dashboard, Admin!', 'info');
+          window.location.href = '/admin';
+          return; // ✅ Prevents further execution
+        } else {
+          addToast(data.error || 'Admin login failed.', 'error');
+          return; // ✅ Stop further login attempt
+        }
+      }
+  
+      // Default user login
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
+  
       const data = await response.json();
+  
       if (response.ok) {
+        console.log("User data: ", data);
         addToast('Login successful!', 'success');
-        addToast('Taking you to your dashboard', 'info');
-        // Redirect to dashboard or home page
+        addToast('Taking you to your dashboard, User!', 'info');
         window.location.href = '/dashboard';
       } else {
-        addToast(data.error, 'error');
+        addToast(data.error || 'Login failed.', 'error');
       }
+  
     } catch (error) {
       console.error('LOGIN_ERROR:', error);
       addToast('Something went wrong. Please try again.', 'error');
@@ -38,6 +70,7 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="max-w-md mx-auto">
