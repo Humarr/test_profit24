@@ -9,7 +9,8 @@ export async function GET() {
     });
     return NextResponse.json({ resources });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch resources" }, { status: 500 });
+    const err = error instanceof Error ? error : new Error('Failed to fetch resources')
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ resource: newResource });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to create resource" }, { status: 500 });
+    const err = error instanceof Error ? error : new Error('Failed to create resource')
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

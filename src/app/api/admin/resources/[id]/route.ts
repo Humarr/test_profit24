@@ -15,7 +15,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
     return NextResponse.json({ resource: updated });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to update resource" }, { status: 500 });
+    const err = error instanceof Error ? error : new Error('Failed to update resource')
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
@@ -30,6 +31,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
     await prisma.resource.delete({ where: { id } });
     return NextResponse.json({ message: "Deleted" });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to delete resource" }, { status: 500 });
+    const err = error instanceof Error ? error : new Error('Failed to delete resource')
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
