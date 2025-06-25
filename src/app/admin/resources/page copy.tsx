@@ -2,7 +2,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@/components/toast/useToast'
 import { Plus, Trash2, Edit } from 'lucide-react'
-import Image from 'next/image'
 
 interface Resource {
   id: string
@@ -129,33 +128,19 @@ export default function AdminResourcesPage() {
       ['LEARN_WITH_US','FOREX_SIGNAL'].map(cat => (
         <div key={cat} className="mb-6">
           <h2 className="font-semibold text-brand-purple-600 mb-2">{cat.replace('_',' ')}</h2>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {resources.filter(r => r.category === cat).length === 0 ? (
-              <div className="col-span-full text-center py-12">
-                <Image
-                  src="https://www.svgrepo.com/show/327408/document-search.svg"
-                  alt="No resources"
-                  width={100}
-                  height={100}
-                  className="mx-auto w-24 h-24 opacity-50 mb-4"
-                />
-                <p className="text-sm text-gray-500">No resources in this category yet.</p>
-              </div>
-            ) : (
-              resources.filter(r => r.category === cat).map(r => (
-                <div key={r.id} className="bg-white rounded shadow p-4 flex flex-col">
-                  <div className="flex-1">
-                    <p className="font-semibold">{r.title}</p>
-                    <a href={r.fileUrl} target="_blank" className="text-sm text-brand-purple-600 underline">Download</a>
-                  </div>
-                  <div className="mt-2 flex justify-end space-x-2">
-                    <button onClick={() => openEdit(r)} className="text-brand-purple-700 hover:text-brand-purple-900"><Edit size={16}/></button>
-                    <button onClick={() => handleDelete(r.id)} className="text-red-600 hover:text-red-800"><Trash2 size={16}/></button>
-                  </div>
+            {resources.filter(r => r.category === cat).map(r => (
+              <div key={r.id} className="bg-white rounded shadow p-4 flex flex-col">
+                <div className="flex-1">
+                  <p className="font-semibold">{r.title}</p>
+                  <a href={r.fileUrl} target="_blank" className="text-sm text-brand-purple-600 underline">Download</a>
                 </div>
-              ))
-            )}
+                <div className="mt-2 flex justify-end space-x-2">
+                  <button onClick={() => openEdit(r)} className="text-brand-purple-700 hover:text-brand-purple-900"><Edit size={16}/></button>
+                  <button onClick={() => handleDelete(r.id)} className="text-red-600 hover:text-red-800"><Trash2 size={16}/></button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       ))}
@@ -210,6 +195,7 @@ export default function AdminResourcesPage() {
           </div>
         </div>
       )}
+
     </div>
   )
 }
