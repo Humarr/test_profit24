@@ -21,14 +21,14 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, fileUrl, category } = body;
+    const { title, fileUrl, thumbnailUrl, category } = body;
 
-    if (!title || !fileUrl || !category) {
+    if (!title || !fileUrl || !thumbnailUrl || !category) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
     const newResource = await prisma.resource.create({
-      data: { title, fileUrl, category }
+      data: { title, fileUrl, thumbnailUrl, category }
     });
 
     return NextResponse.json({ resource: newResource });
