@@ -123,3 +123,13 @@ enum ResourceCategory {
   LEARN_WITH_US
   FOREX_SIGNAL
 }
+
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   // rich HTML or text
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -11,12 +11,13 @@ import {
   HelpCircle,
   X,
   Menu,
-  Search,
+  // Search,
   ChevronDown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Announcements from '@/components/Announcements';
 
 type User = {
   id: string;
@@ -205,12 +206,12 @@ export default function DashboardLayout({ children, user }: { children: React.Re
 
             {/* Search - Center column */}
             <div className="relative mx-auto w-full max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-slate-400" />
+              {/* <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-slate-400" />
               <input
                 type="text"
                 placeholder="Search..."
                 className="w-full pl-10 pr-4 py-2 rounded-lg border border-brand-cream-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-purple-200"
-              />
+              /> */}
             </div>
 
             {/* User Dropdown */}
@@ -251,7 +252,10 @@ export default function DashboardLayout({ children, user }: { children: React.Re
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 overflow-auto p-6 scrollbar-hide">{children}</main>
+        <main className="flex-1 overflow-auto p-6 scrollbar-hide">
+        <Announcements />
+          {children}
+          </main>
       </div>
     </div>
   );
