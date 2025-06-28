@@ -42,16 +42,16 @@ export default async function OthersPage() {
       {/* Learn With Us */}
       <Suspense fallback={<Spinner />}>
 
-     {learn && <Section title="LEARN WITH US" items={learn} />}
-     {!learn && <p className='text-bold text-brand-slate-700'>No resources found</p>}
+     {learn.length > 0 && <Section title="LEARN WITH US" items={learn} />}
+     {learn.length === 0 && <p className='text-bold text-brand-slate-700'>No resources found</p>}
 
 
       </Suspense>
 
       {/* Forex Signals */}
       <Suspense fallback={<Spinner />}>
-      {signals && <Section title="FOREX SIGNAL" items={signals} />}
-      {!signals && <p className='text-bold text-brand-slate-700'>No resources found</p>}
+      {signals.length > 0 && <Section title="FOREX SIGNAL" items={signals} />}
+      {signals.length === 0 && <p className='text-bold text-brand-slate-700'>No resources found</p>}
       </Suspense>
     </div>
   );
