@@ -27,7 +27,7 @@ export default function Pricing({ external }: { external?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [loadingPlan] = useState<string | null>(null);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isBankTransferModalOpen, setIsBankTransferModalOpen] = useState(false);
@@ -105,27 +105,27 @@ export default function Pricing({ external }: { external?: boolean }) {
     fetchPlans();
   }, [toast]);
 
-  const handleSubscribe = async (plan: string) => {
-    try {
-      setLoadingPlan(plan);
-      const res = await fetch("/api/user/subscription", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Subscription failed");
+  // const handleSubscribe = async (plan: string) => {
+  //   try {
+  //     setLoadingPlan(plan);
+  //     const res = await fetch("/api/user/subscription", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ plan }),
+  //     });
+  //     const data = await res.json();
+  //     if (!res.ok) throw new Error(data.error || "Subscription failed");
 
-      toast("Subscription activated!", "success", 5000);
-      setTimeout(() => {
-        window.location.href = "https://wa.me/YOUR_WHATSAPP_NUMBER";
-      }, 1000);
-    } catch (err) {
-      toast((err as Error).message, "error", 5000);
-    } finally {
-      setLoadingPlan(null);
-    }
-  };
+  //     toast("Subscription activated!", "success", 5000);
+  //     setTimeout(() => {
+  //       window.location.href = "https://wa.me/YOUR_WHATSAPP_NUMBER";
+  //     }, 1000);
+  //   } catch (err) {
+  //     toast((err as Error).message, "error", 5000);
+  //   } finally {
+  //     setLoadingPlan(null);
+  //   }
+  // };
 
   const handleBankPaymentSuccess = () => {
     setIsBankTransferModalOpen(false);
