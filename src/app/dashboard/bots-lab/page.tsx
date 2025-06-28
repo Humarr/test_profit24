@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/components/toast/useToast";
 import BotModal from "@/components/BotModal";
 import { Bot } from "@/data/bots";
-import Spinner from "@/components/Spinner";
+// import Spinner from "@/components/Spinner";
 
 export default function BotsLabPage() {
   const { loading, active } = useSubscriptionStatus();

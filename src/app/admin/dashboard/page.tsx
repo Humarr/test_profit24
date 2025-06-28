@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { BarChart, Users, Video, FileText, Speaker, CreditCard } from 'lucide-react'
+import {  Users, Video, FileText, Speaker, CreditCard } from 'lucide-react'
 import { useToast } from '@/components/toast/useToast'
 import Spinner from '@/components/Spinner'
 
