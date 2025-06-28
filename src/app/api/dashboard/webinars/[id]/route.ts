@@ -1,10 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import {extractIdFromUrl} from "@/lib/extractIdFromUrl"
 
-    export async function GET(req: Request, { params }: { params: { id: string } }) {
+
+    export async function GET(req: NextRequest) {
                 try {
+                  const id = extractIdFromUrl(req);
+                  if (!id) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
                   const webinar = await prisma.webinar.findUnique({
-                    where: { id: params.id },
+                    where: { id },
                   });
   
                   if (!webinar) {
