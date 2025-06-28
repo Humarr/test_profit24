@@ -16,6 +16,8 @@ export default function Sidebar({admin_name}: {admin_name: string}) {
     { href: '/admin/subscriptions', label: 'Subscriptions' },
     { href: '/admin/transactions', label: 'Transactions' },
     { href: '/admin/announcements', label: 'Announcements' },
+    { href: '/admin/bots', label: 'Bots' },
+    { href: '/admin/offers', label: 'Offers' },
   ]
 
   return (

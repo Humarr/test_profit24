@@ -133,3 +133,15 @@ model Announcement {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+model Offer {
+  id          String   @id @default(uuid())
+  title       String
+  subtitle    String
+  price       Int
+  features    Json        // Store as array of strings for easy retrieval
+  popular     Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}

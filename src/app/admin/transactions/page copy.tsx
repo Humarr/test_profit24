@@ -2,7 +2,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/components/toast/useToast";
 import { Edit } from "lucide-react";
-import Spinner from "@/components/Spinner";
 
 interface Transaction {
   id: string;
@@ -68,11 +67,10 @@ export default function AdminTransactionsPage() {
       </h1>
 
       {loading ? (
-        <Spinner/>
+        <p>Loading...</p>
       ) : (
         <div className="overflow-x-auto">
-          {/* Desktop / Tablet Table View */}
-          <table className="min-w-full bg-white rounded shadow hidden sm:table">
+          <table className="min-w-full bg-white rounded shadow">
             <thead className="bg-brand-purple-700 text-white">
               <tr>
                 <th className="p-3 text-left text-xs md:text-sm font-semibold">
@@ -130,7 +128,6 @@ export default function AdminTransactionsPage() {
                     <button
                       onClick={() => openEdit(t)}
                       className="text-brand-purple-700 hover:text-brand-purple-900"
-                      aria-label={`Edit transaction ${t.reference}`}
                     >
                       <Edit size={16} />
                     </button>
@@ -140,32 +137,23 @@ export default function AdminTransactionsPage() {
             </tbody>
           </table>
 
-          {/* Mobile Card View */}
-          <div className="grid gap-4 mt-4 sm:hidden">
+          {/* Mobile fallback: card view */}
+          <div className="grid gap-4 sm:hidden mt-4">
             {transactions.map((t) => (
-              <div
-                key={t.id}
-                className="bg-white rounded shadow p-4 space-y-2"
-                role="group"
-                aria-label={`Transaction ${t.reference}`}
-              >
-                <div className="text-sm font-semibold text-brand-slate-700">
+              <div key={t.id} className="bg-white rounded shadow p-4 space-y-2">
+                <div className="text-sm font-semibold">
                   {t.user.name}{" "}
                   <span className="block text-xs text-brand-slate-400">
                     {t.user.email}
                   </span>
                 </div>
-                <div className="text-xs text-brand-slate-700">
-                  <strong className="text-brand-slate-700">Reference:</strong> {t.reference}
+                <div className="text-xs">Ref: {t.reference}</div>
+                <div className="text-xs">Plan: {t.plan}</div>
+                <div className="text-xs">
+                  Amount: ₦{t.amount.toLocaleString()}
                 </div>
-                <div className="text-xs text-brand-slate-700">
-                  <strong className="text-brand-slate-700">Plan:</strong> {t.plan}
-                </div>
-                <div className="text-xs text-brand-slate-700">
-                  <strong className="text-brand-slate-700">Amount:</strong> ₦{t.amount.toLocaleString()}
-                </div>
-                <div className="text-xs text-brand-slate-700">
-                  <strong className="text-brand-slate-700">Status:</strong>{" "}
+                <div className="text-xs">
+                  Status:{" "}
                   <span
                     className={`font-semibold ${
                       t.status === "success"
@@ -178,13 +166,12 @@ export default function AdminTransactionsPage() {
                     {t.status}
                   </span>
                 </div>
-                <div className="text-xs text-brand-slate-700">
-                  <strong className="text-brand-slate-700">Date:</strong> {new Date(t.createdAt).toLocaleString()}
+                <div className="text-xs">
+                  Date: {new Date(t.createdAt).toLocaleString()}
                 </div>
                 <button
                   onClick={() => openEdit(t)}
                   className="mt-2 w-full text-center text-brand-purple-700 hover:text-brand-purple-900 flex justify-center"
-                  aria-label={`Edit transaction ${t.reference}`}
                 >
                   <Edit size={16} />
                 </button>

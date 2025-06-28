@@ -14,6 +14,15 @@ import CryptoPaymentModal from "./CryptoPaymentModal";
 //   return `₦${(usd * rate).toLocaleString()}`;
 // };
 
+interface Offer {
+  id: string;
+  title: string;
+  subtitle: string;
+  price: number;
+  features: string[];
+  popular: boolean;
+}
+
 export default function Pricing({ external }: { external?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -29,52 +38,72 @@ export default function Pricing({ external }: { external?: boolean }) {
 
   const toast = useToast();
 
-  const plans = [
-    {
-      id: 1,
-      title: "Standard",
-      subtitle: "Great for beginners wanting simple automated trading",
-      price: 0,
-      features: [
-        "Basic trading bot",
-        "Pre-configured strategies",
-        "Email support",
-        "Community access",
-        "Up to 5 trades/day",
-      ],
-      popular: false,
-    },
-    {
-      id: 2,
-      title: "Premium",
-      subtitle: "Best for small businesses with serious automation needs",
-      price: 43500,
-      features: [
-        "All Standard features",
-        "Advanced strategies",
-        "Priority email support",
-        "Custom bot parameters",
-        "Up to 50 trades/day",
-        "Basic analytics dashboard",
-      ],
-      popular: true,
-    },
-    {
-      id: 3,
-      title: "Enterprise",
-      subtitle: "Ideal for power users and AI-driven trading",
-      price: 148500,
-      features: [
-        "All Premium features",
-        "Unlimited trades",
-        "24/7 VIP support",
-        "Advanced analytics",
-        "Custom bot dev",
-        "Dedicated account manager",
-      ],
-      popular: false,
-    },
-  ];
+  // const plans = [
+  //   {
+  //     id: 1,
+  //     title: "Standard",
+  //     subtitle: "Great for beginners wanting simple automated trading",
+  //     price: 0,
+  //     features: [
+  //       "Basic trading bot",
+  //       "Pre-configured strategies",
+  //       "Email support",
+  //       "Community access",
+  //       "Up to 5 trades/day",
+  //     ],
+  //     popular: false,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Premium",
+  //     subtitle: "Best for small businesses with serious automation needs",
+  //     price: 43500,
+  //     features: [
+  //       "All Standard features",
+  //       "Advanced strategies",
+  //       "Priority email support",
+  //       "Custom bot parameters",
+  //       "Up to 50 trades/day",
+  //       "Basic analytics dashboard",
+  //     ],
+  //     popular: true,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Enterprise",
+  //     subtitle: "Ideal for power users and AI-driven trading",
+  //     price: 148500,
+  //     features: [
+  //       "All Premium features",
+  //       "Unlimited trades",
+  //       "24/7 VIP support",
+  //       "Advanced analytics",
+  //       "Custom bot dev",
+  //       "Dedicated account manager",
+  //     ],
+  //     popular: false,
+  //   },
+  // ];
+
+  const [loading, setLoading] = useState(false);
+  const [plans, setPlans] = useState<Offer[]>([]);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("/api/dashboard/offers");
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to load plans");
+        setPlans(data.offers);
+      } catch (e) {
+        toast((e as Error).message, "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPlans();
+  }, [toast]);
 
   const handleSubscribe = async (plan: string) => {
     try {
@@ -157,14 +186,15 @@ export default function Pricing({ external }: { external?: boolean }) {
 
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
-      {!external && (
+      
+     {(!loading && plans.length > 0) && (!external && (
         <div className="max-w-4xl mx-auto text-center mb-12">
           <p className="inline-block px-4 py-1 text-sm font-semibold text-brand-purple-500 bg-brand-purple-100 rounded-full">Pricing</p>
           <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">Choose your plan</h2>
           <p className="mt-2 text-lg text-brand-slate-500">Unlock endless possibilities with our bot</p>
         </div>
-      )}
-
+      ))}
+      {(!loading && plans.length > 0) && (
       <div className="md:hidden flex justify-center mb-8 gap-2">
         {plans.map((p, i) => (
           <button
@@ -180,7 +210,8 @@ export default function Pricing({ external }: { external?: boolean }) {
           </button>
         ))}
       </div>
-
+      )}
+      {(!loading && plans.length > 0) && (
       <div className="relative max-w-6xl mx-auto">
         <div
           ref={scrollRef}
@@ -195,7 +226,7 @@ export default function Pricing({ external }: { external?: boolean }) {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: id * 0.1 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="snap-center shrink-0 min-w-[300px] sm:min-w-[360px] md:flex-1 bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
             >
               {popular && (
@@ -235,7 +266,7 @@ export default function Pricing({ external }: { external?: boolean }) {
           ))}
         </div>
       </div>
-
+      )}
       {/* Modals */}
       <PaymentMethodModal
         isOpen={isPaymentModalOpen}
