@@ -1,6 +1,8 @@
 import { Download } from 'lucide-react';
 import Image from 'next/image';
 import { getPdfThumbnail } from '@/lib/generateThumbnail';
+import { Suspense } from 'react';
+import Spinner from '@/components/Spinner';
 // import { getRawFileUrl } from '@/lib/getRawFileUrl';
 // Types
 type Resource = {
@@ -38,10 +40,19 @@ export default async function OthersPage() {
       <h1 className="text-3xl font-bold text-brand-slate-700 mb-8">RESOURCES</h1>
 
       {/* Learn With Us */}
-      <Section title="LEARN WITH US" items={learn} />
+      <Suspense fallback={<Spinner />}>
+
+     {learn && <Section title="LEARN WITH US" items={learn} />}
+     {!learn && <p className='text-bold text-brand-slate-700'>No resources found</p>}
+
+
+      </Suspense>
 
       {/* Forex Signals */}
-      <Section title="FOREX SIGNAL" items={signals} />
+      <Suspense fallback={<Spinner />}>
+      {signals && <Section title="FOREX SIGNAL" items={signals} />}
+      {!signals && <p className='text-bold text-brand-slate-700'>No resources found</p>}
+      </Suspense>
     </div>
   );
 }
