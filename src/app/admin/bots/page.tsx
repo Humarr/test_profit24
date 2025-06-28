@@ -5,18 +5,41 @@ import { Trash2, Edit, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Spinner from '@/components/Spinner'
 
+
+
+
+
 interface Bot {
-  id: string
-  name: string
-  description: string
-  tier: string
-  minAmount: string
-  performance: string
-  fee: string
-  imageUrl?: string
-  bgColor: string
-  stats: Record<string, any>
+  id: string;
+  name: string;
+  description: string;
+  tier: string;
+  minAmount: string;
+  performance: string;
+  fee: string;
+  imageUrl?: string;
+  bgColor: string;
+  stats: BotStats;
 }
+
+interface BotStats {
+  trades: number;
+  profit: number;
+  loss: number;
+}
+
+// interface Bot {
+//   id: string
+//   name: string
+//   description: string
+//   tier: string
+//   minAmount: string
+//   performance: string
+//   fee: string
+//   imageUrl?: string
+//   bgColor: string
+//   stats: Record<string, any>
+// }
 
 export default function AdminBotsPage() {
   const toast = useToast()
