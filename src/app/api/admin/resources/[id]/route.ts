@@ -1,10 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { extractIdFromUrl } from "@/lib/extractIdFromUrl";
 
 // /api/admin/resources/[id]/route.ts (PATCH)
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
+export async function PATCH(req: NextRequest) {
   try {
-    const { id } = await context.params;
+    const id = extractIdFromUrl(req);
+    if (!id) return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     const body = await req.json();
     const { title, fileUrl, thumbnailUrl, category } = body;
 
@@ -22,9 +24,10 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
 
 
 // /api/admin/resources/[id]/route.ts (DELETE)
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   try {
-    const { id } = await context.params;
+    const id = extractIdFromUrl(req);
+    if (!id) return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
 
     await prisma.resource.delete({ where: { id } });
     return NextResponse.json({ message: "Deleted" });

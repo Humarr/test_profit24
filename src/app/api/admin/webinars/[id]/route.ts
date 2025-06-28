@@ -1,10 +1,11 @@
 // app/api/admin/webinars/[id]/route.ts
 
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getAuthUser } from '@/lib/auth';
+import { extractIdFromUrl } from '@/lib/extractIdFromUrl';
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   try {
     const user = await getAuthUser();
 
@@ -12,8 +13,12 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+
+    const id = extractIdFromUrl(req);
+    if (!id) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+    
     const deleted = await prisma.webinar.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true, deleted });
@@ -24,7 +29,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
 }
 
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest) {
     try {
       const user = await getAuthUser();
   
@@ -33,9 +38,12 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
       }
   
       const { title, thumbnail, duration, videoUrl } = await req.json();
+
+      const id = extractIdFromUrl(req);
+      if (!id) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
   
       const updated = await prisma.webinar.update({
-        where: { id: params.id },
+        where: { id },
         data: {
           ...(title && { title }),
           ...(thumbnail && { thumbnail }),

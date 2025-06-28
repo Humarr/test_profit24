@@ -1,10 +1,12 @@
 // app/api/admin/offers/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
+import { extractIdFromUrl } from "@/lib/extractIdFromUrl";
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest) {
   try {
-    const { id } = params;
+    const id = extractIdFromUrl(req);
+    if (!id) return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     const { title, subtitle, price, features, popular } = await req.json();
 
     const updatedOffer = await prisma.offer.update({
@@ -27,9 +29,10 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
 
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
     try {
-      const { id } = params;
+      const id = extractIdFromUrl(req);
+      if (!id) return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
   
       await prisma.offer.delete({ where: { id } });
   

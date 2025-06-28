@@ -8,19 +8,29 @@ interface UpdateData {
   active?: boolean;
 }
 
+// Helper to extract ID from the URL
+function extractIdFromUrl(req: NextRequest): string | null {
+  const segments = req.nextUrl.pathname.split("/");
+  return segments[segments.length - 1] || null;
+}
+
 // PATCH
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
+export async function PATCH(req: NextRequest) {
   const user = await getAdminUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const id = extractIdFromUrl(req);
+  if (!id) return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+
   const { title, content, active } = await req.json();
-  const updateData: Record<string, UpdateData> = {};
+
+  const updateData: UpdateData = {};
   if (title !== undefined) updateData.title = title;
   if (content !== undefined) updateData.content = content;
   if (active !== undefined) updateData.active = active;
 
   const announcement = await prisma.announcement.update({
-    where: { id: context.params.id },
+    where: { id },
     data: updateData,
   });
 
@@ -28,11 +38,14 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
 }
 
 // DELETE
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   const user = await getAdminUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  await prisma.announcement.delete({ where: { id: context.params.id } });
+  const id = extractIdFromUrl(req);
+  if (!id) return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+
+  await prisma.announcement.delete({ where: { id } });
 
   return NextResponse.json({ success: true });
 }
