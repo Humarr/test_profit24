@@ -24,7 +24,7 @@ export default function PaymentSuccessClient() {
         if (data.success) {
           toast("Payment confirmed! Redirecting...", "success", 5000)
           setTimeout(() => {
-            window.location.href = "https://wa.me/234XXXXXXXXXX"
+            window.location.href = `${process.env.NEXT_PUBLIC_WHATSAPP_URL}/?text=Hello%20I%20have%20just%20completed%20a%20payment%20for%20my%20bot%20plan%20and%20I%20need%20your%20help%20to%20get%20started.%20Please%20provide%20me%20with%20the%20details%20of%20the%20bot%20so%20I%20can%20start%20using%20it.%20Thank%20you!` || ""
           }, 1500)
         } else {
           toast(data.error || "Payment verification failed", "error", 7000)

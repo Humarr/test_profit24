@@ -66,6 +66,7 @@ export default function BotsLabPage() {
       }
 
       addToast(`${botName} activated!`, "success");
+      
     } catch (err) {
       const error = err as Error;
       addToast(error.message, "error");
