@@ -10,7 +10,8 @@ export async function POST(req: Request) {
   if (event !== "charge.success") return NextResponse.json({ received: true })
 
   const { reference, metadata } = data
-  const { userId, plan } = metadata
+  const { userId } = metadata
+  // const { userId, plan } = metadata
   
   // console.log("\nreference, metadata: ", reference, metadata)
   const user = await prisma.user.findUnique({ where: { id: userId } })
