@@ -75,12 +75,14 @@ export default function Pricing({ external }: { external?: boolean }) {
       const cwid = card.offsetWidth;
       const pos = left - (cw - cwid) / 2;
       container.scrollTo({ left: pos, behavior: "smooth" });
+      setActiveIndex(index);
     }
   };
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
+
     const onScroll = () => {
       const center = container.scrollLeft + container.offsetWidth / 2;
       let closest = 0;
@@ -97,6 +99,7 @@ export default function Pricing({ external }: { external?: boolean }) {
       });
       setActiveIndex(closest);
     };
+
     container.addEventListener("scroll", onScroll, { passive: true });
     return () => container.removeEventListener("scroll", onScroll);
   }, []);
@@ -110,16 +113,16 @@ export default function Pricing({ external }: { external?: boolean }) {
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
 
-      {(!loading && plans.length > 0) && (!external && (
+      {!loading && plans.length > 0 && !external && (
         <div className="max-w-4xl mx-auto text-center mb-12">
           <p className="inline-block px-4 py-1 text-sm font-semibold text-brand-purple-500 bg-brand-purple-100 rounded-full">Pricing</p>
           <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">Choose your plan</h2>
           <p className="mt-2 text-lg text-brand-slate-500">Unlock endless possibilities with our bot</p>
         </div>
-      ))}
+      )}
 
       {/* Top Buttons for Small Screens */}
-      {(!loading && plans.length > 0) && (
+      {!loading && plans.length > 0 && (
         <div className="md:hidden flex justify-center mb-6 gap-2">
           {plans.map((p, i) => (
             <button
@@ -138,15 +141,8 @@ export default function Pricing({ external }: { external?: boolean }) {
       )}
 
       {/* Pricing Cards */}
-      {(!loading && plans.length > 0) && (
+      {!loading && plans.length > 0 && (
         <div className="relative max-w-6xl mx-auto">
-
-          {/* Swipe hint for mobile */}
-          {/* <div className="md:hidden absolute -top-10 left-0 right-0 flex justify-between px-4 text-sm text-brand-purple-400 font-medium pointer-events-none select-none">
-            <span>← swipe</span>
-            <span>swipe →</span>
-          </div> */}
-
           <div
             ref={scrollRef}
             className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 px-2 md:overflow-visible scrollbar-hide"
@@ -206,9 +202,7 @@ export default function Pricing({ external }: { external?: boolean }) {
                 key={i}
                 onClick={() => scrollToCard(i)}
                 className={`w-3 h-3 rounded-full transition ${
-                  i === activeIndex
-                    ? "bg-brand-purple-500"
-                    : "bg-brand-purple-200"
+                  i === activeIndex ? "bg-brand-purple-500" : "bg-brand-purple-200"
                 }`}
               />
             ))}
@@ -225,7 +219,6 @@ export default function Pricing({ external }: { external?: boolean }) {
         onBankTransferSelect={() => setIsBankTransferModalOpen(true)}
         onCryptoSelect={() => setIsCryptoModalOpen(true)}
       />
-
       <BankTransferModal
         isOpen={isBankTransferModalOpen}
         onClose={() => setIsBankTransferModalOpen(false)}
@@ -233,7 +226,6 @@ export default function Pricing({ external }: { external?: boolean }) {
         amount={selectedAmount}
         onSuccess={handleBankPaymentSuccess}
       />
-
       <CryptoPaymentModal
         isOpen={isCryptoModalOpen}
         onClose={() => setIsCryptoModalOpen(false)}
