@@ -8,12 +8,6 @@ import BankTransferModal from "./BankTransferModal";
 import PaymentMethodModal from "./PaymentMethodModal";
 import CryptoPaymentModal from "./CryptoPaymentModal";
 
-// Helper to convert USD to Naira (₦1,500 per USD)
-// const formatNaira = (usd: number) => {
-//   const rate = 1500;
-//   return `₦${(usd * rate).toLocaleString()}`;
-// };
-
 interface Offer {
   id: string;
   title: string;
@@ -38,53 +32,6 @@ export default function Pricing({ external }: { external?: boolean }) {
 
   const toast = useToast();
 
-  // const plans = [
-  //   {
-  //     id: 1,
-  //     title: "Standard",
-  //     subtitle: "Great for beginners wanting simple automated trading",
-  //     price: 0,
-  //     features: [
-  //       "Basic trading bot",
-  //       "Pre-configured strategies",
-  //       "Email support",
-  //       "Community access",
-  //       "Up to 5 trades/day",
-  //     ],
-  //     popular: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Premium",
-  //     subtitle: "Best for small businesses with serious automation needs",
-  //     price: 43500,
-  //     features: [
-  //       "All Standard features",
-  //       "Advanced strategies",
-  //       "Priority email support",
-  //       "Custom bot parameters",
-  //       "Up to 50 trades/day",
-  //       "Basic analytics dashboard",
-  //     ],
-  //     popular: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Enterprise",
-  //     subtitle: "Ideal for power users and AI-driven trading",
-  //     price: 148500,
-  //     features: [
-  //       "All Premium features",
-  //       "Unlimited trades",
-  //       "24/7 VIP support",
-  //       "Advanced analytics",
-  //       "Custom bot dev",
-  //       "Dedicated account manager",
-  //     ],
-  //     popular: false,
-  //   },
-  // ];
-
   const [loading, setLoading] = useState(false);
   const [plans, setPlans] = useState<Offer[]>([]);
 
@@ -105,34 +52,11 @@ export default function Pricing({ external }: { external?: boolean }) {
     fetchPlans();
   }, [toast]);
 
-  // const handleSubscribe = async (plan: string) => {
-  //   try {
-  //     setLoadingPlan(plan);
-  //     const res = await fetch("/api/user/subscription", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ plan }),
-  //     });
-  //     const data = await res.json();
-  //     if (!res.ok) throw new Error(data.error || "Subscription failed");
-
-  //     toast("Subscription activated!", "success", 5000);
-  //     setTimeout(() => {
-  //       window.location.href = "https://wa.me/YOUR_WHATSAPP_NUMBER";
-  //     }, 1000);
-  //   } catch (err) {
-  //     toast((err as Error).message, "error", 5000);
-  //   } finally {
-  //     setLoadingPlan(null);
-  //   }
-  // };
-
   const handleBankPaymentSuccess = () => {
     setIsBankTransferModalOpen(false);
     setSelectedPlan("");
     setSelectedAmount("");
     setIsPaymentModalOpen(false);
-    // handleSubscribe(selectedPlan);
   };
 
   const handleCryptoPaymentSuccess = () => {
@@ -140,7 +64,6 @@ export default function Pricing({ external }: { external?: boolean }) {
     setSelectedPlan("");
     setSelectedAmount("");
     setIsPaymentModalOpen(false);
-    // handleSubscribe(selectedPlan);
   };
 
   const scrollToCard = (index: number) => {
@@ -186,87 +109,113 @@ export default function Pricing({ external }: { external?: boolean }) {
 
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
-      
-     {(!loading && plans.length > 0) && (!external && (
+
+      {(!loading && plans.length > 0) && (!external && (
         <div className="max-w-4xl mx-auto text-center mb-12">
           <p className="inline-block px-4 py-1 text-sm font-semibold text-brand-purple-500 bg-brand-purple-100 rounded-full">Pricing</p>
           <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">Choose your plan</h2>
           <p className="mt-2 text-lg text-brand-slate-500">Unlock endless possibilities with our bot</p>
         </div>
       ))}
+
+      {/* Top Buttons for Small Screens */}
       {(!loading && plans.length > 0) && (
-      <div className="md:hidden flex justify-center mb-8 gap-2">
-        {plans.map((p, i) => (
-          <button
-            key={p.id}
-            onClick={() => scrollToCard(i)}
-            className={`px-4 py-2 rounded-lg font-medium ${
-              activeIndex === i
-                ? "bg-brand-purple-500 text-white"
-                : "bg-brand-purple-100 text-brand-purple-500 hover:bg-brand-purple-200"
-            } transition`}
-          >
-            {p.title}
-          </button>
-        ))}
-      </div>
-      )}
-      {(!loading && plans.length > 0) && (
-      <div className="relative max-w-6xl mx-auto">
-        <div
-          ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 px-4 md:overflow-visible scrollbar-hide"
-        >
-          {plans.map(({ id, title, subtitle, price, features, popular }, idx) => (
-            <motion.div
-              key={id}
-              ref={(el) => {
-                cardRefs.current[idx] = el;
-              }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="snap-center shrink-0 min-w-[300px] sm:min-w-[360px] md:flex-1 bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
+        <div className="md:hidden flex justify-center mb-6 gap-2">
+          {plans.map((p, i) => (
+            <button
+              key={p.id}
+              onClick={() => scrollToCard(i)}
+              className={`px-4 py-2 rounded-lg font-medium transition ${
+                activeIndex === i
+                  ? "bg-brand-purple-500 text-white"
+                  : "bg-brand-purple-100 text-brand-purple-500 hover:bg-brand-purple-200"
+              }`}
             >
-              {popular && (
-                <div className="absolute top-4 right-4 bg-brand-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Popular</div>
-              )}
-
-              <h3 className="text-2xl font-extrabold mb-2 text-brand-slate-700">{title}</h3>
-              <p className="mb-6 text-sm font-medium text-brand-purple-700">{subtitle}</p>
-
-              <div className="text-brand-purple-600 font-bold text-3xl mb-6">
-                {price === 0 ? "Free" : price.toLocaleString()}
-                {/* {price === 0 ? "Free" : formatNaira(price)} */}
-                <span className="text-base font-normal text-brand-purple-700"> / month</span>
-              </div>
-
-              <ul className="flex-1 mb-6 space-y-3 text-sm font-medium text-brand-purple-800">
-                {features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <ShieldCheck size={20} className="text-brand-purple-500 mt-0.5" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => handleActivateClick(title, price.toString())}
-                disabled={loadingPlan === title}
-                className={`mt-auto px-6 py-3 w-full font-semibold rounded-lg transition ${
-                  loadingPlan === title
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-brand-purple-500 text-white hover:bg-brand-purple-600"
-                }`}
-              >
-                {loadingPlan === title ? "Processing..." : "Activate Plan"}
-              </button>
-            </motion.div>
+              {p.title}
+            </button>
           ))}
         </div>
-      </div>
       )}
+
+      {/* Pricing Cards */}
+      {(!loading && plans.length > 0) && (
+        <div className="relative max-w-6xl mx-auto">
+
+          {/* Swipe hint for mobile */}
+          {/* <div className="md:hidden absolute -top-10 left-0 right-0 flex justify-between px-4 text-sm text-brand-purple-400 font-medium pointer-events-none select-none">
+            <span>← swipe</span>
+            <span>swipe →</span>
+          </div> */}
+
+          <div
+            ref={scrollRef}
+            className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 px-2 md:overflow-visible scrollbar-hide"
+          >
+            {plans.map(({ id, title, subtitle, price, features, popular }, idx) => (
+              <motion.div
+                key={id}
+                ref={(el) => { cardRefs.current[idx] = el }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="snap-center shrink-0 w-[90%] sm:w-[360px] md:flex-1 bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
+              >
+                {popular && (
+                  <div className="absolute top-4 right-4 bg-brand-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    Popular
+                  </div>
+                )}
+
+                <h3 className="text-2xl font-extrabold mb-2 text-brand-slate-700">{title}</h3>
+                <p className="mb-6 text-sm font-medium text-brand-purple-700">{subtitle}</p>
+
+                <div className="text-brand-purple-600 font-bold text-3xl mb-6">
+                  {price === 0 ? "Free" : price.toLocaleString()}
+                  <span className="text-base font-normal text-brand-purple-700"> / month</span>
+                </div>
+
+                <ul className="flex-1 mb-6 space-y-3 text-sm font-medium text-brand-purple-800">
+                  {features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <ShieldCheck size={20} className="text-brand-purple-500 mt-0.5" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleActivateClick(title, price.toString())}
+                  disabled={loadingPlan === title}
+                  className={`mt-auto px-6 py-3 w-full font-semibold rounded-lg transition ${
+                    loadingPlan === title
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-brand-purple-500 text-white hover:bg-brand-purple-600"
+                  }`}
+                >
+                  {loadingPlan === title ? "Processing..." : "Activate Plan"}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Indicator dots */}
+          <div className="flex justify-center mt-6 gap-2 md:hidden">
+            {plans.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                className={`w-3 h-3 rounded-full transition ${
+                  i === activeIndex
+                    ? "bg-brand-purple-500"
+                    : "bg-brand-purple-200"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Modals */}
       <PaymentMethodModal
         isOpen={isPaymentModalOpen}
