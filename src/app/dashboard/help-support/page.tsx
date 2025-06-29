@@ -27,7 +27,7 @@ export default function HelpSupportPage() {
       
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         <Link
-          href="https://wa.me/2348123456789"
+          href={process.env.NEXT_PUBLIC_WHATSAPP_URL as string}
           target="_blank"
           className="bg-brand-purple-600 hover:bg-brand-purple-700 text-white rounded-full px-6 py-3 font-medium flex items-center justify-center gap-3 transition"
         >
