@@ -75,7 +75,7 @@ export default function BankTransferModal({
         <button
           disabled={loading}
           onClick={handleProceed}
-          className={`w-full py-4 rounded-xl text-white font-bold text-center transition ${
+          className={`w-full py-4 rounded-xl text-white font-bold text-center transition cursor-pointer ${
             loading
               ? "bg-brand-purple-300 cursor-not-allowed"
               : "bg-brand-purple-600 hover:bg-brand-purple-800"
@@ -87,7 +87,7 @@ export default function BankTransferModal({
         <button
           onClick={onClose}
           type="button"
-          className="mt-4 w-full text-center text-brand-purple-500 font-semibold hover:underline"
+          className="mt-4 w-full text-center text-brand-purple-500 font-semibold hover:underline cursor-pointer"
         >
           Cancel
         </button>

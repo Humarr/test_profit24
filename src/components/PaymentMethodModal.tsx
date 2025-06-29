@@ -47,7 +47,7 @@ export default function PaymentMethodModal({
             onBankTransferSelect()
             onClose()
           }}
-          className="w-full mb-5 py-4 bg-gradient-to-r from-brand-purple-600 to-brand-purple-800 text-white rounded-2xl font-bold shadow-lg hover:from-brand-purple-700 hover:to-brand-purple-900 focus:outline-none focus:ring-4 focus:ring-brand-purple-400 transition"
+          className="w-full mb-5 py-4 bg-gradient-to-r from-brand-purple-600 to-brand-purple-800 text-white rounded-2xl font-bold shadow-lg hover:from-brand-purple-700 hover:to-brand-purple-900 focus:outline-none focus:ring-4 focus:ring-brand-purple-400 transition cursor-pointer"
           type="button"
         >
           Pay via Bank Transfer

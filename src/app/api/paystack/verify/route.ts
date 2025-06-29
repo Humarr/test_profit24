@@ -8,6 +8,7 @@ export async function GET(req: Request) {
   if (!user) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
 
   const url = new URL(req.url)
+  // console.log("URL: ", url)
   const reference = url.searchParams.get("reference")
   if (!reference) return NextResponse.json({ success: false, error: "Missing reference" }, { status: 400 })
 
@@ -19,6 +20,7 @@ export async function GET(req: Request) {
 
   // Optional: double-check subscription exists
   const subscription = await prisma.subscription.findUnique({ where: { userId: user.id } })
+  console.log("subscription: ", subscription)
   if (!subscription || subscription.plan !== trx.plan || subscription.expiresAt < new Date()) {
     return NextResponse.json({ success: false, error: "Subscription looks invalid" }, { status: 400 })
   }

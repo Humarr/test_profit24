@@ -183,7 +183,7 @@ export default function Pricing({ external }: { external?: boolean }) {
                 <button
                   onClick={() => handleActivateClick(title, price.toString())}
                   disabled={loadingPlan === title}
-                  className={`mt-auto px-6 py-3 w-full font-semibold rounded-lg transition ${
+                  className={`mt-auto px-6 py-3 w-full font-semibold rounded-lg transition duration-300 ease-in-out cursor-pointer ${
                     loadingPlan === title
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-brand-purple-500 text-white hover:bg-brand-purple-600"
