@@ -1,0 +1,29 @@
+GHL API KEY= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6ImluUnQ0cU5yT3lVSGNadG5xc1hoIiwidmVyc2lvbiI6MSwiaWF0IjoxNzUxNzE4NDQwMDU1LCJzdWIiOiJXVzQyZlo4S3k4TlA5cGVoWksyeiJ9._76uJV7PBIMNjYemJJl9NOaS9z24lSj_fr85bAdcHZ8
+
+
+AMAZON SES:
+	
+	ACCOUNT_ID=590184002494
+
+	ACCESS_KEY= AKIAYS2NVGO7CZZYY2NU
+	SECRET_KEY= 
+	SMTP_ENDPOINT= email-smtp.us-east-2.amazonaws.com
+	STARTTLS_Port= 25, 587 or 2587
+	TLS Wrapper Port=465 or 2465
+	
+
+
+
+ACCESS_KEY= AKIAYS2NVGO7CZZYY2NU
+SMTP password = BBW/M2zzsm/BKkdyKkIoDgDxsJYbKik1b6m2Em6p4Jpr
+SMTP user name = AKIAYS2NVGO7CZZYY2NU
+IAM user name = Profit_Spark
+
+ARN = arn:aws:iam::590184002494:user/Profit_Spark
+
+
+
+INFO:
+
+Action required
+To verify ownership of this identity, DKIM must be configured in the domain's DNS settings using the CNAME records provided.

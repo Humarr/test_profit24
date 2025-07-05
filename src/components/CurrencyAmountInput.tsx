@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
+import { FormattedNumberInput } from "./FormattedNumberInput";
 
 interface CurrencyAmountInputProps {
   value: string;
@@ -35,13 +36,15 @@ export default function CurrencyAmountInput({
 
   return (
     <div className="relative w-full flex rounded-lg border border-brand-cream-300 bg-brand-slate-50/50 focus-within:ring-2 focus-within:ring-brand-purple-200">
-      <input
-        type="text"
-        value={value}
+      {/* <input
+        type="number"
+        value={value.toLocaleString()}
         onChange={(e) => onChange(e.target.value)}
         placeholder="How much do you want to trade with?"
         className="flex-grow px-4 py-3 rounded-l-lg bg-transparent placeholder:text-brand-slate-400 text-brand-slate-700 focus:outline-none"
-      />
+      /> */}
+
+      <FormattedNumberInput value={value} onChange={onChange} />
 
       <div
         ref={dropdownRef}
