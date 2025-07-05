@@ -104,7 +104,29 @@ export default function Pricing({ external }: { external?: boolean }) {
     return () => container.removeEventListener("scroll", onScroll);
   }, []);
 
+  
+
   const handleActivateClick = (plan: string, amount: string) => {
+    // const planNumber = Number(plan);
+    // if (isNaN(planNumber)) {
+    //   console.error("Invalid plan number:", plan);
+    //   return;
+    // }
+    if (plan === "Standard") {
+      const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL;
+      if (!whatsappUrl) {
+        console.error("WhatsApp URL is not defined");
+        return;
+      }
+      const message = encodeURIComponent(
+        "Hello I have just completed a payment for my bot plan and I need your help to get started. Please provide me with the details of the bot so I can start using it. Thank you!"
+      );
+      setTimeout(() => {
+        window.location.href = `${whatsappUrl}/?text=${message}`;
+      }, 1500);
+      return;
+    }
+  
     setSelectedPlan(plan);
     setSelectedAmount(amount);
     setIsPaymentModalOpen(true);
@@ -167,7 +189,8 @@ export default function Pricing({ external }: { external?: boolean }) {
                 <p className="mb-6 text-sm font-medium text-brand-purple-700">{subtitle}</p>
 
                 <div className="text-brand-purple-600 font-bold text-3xl mb-6">
-                  {price === 0 ? "Free" : price.toLocaleString()}
+                  {price === 0 ? "0" : price.toLocaleString()}
+                  {/* {price === 0 ? "Free" : price.toLocaleString()} */}
                   <span className="text-base font-normal text-brand-purple-700"> / month</span>
                 </div>
 
