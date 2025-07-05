@@ -12,7 +12,8 @@ export async function saveOTP(email: string, otp: string) {
 
 export async function verifyOTP(email: string, otp: string) {
   const storedOtp = await redis.get(`otp:${email}`);
-  if (storedOtp && storedOtp === otp) {
+  console.log("OTP:", email, typeof otp, typeof storedOtp)
+  if (storedOtp && storedOtp.toString() === otp) {
     // Delete OTP after verification
     await redis.del(`otp:${email}`);
     return true;

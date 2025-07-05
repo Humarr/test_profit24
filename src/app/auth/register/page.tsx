@@ -8,7 +8,6 @@ import { useToast } from "@/components/toast/useToast";
 import CustomSelect from "@/components/CustomSelect";
 import CurrencyAmountInput from "@/components/CurrencyAmountInput";
 
-
 export default function RegisterPage() {
   const [activeStep, setActiveStep] = useState(0);
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
@@ -29,8 +28,6 @@ export default function RegisterPage() {
   // const [tradingAmount, setTradingAmount] = useState("");
   // const [phone, setPhone] = useState("");
   // const [loading, setLoading] = useState(false);
-
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -129,7 +126,8 @@ export default function RegisterPage() {
       }
     } catch (error) {
       console.log("REGISTER_ERROR:", error);
-      addToast("Something went wrong. Please try again.", "error");
+      const err = error as Error
+      addToast(err.message, "error");
     } finally {
       setLoading(false);
     }
@@ -147,7 +145,8 @@ export default function RegisterPage() {
       addToast("OTP sent successfully!", "success");
     } catch (error) {
       console.log("OTP_ERROR:", error);
-      addToast("Something went wrong. Please try again.", "error");
+      const err = error as Error
+      addToast(err.message, "error");
     } finally {
       setLoading(false);
     }
@@ -167,7 +166,8 @@ export default function RegisterPage() {
       addToast("OTP sent successfully!", "success");
     } catch (error) {
       console.log("OTP_ERROR:", error);
-      addToast("Something went wrong. Please try again.", "error");
+      const err = error as Error
+      addToast(err.message, "error");
     } finally {
       setLoading(false);
     }
@@ -179,41 +179,33 @@ export default function RegisterPage() {
     addToast("A new OTP has been sent to your email.", "success");
   };
 
+  // Verify OTP entered by user
+  async function verifyOTP() {
+    setLoading(true);
 
-
-
-// Verify OTP entered by user
-async function verifyOTP() {
-  setLoading(true);
-
-  try {
-    const response = await fetch("/api/verify-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: formData.email, otp: otp.join("") }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      addToast("OTP verified successfully!", "success");
-      setActiveStep(2);
-    } else {
-      console.log("OTP_ERROR:", data.error);
-      addToast("Something went wrong. Please try again.", "error");
+    try {
+      const response = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email, otp: otp.join("") }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        addToast("OTP verified successfully!", "success");
+        setActiveStep(2);
+      } else {
+        console.log("OTP_ERROR:", data.error);
+        addToast(data.error, "error");
+      }
+    } catch (error) {
+      console.log("OTP_ERROR:", error);
+      const err = error as Error
+      addToast(err.message, "error");
+      // addToast("Something went wrong. Please try again.", "error");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.log("OTP_ERROR:", error);
-    addToast("Something went wrong. Please try again.", "error");
-  } finally {
-    setLoading(false);
   }
-}
-
-
-
-
-
-
-
 
   return (
     <div className="max-w-md mx-auto">
@@ -284,7 +276,6 @@ async function verifyOTP() {
                 </label>
               </div>
               <button
-
                 onClick={() => {
                   if (!formData.email && !agreement) {
                     addToast(
@@ -348,7 +339,7 @@ async function verifyOTP() {
               </div>
               <button
                 onClick={verifyOTP}
-                className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
+                className="w-full py-3 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600 cursor-pointer"
               >
                 Verify email
               </button>
