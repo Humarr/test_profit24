@@ -5,7 +5,8 @@ import CurrencyDropdown from "./CurrencyDropdown"
 export default function InvestmentCalculator() {
   const [investment, setInvestment] = useState(5000)
   const [months, setMonths] = useState(12)
-  const [currency, setCurrency] = useState("NGN")
+  const [currency, setCurrency] = useState("USD")
+  // const [currency, setCurrency] = useState("NGN")
   const [result, setResult] = useState<number | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
