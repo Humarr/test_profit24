@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 export default function InvestmentCalculator() {
   const [investment, setInvestment] = useState(500)
-  const [months, setMonths] = useState(12)
+  const [months, setMonths] = useState(1)
   const currency = "USD"
   // const [currency, setCurrency] = useState("USD")
   // const [currency, setCurrency] = useState("NGN")
