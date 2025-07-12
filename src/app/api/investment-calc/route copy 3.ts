@@ -81,6 +81,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
+    // 40% monthly compound interest
+    const rate = 0.4
+    let finalAmount = amount
+    for (let i = 0; i < months; i++) {
+      finalAmount *= 1 + rate
+    }
+
     let conversionRate: number | undefined
 
     if (currency === 'BTC') {
@@ -94,15 +101,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unsupported currency' }, { status: 400 })
     }
 
-    // Convert input amount from target currency to NGN
-    const amountInNGN = amount / conversionRate
-
-    // Compound monthly interest at 40%
-    const rate = 0.4
-    const finalAmountInNGN = amountInNGN * Math.pow(1 + rate, months)
-
-    // Convert compounded amount back to target currency
-    const convertedAmount = finalAmountInNGN * conversionRate
+    const convertedAmount = finalAmount * conversionRate
 
     return NextResponse.json({
       currency,
