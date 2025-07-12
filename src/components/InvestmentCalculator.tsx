@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 // import CurrencyDropdown from "./CurrencyDropdown"
 
 export default function InvestmentCalculator() {
-  const [investment, setInvestment] = useState(5000)
+  const [investment, setInvestment] = useState(500)
   const [months, setMonths] = useState(12)
   const currency = "USD"
   // const [currency, setCurrency] = useState("USD")
@@ -12,7 +12,8 @@ export default function InvestmentCalculator() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const monthOptions = [1, 3, 6, 12, 24, 36]
+  const monthOptions = [1, 2, 3, 4, 5, 6]
+  // const monthOptions = [1, 3, 6, 12, 24, 36]
 
   const formatValue = (value: number) => value.toLocaleString()
   // const formatValue = (value: number) =>
@@ -62,16 +63,16 @@ export default function InvestmentCalculator() {
           <div className="mb-8">
             <input
               type="range"
-              min="100"
-              max="10000"
+              min="500"
+              max="50000"
               step="100"
               value={investment}
               onChange={(e) => setInvestment(parseInt(e.target.value))}
               className="w-full bg-white rounded-lg appearance-none cursor-pointer"
             />
             <div className="flex justify-between mt-2 text-brand-purple-100 text-sm">
-              <span>{currency} 100</span>
-              <span>{currency} 10,000</span>
+              <span>{currency} 500</span>
+              <span>{currency} 50,000</span>
             </div>
           </div>
 
@@ -105,7 +106,8 @@ export default function InvestmentCalculator() {
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-medium text-white">Total amount <span className="hidden sm:inline">(capital + ROI)</span></h3>
           <div className="text-2xl font-bold text-white">
-            {loading ? "Calculating..." : result !== null ? `$ ${formatValue(result)}` : "--"}
+            {loading ? "Calculating..." : result !== null ? `$
+             ${formatValue(result)}` : "--"}
           </div>
         </div>
 
