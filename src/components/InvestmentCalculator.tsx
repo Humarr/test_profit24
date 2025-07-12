@@ -54,7 +54,7 @@ export default function InvestmentCalculator() {
         {/* Header */}
         <div className="flex justify-between items-center mb-6 my-2">
           <h3 className="text-lg font-medium text-brand-purple-100">Initial investment</h3>
-          <div className="text-2xl font-bold text-brand-purple-100">{formatValue(investment)}</div>
+          <div className="text-2xl font-bold text-brand-purple-100">${formatValue(investment)}</div>
         </div>
 
         {/* Card */}
@@ -105,7 +105,7 @@ export default function InvestmentCalculator() {
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-medium text-white">Total amount <span className="hidden sm:inline">(capital + ROI)</span></h3>
           <div className="text-2xl font-bold text-white">
-            {loading ? "Calculating..." : result !== null ? formatValue(result) : "--"}
+            {loading ? "Calculating..." : result !== null ? `$ ${formatValue(result)}` : "--"}
           </div>
         </div>
 
