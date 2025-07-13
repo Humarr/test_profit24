@@ -39,7 +39,7 @@ export default function PaymentMethodModal({
         </h2>
         <p className="mb-8 text-lg font-semibold text-brand-purple-700">
           Plan: <span className="text-brand-purple-900">{plan}</span> &mdash; Amount:{" "}
-          <span className="text-brand-purple-900">₦{amount}</span>
+          <span className="text-brand-purple-900">${amount}</span>
         </p>
 
         <button
