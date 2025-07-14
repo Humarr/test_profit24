@@ -37,8 +37,9 @@ export default function BankTransferModal({
       if (!res.ok || !data.authorization_url) {
         throw new Error(data.error || "Failed to initialize payment")
       }
-      
-      window.location.href = data.authorization_url
+      if (typeof window !== 'undefined') {
+        window.location.href = data.authorization_url
+      }
       onSuccess()
     } catch (err) {
       const error = err as Error
