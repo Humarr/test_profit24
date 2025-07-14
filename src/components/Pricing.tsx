@@ -181,7 +181,7 @@ export default function Pricing({ external }: { external?: boolean }) {
             className={`px-4 py-2 rounded-lg font-medium transition ${
               activeIndex === i
                 ? "bg-brand-purple-500 text-white"
-                : "bg-brand-purple-100 text-brand-purple-500 hover:bg-brand-purple-200"
+                : "bg-brand-purple-100 text-brand-purple-500 hover:bg-brand-purple-200 cursor-pointer"
             }`}
           >
             {p.title}
@@ -232,7 +232,7 @@ export default function Pricing({ external }: { external?: boolean }) {
 
               <button
                 onClick={() => handleActivateClick(title, price.toString())}
-                className="mt-auto px-6 py-3 w-full font-semibold rounded-lg bg-brand-purple-500 text-white hover:bg-brand-purple-600 transition duration-300"
+                className="mt-auto px-6 py-3 w-full font-semibold rounded-lg bg-brand-purple-500 text-white hover:bg-brand-purple-600 transition duration-300 cursor-pointer"
               >
                 Activate Plan
               </button>
@@ -246,7 +246,7 @@ export default function Pricing({ external }: { external?: boolean }) {
             <button
               key={i}
               onClick={() => scrollToCard(i)}
-              className={`w-3 h-3 rounded-full transition ${
+              className={`w-3 h-3 rounded-full transition cursor-pointer ${
                 i === activeIndex ? "bg-brand-purple-500" : "bg-brand-purple-200"
               }`}
             />

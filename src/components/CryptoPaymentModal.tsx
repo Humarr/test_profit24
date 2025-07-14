@@ -34,7 +34,7 @@ export default function CryptoPaymentModal({
       // Simulate API call for crypto payment
       await new Promise((r) => setTimeout(r, 2000))
 
-      toast(`Crypto payment initiated for ${plan} (₦${amount})`, "success", 5000)
+      toast(`Crypto payment initiated for ${plan} ($${amount})`, "success", 5000)
       onClose()
       onSuccess()
       setWalletAddress("")
@@ -65,7 +65,7 @@ export default function CryptoPaymentModal({
         </h2>
         <p className="mb-8 text-lg font-semibold text-brand-purple-700">
           Plan: <span className="text-brand-purple-900">{plan}</span> &mdash; Amount:{" "}
-          <span className="text-brand-purple-900">₦{amount}</span>
+          <span className="text-brand-purple-900">${amount}</span>
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -91,7 +91,7 @@ export default function CryptoPaymentModal({
             className={`w-full py-4 font-bold rounded-2xl text-white shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-purple-500 transition ${
               loading
                 ? "bg-brand-purple-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-brand-purple-600 to-brand-purple-800 hover:from-brand-purple-700 hover:to-brand-purple-900"
+                : "bg-gradient-to-r from-brand-purple-600 to-brand-purple-800 hover:from-brand-purple-700 hover:to-brand-purple-900 cursor-pointer"
             }`}
           >
             {loading ? "Processing..." : "Pay Now"}

@@ -91,6 +91,8 @@ model Transaction {
   userId     String
   plan       String
   amount     Int
+  metadata   Json
+  currency   String
   reference  String   @unique
   status     String   @default("initialized") // initialized, success, failed
   createdAt  DateTime @default(now())

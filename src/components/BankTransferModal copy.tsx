@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import { useState } from "react"
 import { useToast } from "@/components/toast/useToast"
-import PaystackPop from '@paystack/inline-js';
-import { redirect } from "next/navigation";
-
 
 interface BankTransferModalProps {
   isOpen: boolean
@@ -38,30 +34,15 @@ export default function BankTransferModal({
       })
 
       const data = await res.json()
-      if (!res.ok || !data.reference || !data.email) {
+      if (!res.ok || !data.authorization_url) {
         throw new Error(data.error || "Failed to initialize payment")
       }
-
-      const paystack = new PaystackPop()
-
-      paystack.newTransaction({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-        reference: data.reference,
-        email: data.email,
-        amount: parseInt(amount, 10) * 100,
-        metadata: { custom_fields: [{ display_name: "Plan", variable_name: "plan", value: plan }], },
-        onSuccess: (trx: any) => {
-          toast(`✅ Payment successful: ${trx.reference}`, "success", 5000)
-          onSuccess()
-        },
-        onCancel: () => {
-          toast("❌ Payment was cancelled", "error", 4000)
-        },
-      })
+      
+      window.location.href = data.authorization_url
+      onSuccess()
     } catch (err) {
       const error = err as Error
       toast(error.message || "Error initiating payment", "error", 5000)
-      if (error.message === "Unauthorized") return redirect("/auth/login")
     } finally {
       setLoading(false)
     }
@@ -76,20 +57,31 @@ export default function BankTransferModal({
         className="bg-white max-w-md w-full rounded-2xl shadow-xl p-8 relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">Pay with Card</h2>
-        <p className="mb-2 text-brand-slate-900">Plan: <strong>{plan}</strong></p>
-        <p className="mb-4 text-brand-slate-900">Amount: <strong>₦{amount}</strong></p>
+        <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">Bank Transfer Payment</h2>
+        <p className="mb-2 text-brand-slate-600 font-medium">
+          Plan: <span className="text-brand-purple-800 font-semibold">{plan}</span>
+        </p>
+        <p className="mb-4 text-brand-slate-600 font-medium">
+          Amount: <span className="text-brand-purple-800 font-semibold">₦{amount}</span>
+        </p>
+
+        <div className="bg-brand-purple-100 p-4 rounded-lg mb-6 text-sm text-brand-slate-800">
+          <p className="mb-1 font-semibold">Account Name: <span className="font-normal">PROFIT24 SYSTEMS</span></p>
+          <p className="mb-1 font-semibold">Account Number: <span className="font-normal">0123456789</span></p>
+          <p className="mb-1 font-semibold">Bank: <span className="font-normal">GTBank</span></p>
+          <p className="text-xs text-brand-slate-500 mt-2 italic">You'll be redirected to Paystack after clicking proceed</p>
+        </div>
 
         <button
           disabled={loading}
           onClick={handleProceed}
-          className={`w-full py-4 rounded-xl text-white font-bold cursor-pointer ${
+          className={`w-full py-4 rounded-xl text-white font-bold text-center transition cursor-pointer ${
             loading
-              ? "bg-gray-400 cursor-not-allowed"
+              ? "bg-brand-purple-300 cursor-not-allowed"
               : "bg-brand-purple-600 hover:bg-brand-purple-800"
           }`}
         >
-          {loading ? "Loading..." : "Proceed to Payment"}
+          {loading ? "Redirecting..." : "Proceed to Payment"}
         </button>
 
         <button
