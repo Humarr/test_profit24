@@ -50,6 +50,7 @@ export async function POST(req: Request) {
       reference,
       status: 'initialized',
       currency: "NGN", //to be removed in case we're rolling back to this
+      metadata: { userId: user.id, plan },
     },
   })
 

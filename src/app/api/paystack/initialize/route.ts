@@ -43,6 +43,7 @@ export async function POST(req: Request) {
       reference,
       status: 'initialized',
       currency,
+      metadata: { userId: user.id, plan },
     },
   })
 
