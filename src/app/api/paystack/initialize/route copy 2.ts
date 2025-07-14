@@ -49,6 +49,7 @@ export async function POST(req: Request) {
       amount: parseInt(amount, 10),
       reference,
       status: 'initialized',
+      currency: "NGN", //to be removed in case we're rolling back to this
     },
   })
 
