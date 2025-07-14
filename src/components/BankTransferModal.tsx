@@ -34,7 +34,7 @@ export default function BankTransferModal({
       const res = await fetch("/api/paystack/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, amount }),
+        body: JSON.stringify({ plan, amount, currency: "USD" }),
       })
 
       const data = await res.json()
@@ -49,6 +49,7 @@ export default function BankTransferModal({
         reference: data.reference,
         email: data.email,
         amount: parseInt(amount, 10) * 100,
+        currency: "USD",
         metadata: { custom_fields: [{ display_name: "Plan", variable_name: "plan", value: plan }], },
         onSuccess: (trx: any) => {
           toast(`✅ Payment successful: ${trx.reference}`, "success", 5000)
@@ -78,7 +79,7 @@ export default function BankTransferModal({
       >
         <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">Pay with Card</h2>
         <p className="mb-2 text-brand-slate-900">Plan: <strong>{plan}</strong></p>
-        <p className="mb-4 text-brand-slate-900">Amount: <strong>₦{amount}</strong></p>
+        <p className="mb-4 text-brand-slate-900">Amount: <strong>${amount}</strong></p>
 
         <button
           disabled={loading}
