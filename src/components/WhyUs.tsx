@@ -1,4 +1,5 @@
 export default function WhyUs() {
+    console.log("rendering WhyUs")
     const cards = [
         {
             title: "Fully Automated Trading",

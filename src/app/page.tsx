@@ -29,6 +29,7 @@ export default function Home() {
   return (
     <main className="bg-brand-white">
       <Navbar />
+      
       <Hero />
       {/* <Infrastructure /> */}
       {/* <Standout /> */}

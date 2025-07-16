@@ -8,6 +8,7 @@ import { FaInstagram as Instagram, FaLinkedinIn as Linkedin, FaTwitter as Twitte
 
 
 export default function Footer() {
+    console.log("rendering Footer")
     return (
         <footer className="bg-brand-purple-500/15 text-brand-slate-500 px-6 py-12 space-y-8">
             {/* Top Row: Logo & Links */}

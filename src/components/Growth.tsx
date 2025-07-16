@@ -96,6 +96,7 @@ const growthData: GrowthData = {
 };
 
 export default function GrowthSection() {
+    console.log("rendering GrowthSection")
     const years: number[] = [2023, 2024, 2025, 2026, 2027];
     const [selectedYear, setSelectedYear] = useState<number>(2023);
 

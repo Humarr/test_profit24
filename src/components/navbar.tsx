@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 
 export default function Navbar() {
+    console.log("rendering Navbar")
     const [isOpen, setIsOpen] = useState(false);
 
     return (
