@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import  LogoSvg  from "../public/logo1.svg";
+import  LogoSvg  from "./logo1.svg";
 // import { ReactComponent as Logo } from './logo.svg';
 
 
