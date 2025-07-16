@@ -20,8 +20,8 @@ import Testimonials from "@/components/Testimonials";
 console.log("rendering Testimonials")
 import Footer from "@/components/Footer";
 console.log("rendering Footer")
-// import InvestmentCalculator from "@/components/InvestmentCalculator";
-// console.log("rendering InvestmentCalculator")
+import InvestmentCalculator from "@/components/InvestmentCalculator";
+console.log("rendering InvestmentCalculator")
 import WhyUs from "@/components/WhyUs";
 console.log("rendering WhyUs")
 
@@ -35,7 +35,7 @@ export default function Home() {
       {/* <Standout /> */}
       <WhyUs />
       <Pricing />
-      {/* <InvestmentCalculator /> */}
+      <InvestmentCalculator />
       {/* <Calculation /> */}
       <GrowthSection/>
       <Testimonials/>
