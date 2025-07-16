@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 // import CurrencyDropdown from "./CurrencyDropdown"
 
 export default function InvestmentCalculator() {
-    console.log("rendering InvestmentCalculator")
+    console.log("rendering InvestmentCalculator component")
   const [investment, setInvestment] = useState(500)
   const [months, setMonths] = useState(1)
   const currency = "USD"

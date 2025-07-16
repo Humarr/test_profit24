@@ -25,7 +25,7 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-    console.log("rendering FAQSection")
+    console.log("rendering FAQSection component")
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     const toggleAccordion = (index: number) => {

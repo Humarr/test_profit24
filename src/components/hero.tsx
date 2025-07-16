@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Hero() {
-  console.log("rendering Hero")
+  console.log("rendering Hero component")
   return (
     <header
       className="relative w-full bg-brand-white px-6 py-20 overflow-hidden text-center"

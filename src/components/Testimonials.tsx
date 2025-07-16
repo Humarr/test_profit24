@@ -19,7 +19,7 @@ const mockTweets: Tweet[] = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 export default function Testimonials() {
-    console.log("rendering Testimonials")
+    console.log("rendering Testimonials component")
   const topRowRef = useRef<HTMLDivElement>(null);
   const bottomRowRef = useRef<HTMLDivElement>(null);
 

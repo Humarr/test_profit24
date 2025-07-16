@@ -1,7 +1,7 @@
 import { FaTelegramPlane } from "react-icons/fa";
 
 export default function SupportCard() {
-    console.log("rendering SupportCard")
+    console.log("rendering SupportCard component")
     return (
         <section className="bg-brand-purple-500 py-16 px-6 mx-4 md:mx-auto md:px-20 rounded-lg max-w-4xl text-white text-center my-16">
             <h2 className="text-3xl font-bold font-sans mb-4">Need clarity or support?</h2>

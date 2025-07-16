@@ -76,7 +76,7 @@ const plans = [
 ];
 
 export default function Pricing({ external }: { external?: boolean }) {
-    console.log("rendering Pricing")
+    console.log("rendering Pricing component")
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
