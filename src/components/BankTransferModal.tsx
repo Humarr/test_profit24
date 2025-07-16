@@ -4,7 +4,7 @@
 
 import { useState } from "react"
 import { useToast } from "@/components/toast/useToast"
-import PaystackPop from '@paystack/inline-js';
+// import PaystackPop from '@paystack/inline-js';
 import { redirect } from "next/navigation";
 
 
@@ -41,7 +41,8 @@ export default function BankTransferModal({
       if (!res.ok || !data.reference || !data.email) {
         throw new Error(data.error || "Failed to initialize payment")
       }
-
+// ✅ Dynamically import Paystack only in browser
+const { default: PaystackPop } = await import('@paystack/inline-js');
       const paystack = new PaystackPop()
 
       paystack.newTransaction({

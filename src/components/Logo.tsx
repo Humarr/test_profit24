@@ -2,7 +2,8 @@
 "use client";
 
 import Link from "next/link";
-import  LogoSvg  from "./logo1.svg";
+import Image from "next/image";
+// import  LogoSvg  from "./logo1.svg";
 // import { ReactComponent as Logo } from './logo.svg';
 
 
@@ -22,8 +23,8 @@ export default function Logo({
   return (
     <Link href={href} className={`inline-flex items-center gap-2 ${className}`}>
   
-    <LogoSvg size={size} />
-
+    {/* <LogoSvg size={size} /> */}
+    <Image src="/logo1.svg" alt="Logo" width={size} height={size} />
 
       {showText && (
         <span className="text-xl font-semibold text-gray-800 hidden sm:inline">
