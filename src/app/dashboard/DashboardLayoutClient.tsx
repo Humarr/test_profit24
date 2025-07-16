@@ -18,6 +18,7 @@ import {
 import { cn } from '@/lib/utils'
 import Dropdown from '@/components/Dropdown'
 import Announcements from '@/components/Announcements'
+import Logo from '@/components/Logo'
 
 type User = {
   id: string
@@ -80,7 +81,7 @@ export default function DashboardLayout({
         >
           <Menu className="w-6 h-6" />
         </button>
-        <div className="text-xl font-bold text-brand-purple-600">Profit24 SCALPER</div>
+        <Logo/>
         <div className="w-6" />
       </div>
 

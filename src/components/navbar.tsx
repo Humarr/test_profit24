@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ export default function Navbar() {
         <nav className="w-full flex items-center justify-between px-6 py-4 shadow-md bg-white relative">
             {/* Logo */}
             <div className="text-2xl font-bold tracking-tight text-brand-purple-500 font-sans">
-                Profit<span className="text-brand-orange-500">24</span>
+                <Logo/>
             </div>
 
             {/* Desktop Navigation */}
