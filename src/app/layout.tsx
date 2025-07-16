@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 
-import { ToastProvider } from "../components/toast/ToastProvider"; // adjust path as needed
+import { ToastProvider } from "@/components/toast/ToastProvider"; // adjust path as needed
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
