@@ -1,19 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/no-unescaped-entities */
-'use client'
+"use client";
 
-import { useState } from "react"
-import { useToast } from "@/components/toast/useToast"
-// import PaystackPop from '@paystack/inline-js';
+import { useState } from "react";
+import { useToast } from "@/components/toast/useToast";
 import { redirect } from "next/navigation";
 
-
 interface BankTransferModalProps {
-  isOpen: boolean
-  onClose: () => void
-  plan: string
-  amount: string
-  onSuccess: () => void
+  isOpen: boolean;
+  onClose: () => void;
+  plan: string;
+  amount: string;
+  onSuccess: () => void;
 }
 
 export default function BankTransferModal({
@@ -23,51 +20,72 @@ export default function BankTransferModal({
   amount,
   onSuccess,
 }: BankTransferModalProps) {
-  const [loading, setLoading] = useState(false)
-  const toast = useToast()
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   const handleProceed = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await fetch("/api/paystack/initialize", {
+      const res = await fetch("/api/flutterwave/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan, amount, currency: "USD" }),
-      })
+      });
 
-      const data = await res.json()
-      if (!res.ok || !data.reference || !data.email) {
-        throw new Error(data.error || "Failed to initialize payment")
+      const data = await res.json();
+      if (!res.ok || !data.tx_ref || !data.email) {
+        throw new Error(
+          data.error || "Failed to initialize Flutterwave payment"
+        );
       }
-// ✅ Dynamically import Paystack only in browser
-const { default: PaystackPop } = await import('@paystack/inline-js');
-      const paystack = new PaystackPop()
 
-      paystack.newTransaction({
-        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-        reference: data.reference,
-        email: data.email,
-        amount: parseInt(amount, 10) * 100,
-        currency: "USD",
-        metadata: { custom_fields: [{ display_name: "Plan", variable_name: "plan", value: plan }], },
-        onSuccess: (trx: any) => {
-          toast(`✅ Payment successful: ${trx.reference}`, "success", 5000)
-          onSuccess()
+      // Dynamically import flutterwave inline script
+      // const { loadScript } = await import("@/lib/loadFlutterwave") // we'll create this utility
+      // await loadScript()
+
+      const flutterwaveModule = await import("@/lib/loadFlutterwave");
+      await flutterwaveModule.loadScript();
+
+      // Launch Flutterwave Inline Payment
+      (window as any).FlutterwaveCheckout({
+        public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY!,
+        tx_ref: data.tx_ref,
+        amount: parseFloat(amount),
+        currency: data.currency || "USD",
+        customer: {
+          email: data.email,
         },
-        onCancel: () => {
-          toast("❌ Payment was cancelled", "error", 4000)
+        meta: {
+          userId: data.userId,
+          plan: plan,
         },
-      })
+        callback: (response: any) => {
+          if (response.status === "successful") {
+            toast("✅ Payment successful", "success", 5000);
+            onSuccess();
+          } else {
+            toast("❌ Payment not successful", "error", 5000);
+          }
+        },
+        onclose: () => {
+          toast("❌ Payment cancelled", "error", 5000);
+        },
+        customizations: {
+          title: "Bot Payment",
+          description: `Activate ${plan} Plan`,
+          logo: "/logo.png",
+        },
+      });
     } catch (err) {
-      const error = err as Error
-      toast(error.message || "Error initiating payment", "error", 5000)
-      if (error.message === "Unauthorized") return redirect("/auth/login")
+      const error = err as Error;
+      toast(error.message || "Flutterwave error", "error", 5000);
+      if (error.message === "Unauthorized") return redirect("/auth/login");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div
@@ -78,9 +96,15 @@ const { default: PaystackPop } = await import('@paystack/inline-js');
         className="bg-white max-w-md w-full rounded-2xl shadow-xl p-8 relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">Pay with Card</h2>
-        <p className="mb-2 text-brand-slate-900">Plan: <strong>{plan}</strong></p>
-        <p className="mb-4 text-brand-slate-900">Amount: <strong>${amount}</strong></p>
+        <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">
+          Pay with Card
+        </h2>
+        <p className="mb-2 text-brand-slate-900">
+          Plan: <strong>{plan}</strong>
+        </p>
+        <p className="mb-4 text-brand-slate-900">
+          Amount: <strong>${amount}</strong>
+        </p>
 
         <button
           disabled={loading}
@@ -103,5 +127,5 @@ const { default: PaystackPop } = await import('@paystack/inline-js');
         </button>
       </div>
     </div>
-  )
+  );
 }

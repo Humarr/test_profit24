@@ -18,7 +18,8 @@ export default function PaymentSuccessClient() {
       return
     }
 
-    fetch(`/api/paystack/verify?reference=${reference}`)
+    // fetch(`/api/paystack/verify?reference=${reference}`)
+    fetch(`/api/flutterwave/verify?reference=${reference}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
