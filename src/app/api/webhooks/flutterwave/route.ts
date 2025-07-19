@@ -5,6 +5,8 @@ import prisma from "@/lib/prisma"
 
 export async function POST(req: Request) {
   const { data, event } = await req.json()
+  // const payload = await req.json();
+  console.log("🌍 Webhook hit!", JSON.stringify(data, null, 2));
   if (event !== "charge.completed") return NextResponse.json({ received: true })
 
   const { tx_ref, status, meta } = data

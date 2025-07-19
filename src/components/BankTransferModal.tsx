@@ -61,6 +61,7 @@ export default function BankTransferModal({
           userId: data.userId,
           plan: plan,
         },
+        redirect_url: "https://cc1d38f1484e.ngrok-free.app/payment/success",
         callback: (response: any) => {
           if (response.status === "successful") {
             toast("✅ Payment successful", "success", 5000);
