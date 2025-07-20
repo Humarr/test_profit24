@@ -24,8 +24,10 @@ import InvestmentCalculator from "@/components/InvestmentCalculator";
 console.log("rendering InvestmentCalculator")
 import WhyUs from "@/components/WhyUs";
 console.log("rendering WhyUs")
+import { getCurrentUser } from "@/lib/getCurrentUser";
 
-export default function Home() {
+export default async function Home() {
+  const currentUser = await getCurrentUser()
   return (
     <main className="bg-brand-white">
       <Navbar />
@@ -34,7 +36,7 @@ export default function Home() {
       {/* <Infrastructure /> */}
       {/* <Standout /> */}
       <WhyUs />
-      <Pricing />
+      <Pricing currentUser={currentUser} />
       <InvestmentCalculator />
       {/* <Calculation /> */}
       <GrowthSection/>

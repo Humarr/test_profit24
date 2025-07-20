@@ -19,6 +19,7 @@ export default function PaymentMethodModal({
 }: PaymentMethodModalProps) {
   if (!isOpen) return null
 
+  const isComingSoon = true
   return (
     <div
       className="fixed inset-0 bg-brand-slate-900/80 flex justify-center items-end p-6 z-50"
@@ -50,7 +51,7 @@ export default function PaymentMethodModal({
           className="w-full mb-5 py-4 bg-gradient-to-r from-brand-purple-600 to-brand-purple-800 text-white rounded-2xl font-bold shadow-lg hover:from-brand-purple-700 hover:to-brand-purple-900 focus:outline-none focus:ring-4 focus:ring-brand-purple-400 transition cursor-pointer"
           type="button"
         >
-          Pay via Bank Transfer
+          Pay via Paystack
         </button>
 
         <button
@@ -60,7 +61,7 @@ export default function PaymentMethodModal({
           }}
           className="w-full py-4 bg-brand-purple-100 text-brand-purple-700 rounded-2xl font-semibold shadow-sm hover:bg-brand-purple-200 focus:outline-none focus:ring-4 focus:ring-brand-purple-300 transition cursor-pointer"
           type="button"
-        //   disabled
+          disabled={isComingSoon}
           title="Coming soon"
         >
           Pay via Crypto (coming soon)

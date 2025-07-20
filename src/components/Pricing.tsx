@@ -11,6 +11,10 @@ import {
 import BankTransferModal from "./BankTransferModal";
 import PaymentMethodModal from "./PaymentMethodModal";
 import CryptoPaymentModal from "./CryptoPaymentModal";
+import { useToast } from "./toast/useToast";
+import { useRouter } from "next/navigation";
+import { User } from "next-auth";
+
 
 const plans = [
   {
@@ -75,8 +79,12 @@ const plans = [
   }
 ];
 
-export default function Pricing({ external }: { external?: boolean }) {
-    console.log("rendering Pricing component")
+
+
+export default function Pricing({ external, currentUser  }: { external?: boolean, currentUser?: User | null }) {
+    // console.log("rendering Pricing component")
+    const toast = useToast()
+    const router = useRouter()
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -140,7 +148,14 @@ export default function Pricing({ external }: { external?: boolean }) {
     return () => container.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleActivateClick = (plan: string, amount: string) => {
+  const handleActivateClick = async (plan: string, amount: string) => {
+    if (! currentUser) {
+      toast("Please login to activate a plan", "error", 4000)
+      setTimeout(() => {
+        router.push("/auth/login")
+      }, 1500)
+      return
+    }
     setSelectedPlan(plan);
     setSelectedAmount(amount);
     setIsPaymentModalOpen(true);
