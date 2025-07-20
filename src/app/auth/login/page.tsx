@@ -70,15 +70,15 @@ export default function LoginPage() {
         addToast('Taking you to your dashboard, User!', 'info');
         window.location.href = '/dashboard';
 
-        await fetch('/api/mail', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: form.email,
-            subject: 'User login successful!',
-            content: 'You have successfully logged in to your user account.\nIf that was not you, please contact us at contact@profits24traders.com or reach out to our support team. Change your password as soon as possible.',
-          }),
-        });
+        // await fetch('/api/mail', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     to: form.email,
+        //     subject: 'User login successful!',
+        //     content: 'You have successfully logged in to your user account.\nIf that was not you, please contact us at contact@profits24traders.com or reach out to our support team. Change your password as soon as possible.',
+        //   }),
+        // });
       } else {
         addToast(data.error || 'Login failed.', 'error');
       }

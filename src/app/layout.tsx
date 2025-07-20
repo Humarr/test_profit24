@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-
+import GlobalSpinner from "@/components/GlobalSpinner";
 import { ToastProvider } from "@/components/toast/ToastProvider"; // adjust path as needed
 
 const dmSans = DM_Sans({
@@ -28,6 +28,7 @@ export default function RootLayout({
       <body className={`${dmSans.className} font-sans antialiased`}>
         <ToastProvider animation="slide">
           {children}
+          <GlobalSpinner />
         </ToastProvider>
       </body>
     </html>

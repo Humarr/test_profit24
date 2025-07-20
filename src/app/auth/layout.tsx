@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Logo from '@/components/Logo'
 
 export default function AuthLayout({
   children,
@@ -10,9 +10,9 @@ export default function AuthLayout({
       {/* Top Bar */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-brand-purple-600">
-            Profit24 SCALPER
-          </Link>
+          <div className="text-2xl font-bold text-brand-purple-600">
+            <Logo/>
+          </div>
           {/* <div className="flex gap-4">
             <Link 
               href="/auth/login" 

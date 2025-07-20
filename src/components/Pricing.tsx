@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -6,15 +6,16 @@ import {
   CalendarCheck,
   Star,
   Building2,
-  ShieldCheck as ShieldIcon
+  ShieldCheck as ShieldIcon,
 } from "lucide-react";
 import BankTransferModal from "./BankTransferModal";
 import PaymentMethodModal from "./PaymentMethodModal";
 import CryptoPaymentModal from "./CryptoPaymentModal";
-import { useToast } from "./toast/useToast";
-import { useRouter } from "next/navigation";
+// import { useToast } from "./toast/useToast";
+// import { usePathname, useRouter } from "next/navigation";
 import { User } from "next-auth";
-
+import { useLoadingStore } from "@/store/useLoadingStore";
+import useRedirectWithLoading from "@/hooks/useRedirectWithLoading ";
 
 const plans = [
   {
@@ -27,7 +28,7 @@ const plans = [
       "Basic trading bot",
       "Email support",
       "Community access",
-      "Limited strategy customization"
+      "Limited strategy customization",
     ],
     icon: CalendarCheck,
     popular: false,
@@ -42,7 +43,7 @@ const plans = [
       "All Trial features",
       "Advanced strategy builder",
       "Priority email support",
-      "Up to 50 trades/day"
+      "Up to 50 trades/day",
     ],
     icon: Star,
     popular: true,
@@ -57,7 +58,7 @@ const plans = [
       "All Recommended features",
       "Analytics dashboard",
       "24/7 support",
-      "Custom alerts & triggers"
+      "Custom alerts & triggers",
     ],
     icon: Building2,
     popular: false,
@@ -72,19 +73,25 @@ const plans = [
       "All Institutional features",
       "Dedicated account manager",
       "Unlimited trades",
-      "AI optimization features"
+      "AI optimization features",
     ],
     icon: ShieldIcon,
     popular: false,
-  }
+  },
 ];
 
-
-
-export default function Pricing({ external, currentUser  }: { external?: boolean, currentUser?: User | null }) {
-    // console.log("rendering Pricing component")
-    const toast = useToast()
-    const router = useRouter()
+export default function Pricing({
+  external,
+  currentUser,
+}: {
+  external?: boolean;
+  currentUser?: User | null;
+}) {
+  // console.log("rendering Pricing component")
+  // const toast = useToast()
+  // const router = useRouter()
+  // const pathName = usePathname();
+  const setLoading = useLoadingStore((state) => state.setLoading);
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -93,8 +100,8 @@ export default function Pricing({ external, currentUser  }: { external?: boolean
   const [isBankTransferModalOpen, setIsBankTransferModalOpen] = useState(false);
   const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false);
 
-  const [selectedPlan, setSelectedPlan] = useState<string>('');
-  const [selectedAmount, setSelectedAmount] = useState<string>('');
+  const [selectedPlan, setSelectedPlan] = useState<string>("");
+  const [selectedAmount, setSelectedAmount] = useState<string>("");
 
   const handleBankPaymentSuccess = () => {
     setIsBankTransferModalOpen(false);
@@ -147,19 +154,40 @@ export default function Pricing({ external, currentUser  }: { external?: boolean
     container.addEventListener("scroll", onScroll, { passive: true });
     return () => container.removeEventListener("scroll", onScroll);
   }, []);
+  const { redirectWithLoading } = useRedirectWithLoading();
 
   const handleActivateClick = async (plan: string, amount: string) => {
-    if (! currentUser) {
-      toast("Please login to activate a plan", "error", 4000)
-      setTimeout(() => {
-        router.push("/auth/login")
-      }, 1500)
-      return
+    setLoading(true);
+    if (!currentUser) {
+      // toast("Please login to activate a plan", "error", 4000)
+      // setTimeout(() => {
+      //   router.push("/auth/login")
+      // setLoading(false)
+      // }, 1500)
+
+      //TODO::
+      redirectWithLoading({
+        route: "/auth/login",
+        condition: Boolean(currentUser),
+        message: "Please login to continue.",
+      });
+
+      return;
     }
-    setSelectedPlan(plan);
-    setSelectedAmount(amount);
-    setIsPaymentModalOpen(true);
+
+    setTimeout(() => {
+      setSelectedPlan(plan);
+      setSelectedAmount(amount);
+      setIsPaymentModalOpen(true);
+      setLoading(false);
+    }, 1500);
   };
+
+  // useEffect(() => {
+  //   if (pathName === "/auth/login") {
+  //     setLoading(false); // Reset loading after the login page is loaded
+  //   }
+  // }, [pathName, setLoading]);
 
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
@@ -168,8 +196,12 @@ export default function Pricing({ external, currentUser  }: { external?: boolean
           <p className="inline-block px-4 py-1 text-sm font-semibold text-brand-purple-500 bg-brand-purple-100 rounded-full">
             Pricing
           </p>
-          <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">Choose your plan</h2>
-          <p className="mt-2 text-lg text-brand-slate-500">Unlock endless possibilities with our bot</p>
+          <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">
+            Choose your plan
+          </h2>
+          <p className="mt-2 text-lg text-brand-slate-500">
+            Unlock endless possibilities with our bot
+          </p>
         </div>
       )}
 
@@ -196,49 +228,74 @@ export default function Pricing({ external, currentUser  }: { external?: boolean
           ref={scrollRef}
           className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 px-2 md:overflow-visible scrollbar-hide"
         >
-          {plans.map(({ id, title, subtitle, price, oldPrice, features, icon: Icon, popular }, idx) => (
-            <motion.div
-              key={id}
-              ref={(el) => { cardRefs.current[idx] = el }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="snap-center shrink-0 w-[90%] sm:w-[360px] md:flex-1 bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
-            >
-              {popular && (
-                <div className="absolute top-4 right-4 bg-brand-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                  Recommended
-                </div>
-              )}
-
-              <div className="mb-4 text-center">
-                <Icon size={32} className="mx-auto text-brand-purple-500" />
-                <p className="text-sm text-brand-purple-700 mt-2">{subtitle}</p>
-              </div>
-
-              <div className="text-center mb-6">
-                <p className="text-lg text-brand-slate-400 line-through">${oldPrice}</p>
-                <p className="text-3xl font-extrabold text-brand-purple-700">${price}</p>
-              </div>
-
-              <ul className="flex-1 mb-6 space-y-3 text-sm font-medium text-brand-purple-800">
-                {features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <ShieldIcon size={20} className="text-brand-purple-500 mt-0.5" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => handleActivateClick(title, price.toString())}
-                className="mt-auto px-6 py-3 w-full font-semibold rounded-lg bg-brand-purple-500 text-white hover:bg-brand-purple-600 transition duration-300 cursor-pointer"
+          {plans.map(
+            (
+              {
+                id,
+                title,
+                subtitle,
+                price,
+                oldPrice,
+                features,
+                icon: Icon,
+                popular,
+              },
+              idx
+            ) => (
+              <motion.div
+                key={id}
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="snap-center shrink-0 w-[90%] sm:w-[360px] md:flex-1 bg-brand-purple-100 rounded-2xl shadow-lg p-8 flex flex-col relative"
               >
-                Activate Plan
-              </button>
-            </motion.div>
-          ))}
+                {popular && (
+                  <div className="absolute top-4 right-4 bg-brand-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    Recommended
+                  </div>
+                )}
+
+                <div className="mb-4 text-center">
+                  <Icon size={32} className="mx-auto text-brand-purple-500" />
+                  <p className="text-sm text-brand-purple-700 mt-2">
+                    {subtitle}
+                  </p>
+                </div>
+
+                <div className="text-center mb-6">
+                  <p className="text-lg text-brand-slate-400 line-through">
+                    ${oldPrice}
+                  </p>
+                  <p className="text-3xl font-extrabold text-brand-purple-700">
+                    ${price}
+                  </p>
+                </div>
+
+                <ul className="flex-1 mb-6 space-y-3 text-sm font-medium text-brand-purple-800">
+                  {features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <ShieldIcon
+                        size={20}
+                        className="text-brand-purple-500 mt-0.5"
+                      />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleActivateClick(title, price.toString())}
+                  className="mt-auto px-6 py-3 w-full font-semibold rounded-lg bg-brand-purple-500 text-white hover:bg-brand-purple-600 transition duration-300 cursor-pointer"
+                >
+                  Activate Plan
+                </button>
+              </motion.div>
+            )
+          )}
         </div>
 
         {/* Dots for mobile carousel */}
@@ -248,7 +305,9 @@ export default function Pricing({ external, currentUser  }: { external?: boolean
               key={i}
               onClick={() => scrollToCard(i)}
               className={`w-3 h-3 rounded-full transition cursor-pointer ${
-                i === activeIndex ? "bg-brand-purple-500" : "bg-brand-purple-200"
+                i === activeIndex
+                  ? "bg-brand-purple-500"
+                  : "bg-brand-purple-200"
               }`}
             />
           ))}
