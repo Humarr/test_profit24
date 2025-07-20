@@ -6,8 +6,10 @@ import { Bot, Stars } from 'lucide-react'
 import Pricing from '@/components/Pricing'
 import { format } from 'date-fns'
 import ActivatedBots from './ActivatedBots'
+import {getCurrentUser} from '@/lib/getCurrentUser'
 
 export default async function DashboardPage() {
+  const currentUser = await getCurrentUser()
   const dashboardData = await getUserDashboardData()
 
   if (!dashboardData) {
@@ -61,7 +63,7 @@ export default async function DashboardPage() {
           </Link>
         </div>
 
-        <Pricing />
+        <Pricing currentUser={currentUser} external={true} />
       </div>
     )
   }
