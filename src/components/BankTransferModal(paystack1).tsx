@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useToast } from "@/components/toast/useToast"
-import { redirect } from "next/navigation"
+// import PaystackPop from '@paystack/inline-js';
+import { redirect } from "next/navigation";
+
 
 interface BankTransferModalProps {
   isOpen: boolean
@@ -21,68 +24,34 @@ export default function BankTransferModal({
   onSuccess,
 }: BankTransferModalProps) {
   const [loading, setLoading] = useState(false)
-  const [ngnAmount, setNgnAmount] = useState<number | null>(null)
-  const [converting, setConverting] = useState(true)
   const toast = useToast()
-
-  useEffect(() => {
-    const convertToNGN = async () => {
-      try {
-        setConverting(true)
-        const res = await fetch('/api/convert', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: parseFloat(amount), currency: 'USD' }),
-        })
-
-        const data = await res.json()
-        if (!res.ok || !data.convertedToNGN) throw new Error(data.error || "Failed to convert")
-
-        setNgnAmount(data.convertedToNGN)
-      } catch (error) {
-        console.error("Conversion failed:", error)
-        toast("Error converting to Naira", "error", 4000)
-        setNgnAmount(null)
-      } finally {
-        setConverting(false)
-      }
-    }
-
-    if (isOpen) convertToNGN()
-  }, [amount, isOpen, toast])
 
   if (!isOpen) return null
 
   const handleProceed = async () => {
-    if (!ngnAmount) {
-      toast("Conversion failed. Cannot proceed.", "error", 4000)
-      return
-    }
     setLoading(true)
     try {
       const res = await fetch("/api/paystack/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, amount: ngnAmount.toString(), currency: "NGN" }),
+        body: JSON.stringify({ plan, amount, currency: "USD" }),
       })
 
       const data = await res.json()
       if (!res.ok || !data.reference || !data.email) {
         throw new Error(data.error || "Failed to initialize payment")
       }
-
-      const { default: PaystackPop } = await import('@paystack/inline-js')
+// ✅ Dynamically import Paystack only in browser
+const { default: PaystackPop } = await import('@paystack/inline-js');
       const paystack = new PaystackPop()
 
       paystack.newTransaction({
         key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
         reference: data.reference,
         email: data.email,
-        amount: Math.round(ngnAmount * 100), // NGN kobo
-        currency: "NGN",
-        metadata: {
-          custom_fields: [{ display_name: "Plan", variable_name: "plan", value: plan }],
-        },
+        amount: parseInt(amount, 10) * 100,
+        currency: "USD",
+        metadata: { custom_fields: [{ display_name: "Plan", variable_name: "plan", value: plan }], },
         onSuccess: (trx: any) => {
           toast(`✅ Payment successful: ${trx.reference}`, "success", 5000)
           onSuccess()
@@ -110,36 +79,19 @@ export default function BankTransferModal({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">Pay with Card</h2>
-
-        <p className="mb-2 text-brand-slate-900">
-          Plan: <strong>{plan}</strong>
-        </p>
-
-        <p className="mb-1 text-brand-slate-900">
-          Amount (USD): <strong>${amount}</strong>
-        </p>
-
-        <p className="mb-6 text-brand-slate-900">
-          Amount (NGN):{" "}
-          {converting ? (
-            <span className="inline-block w-24 h-4 bg-gray-200 animate-pulse rounded-sm" />
-          ) : ngnAmount ? (
-            <strong>₦{ngnAmount.toLocaleString("en-NG", { minimumFractionDigits: 2 })}</strong>
-          ) : (
-            <span className="text-red-500 font-semibold">Failed to convert</span>
-          )}
-        </p>
+        <p className="mb-2 text-brand-slate-900">Plan: <strong>{plan}</strong></p>
+        <p className="mb-4 text-brand-slate-900">Amount: <strong>${amount}</strong></p>
 
         <button
-          disabled={loading || converting || !ngnAmount}
+          disabled={loading}
           onClick={handleProceed}
           className={`w-full py-4 rounded-xl text-white font-bold cursor-pointer ${
-            loading || converting || !ngnAmount
+            loading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-brand-purple-600 hover:bg-brand-purple-800"
           }`}
         >
-          {loading ? "Loading..." : converting ? "Converting..." : "Proceed to Payment"}
+          {loading ? "Loading..." : "Proceed to Payment"}
         </button>
 
         <button

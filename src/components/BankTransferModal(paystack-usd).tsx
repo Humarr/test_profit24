@@ -54,16 +54,12 @@ export default function BankTransferModal({
   if (!isOpen) return null
 
   const handleProceed = async () => {
-    if (!ngnAmount) {
-      toast("Conversion failed. Cannot proceed.", "error", 4000)
-      return
-    }
     setLoading(true)
     try {
       const res = await fetch("/api/paystack/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, amount: ngnAmount.toString(), currency: "NGN" }),
+        body: JSON.stringify({ plan, amount, currency: "USD" }),
       })
 
       const data = await res.json()
@@ -78,8 +74,8 @@ export default function BankTransferModal({
         key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
         reference: data.reference,
         email: data.email,
-        amount: Math.round(ngnAmount * 100), // NGN kobo
-        currency: "NGN",
+        amount: parseInt(amount, 10) * 100,
+        currency: "USD",
         metadata: {
           custom_fields: [{ display_name: "Plan", variable_name: "plan", value: plan }],
         },
@@ -131,10 +127,10 @@ export default function BankTransferModal({
         </p>
 
         <button
-          disabled={loading || converting || !ngnAmount}
+          disabled={loading || converting}
           onClick={handleProceed}
           className={`w-full py-4 rounded-xl text-white font-bold cursor-pointer ${
-            loading || converting || !ngnAmount
+            loading || converting
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-brand-purple-600 hover:bg-brand-purple-800"
           }`}
