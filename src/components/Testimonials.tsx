@@ -10,17 +10,92 @@ interface Tweet {
   avatarUrl: string;
 }
 
-const mockTweets: Tweet[] = Array.from({ length: 10 }, (_, i) => ({
-  username: `User ${i + 1}`,
-  handle: `user${i + 1}`,
-  date: `May ${10 + i}`,
-  content: `This is a sample testimonial tweet number ${
-    i + 1
-  } praising the product for its usefulness.`,
-  avatarUrl: `https://randomuser.me/api/portraits/${
-    i % 2 === 0 ? "men" : "women"
-  }/${i + 10}.jpg`,
-}));
+// const mockTweets: Tweet[] = Array.from({ length: 10 }, (_, i) => ({
+//   username: `User ${i + 1}`,
+//   handle: `user${i + 1}`,
+//   date: `May ${10 + i}`,
+//   content: `This is a sample testimonial tweet number ${
+//     i + 1
+//   } praising the product for its usefulness.`,
+//   avatarUrl: `https://randomuser.me/api/portraits/${
+//     i % 2 === 0 ? "men" : "women"
+//   }/${i + 10}.jpg`,
+// }));
+
+
+const mockTweets: Tweet[] = [
+  {
+    username: "Chinedu Okafor",
+    handle: "chinedu_trades",
+    date: "May 10",
+    content: "Profit24 has changed the game for me. I went from guessing trades to consistent daily profits!",
+    avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    username: "Aisha Bello",
+    handle: "aisha_fxqueen",
+    date: "May 11",
+    content: "I was skeptical at first, but the bots really work. I’ve already made back my investment.",
+    avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg",
+  },
+  {
+    username: "Tunde Bakare",
+    handle: "tunde_bk",
+    date: "May 12",
+    content: "As someone with zero trading experience, I’m surprised how easy Profit24 is to use.",
+    avatarUrl: "https://randomuser.me/api/portraits/men/28.jpg",
+  },
+  {
+    username: "Ngozi Eze",
+    handle: "ngozi_trader",
+    date: "May 13",
+    content: "Solid platform. Transparent bots and reliable support. I love it.",
+    avatarUrl: "https://randomuser.me/api/portraits/women/36.jpg",
+  },
+  {
+    username: "Emeka Nwankwo",
+    handle: "emeka_fx",
+    date: "May 14",
+    content: "Profit24 helped me recover from months of trading losses. Highly recommended.",
+    avatarUrl: "https://randomuser.me/api/portraits/men/39.jpg",
+  },
+  {
+    username: "Halima Yusuf",
+    handle: "halima_yu",
+    date: "May 15",
+    content: "I’ve tried other bots before. None come close to Profit24. The results are real.",
+    avatarUrl: "https://randomuser.me/api/portraits/women/29.jpg",
+  },
+  {
+    username: "Joseph Abah",
+    handle: "joseph_abah",
+    date: "May 16",
+    content: "Finally something legit. It’s been 3 weeks of steady growth in my account.",
+    avatarUrl: "https://randomuser.me/api/portraits/men/42.jpg",
+  },
+  {
+    username: "Blessing Udoh",
+    handle: "bless_udoh",
+    date: "May 17",
+    content: "Customer service is top-notch. They walked me through everything step by step.",
+    avatarUrl: "https://randomuser.me/api/portraits/women/24.jpg",
+  },
+  {
+    username: "Uche Anozie",
+    handle: "ucheanozie",
+    date: "May 18",
+    content: "I love the automation. I wake up and see profits already made. Zero stress.",
+    avatarUrl: "https://randomuser.me/api/portraits/men/47.jpg",
+  },
+  {
+    username: "Kemi Adeyemi",
+    handle: "kemi_fxpro",
+    date: "May 19",
+    content: "Was referred by a friend. Now I’m referring others. This platform actually delivers.",
+    avatarUrl: "https://randomuser.me/api/portraits/women/40.jpg",
+  },
+];
+
 
 export default function Testimonials() {
   console.log("rendering Testimonials component");
