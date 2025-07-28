@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from "react"
+import { ENDPOINT_URL } from "../../endpoint"
 // import CurrencyDropdown from "./CurrencyDropdown"
 
 export default function InvestmentCalculator() {
@@ -29,7 +30,7 @@ export default function InvestmentCalculator() {
       setLoading(true)
       setError("")
       try {
-        const res = await fetch("/api/investment-calc", {
+        const res = await fetch(`${ENDPOINT_URL}/api/investment-calc`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: investment, months, currency }),

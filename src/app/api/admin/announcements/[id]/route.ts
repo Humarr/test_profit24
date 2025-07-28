@@ -1,3 +1,4 @@
+//api/admin/announcements/[id]/route.ts
 import prisma from "@/lib/prisma";
 import { getAdminUser } from "@/lib/auth";
 import { NextResponse, NextRequest } from "next/server";
