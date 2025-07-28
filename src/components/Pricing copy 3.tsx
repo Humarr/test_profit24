@@ -7,7 +7,6 @@ import {
   Star,
   Building2,
   ShieldCheck as ShieldIcon,
-  // CheckCircle,
 } from "lucide-react";
 import BankTransferModal from "./BankTransferModal";
 import PaymentMethodModal from "./PaymentMethodModal";
@@ -20,47 +19,63 @@ import useRedirectWithLoading from "@/hooks/useRedirectWithLoading ";
 
 const plans = [
   {
-    id: "standard",
-    title: "Standard Plan",
-    subtitle: "Perfect for beginners who want a simple, guided way to start trading with automation.",
+    id: "trial",
+    title: "Trial",
+    subtitle: "30 days validity",
     oldPrice: 99,
     price: 49,
     features: [
-      "Minimum Capital: $500 (via a regulated broker)",
-      "24/7 Customer Support",
-      "Optimized Risk Strategy",
+      "Basic trading bot",
+      "Email support",
+      "Community access",
+      "Limited strategy customization",
     ],
     icon: CalendarCheck,
     popular: false,
   },
   {
-    id: "special",
-    title: "Special Package",
-    subtitle: "Ideal for those who want hands-on support and smarter strategies with moderate capital.",
-    oldPrice: 129,
-    price: 39,
+    id: "recommended",
+    title: "Recommended",
+    subtitle: "3 months validity",
+    oldPrice: 297,
+    price: 129,
     features: [
-      "Minimum Capital: $1,000 (via a regulated broker)",
-      "1-on-1 Customer Support",
-      "24/7 Access to Technical Team",
-      "Optimized Risk Strategy",
+      "All Trial features",
+      "Advanced strategy builder",
+      "Priority email support",
+      "Up to 50 trades/day",
     ],
     icon: Star,
     popular: true,
   },
   {
-    id: "investor",
-    title: "Investor Package",
-    subtitle: "Best suited for serious investors looking for deeper support, lower fees, and maximum performance.",
-    oldPrice: 229,
-    price: 29,
+    id: "institutional",
+    title: "Institutional",
+    subtitle: "6 months validity",
+    oldPrice: 594,
+    price: 229,
     features: [
-      "Minimum Capital: $3,000 (via a regulated broker)",
-      "Dedicated 1-on-1 Support",
-      "Direct Call Access to Technical Team (24/7)",
-      "Optimized Risk Strategy",
+      "All Recommended features",
+      "Analytics dashboard",
+      "24/7 support",
+      "Custom alerts & triggers",
     ],
     icon: Building2,
+    popular: false,
+  },
+  {
+    id: "elite",
+    title: "Elite",
+    subtitle: "12 months validity",
+    oldPrice: 1150,
+    price: 360,
+    features: [
+      "All Institutional features",
+      "Dedicated account manager",
+      "Unlimited trades",
+      "AI optimization features",
+    ],
+    icon: ShieldIcon,
     popular: false,
   },
 ];
@@ -72,6 +87,10 @@ export default function Pricing({
   external?: boolean;
   currentUser?: User | null;
 }) {
+  // console.log("rendering Pricing component")
+  // const toast = useToast()
+  // const router = useRouter()
+  // const pathName = usePathname();
   const setLoading = useLoadingStore((state) => state.setLoading);
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -135,17 +154,24 @@ export default function Pricing({
     container.addEventListener("scroll", onScroll, { passive: true });
     return () => container.removeEventListener("scroll", onScroll);
   }, []);
-
   const { redirectWithLoading } = useRedirectWithLoading();
 
   const handleActivateClick = async (plan: string, amount: string) => {
     setLoading(true);
     if (!currentUser) {
+      // toast("Please login to activate a plan", "error", 4000)
+      // setTimeout(() => {
+      //   router.push("/auth/login")
+      // setLoading(false)
+      // }, 1500)
+
+      //TODO::
       redirectWithLoading({
         route: "/auth/login",
         condition: Boolean(currentUser),
         message: "Please login to continue.",
       });
+
       return;
     }
 
@@ -157,6 +183,12 @@ export default function Pricing({
     }, 1500);
   };
 
+  // useEffect(() => {
+  //   if (pathName === "/auth/login") {
+  //     setLoading(false); // Reset loading after the login page is loaded
+  //   }
+  // }, [pathName, setLoading]);
+
   return (
     <section className="w-full px-4 py-16 sm:px-6 bg-brand-white" id="pricing">
       {!external && (
@@ -165,14 +197,15 @@ export default function Pricing({
             Pricing
           </p>
           <h2 className="mt-4 text-4xl font-extrabold text-brand-slate-700">
-            Choose your plan and start trading today
+            Choose your plan
           </h2>
           <p className="mt-2 text-lg text-brand-slate-500">
-            Find the best plan for your trading goals and budget.
+            Unlock endless possibilities with our bot
           </p>
         </div>
       )}
 
+      {/* Mobile navigation buttons */}
       <div className="md:hidden flex justify-center mb-6 gap-2">
         {plans.map((p, i) => (
           <button
@@ -189,6 +222,7 @@ export default function Pricing({
         ))}
       </div>
 
+      {/* Pricing cards */}
       <div className="relative max-w-6xl mx-auto">
         <div
           ref={scrollRef}
@@ -227,7 +261,6 @@ export default function Pricing({
 
                 <div className="mb-4 text-center">
                   <Icon size={32} className="mx-auto text-brand-purple-500" />
-                  <p className="text-xl font-bold text-brand-purple-700 mt-4">{title}</p>
                   <p className="text-sm text-brand-purple-700 mt-2">
                     {subtitle}
                   </p>
@@ -238,7 +271,7 @@ export default function Pricing({
                     ${oldPrice}
                   </p>
                   <p className="text-3xl font-extrabold text-brand-purple-700">
-                    ${price}/month
+                    ${price}
                   </p>
                 </div>
 
@@ -265,6 +298,7 @@ export default function Pricing({
           )}
         </div>
 
+        {/* Dots for mobile carousel */}
         <div className="flex justify-center mt-6 gap-2 md:hidden">
           {plans.map((_, i) => (
             <button

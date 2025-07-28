@@ -1,6 +1,6 @@
-'use client';
-import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+"use client";
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 interface Tweet {
   username: string;
@@ -14,12 +14,16 @@ const mockTweets: Tweet[] = Array.from({ length: 10 }, (_, i) => ({
   username: `User ${i + 1}`,
   handle: `user${i + 1}`,
   date: `May ${10 + i}`,
-  content: `This is a sample testimonial tweet number ${i + 1} praising the product for its usefulness.`,
-  avatarUrl: `https://randomuser.me/api/portraits/${i % 2 === 0 ? 'men' : 'women'}/${i + 10}.jpg`,
+  content: `This is a sample testimonial tweet number ${
+    i + 1
+  } praising the product for its usefulness.`,
+  avatarUrl: `https://randomuser.me/api/portraits/${
+    i % 2 === 0 ? "men" : "women"
+  }/${i + 10}.jpg`,
 }));
 
 export default function Testimonials() {
-    console.log("rendering Testimonials component")
+  console.log("rendering Testimonials component");
   const topRowRef = useRef<HTMLDivElement>(null);
   const bottomRowRef = useRef<HTMLDivElement>(null);
 
@@ -53,10 +57,10 @@ export default function Testimonials() {
     };
 
     const attachEvents = (el: HTMLDivElement) => {
-      el.addEventListener('mouseenter', stopAutoScroll);
-      el.addEventListener('mouseleave', startAutoScroll);
-      el.addEventListener('touchstart', stopAutoScroll);
-      el.addEventListener('touchend', startAutoScroll);
+      el.addEventListener("mouseenter", stopAutoScroll);
+      el.addEventListener("mouseleave", startAutoScroll);
+      el.addEventListener("touchstart", stopAutoScroll);
+      el.addEventListener("touchend", startAutoScroll);
     };
 
     if (topRow && bottomRow) {
@@ -71,7 +75,10 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section id="testimonials" className="py-16 bg-brand-cream-100 overflow-hidden">
+    <section
+      id="testimonials"
+      className="py-16 bg-brand-cream-100 overflow-hidden"
+    >
       {/* Centered Testimonials label */}
       <div className="flex justify-center mb-6">
         <div className="bg-brand-purple-100 text-brand-purple-500 text-sm font-semibold font-sans px-6 py-2 rounded-full">
@@ -81,7 +88,9 @@ export default function Testimonials() {
 
       <h2 className="text-4xl font-bold mb-10 text-center text-brand-slate-500">
         <span className="hidden md:inline">Winning Trades. Happy Traders.</span>
-        <span className="md:hidden">You&apos;re in safe hands</span>
+        <span className="md:hidden">
+          These are the results our users are getting day after day:
+        </span>
       </h2>
 
       {/* Top Row (No scroll-smooth) */}
@@ -117,13 +126,7 @@ export default function Testimonials() {
   );
 }
 
-function TweetCard({
-  username,
-  handle,
-  date,
-  content,
-  avatarUrl,
-}: Tweet) {
+function TweetCard({ username, handle, date, content, avatarUrl }: Tweet) {
   return (
     <div className="bg-white rounded-xl shadow-md p-4 w-full h-full">
       <div className="flex items-center gap-3 mb-3">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Hero() {
-  console.log("rendering Hero component")
+  
   return (
     <header
       className="relative w-full bg-brand-white px-6 py-20 overflow-hidden text-center"
@@ -46,9 +46,11 @@ export default function Hero() {
 
         {/* Description */}
         <p className="text-base md:text-lg text-brand-slate-500 mb-8 max-w-xl font-sans drop-shadow-sm">
-          Harness the power of AI-driven trading strategies. Copy
+          {/* Harness the power of AI-driven trading strategies. Copy
           top-performing bots and maximize your market potential with
-          precision and ease.
+          precision and ease. */}
+          Now is the time to use an advanced, AI-powered forex trading system built to analyse the market and generate consistent profits for you.
+
         </p>
 
         {/* CTA */}
