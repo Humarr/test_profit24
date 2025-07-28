@@ -1,9 +1,9 @@
+// app/payment/success/PaymentSuccessClient.tsx
 "use client"
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { useToast } from "@/components/toast/useToast"
-import { FaSpinner } from "react-icons/fa" // Spinner icon
 
 export default function PaymentSuccessClient() {
   const [loading, setLoading] = useState(true)
@@ -20,23 +20,27 @@ export default function PaymentSuccessClient() {
     }
 
     fetch(`/api/paystack/verify?reference=${reference}`)
+    // fetch(`/api/flutterwave/verify?reference=${reference}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           toast("Payment confirmed! Redirecting...", "success", 5000)
-
-          const message = encodeURIComponent(
-            `Hello, I just completed a payment for the "${data.plan}" bot plan.\n\n` +
-            `Transaction Reference: ${data.reference}\n` +
-            `Name: ${data.fullName || "Not available"}\n` +
-            `Email: ${data.email}\n` +
-            `Amount Paid: ${data.paidAmount} ${data.currency || "NGN"}\n\n` +
-            `Please help me get started. Thank you!`
-          )
-
           setTimeout(() => {
+            const message = encodeURIComponent(
+              `Hello, I just completed a payment for the "${data.plan}" bot plan.\n\n` +
+              `Transaction Reference: ${data.reference}\n` +
+              `Name: ${data.fullName || "Not available"}\n` +
+              `Email: ${data.email}\n` +
+              `Amount Paid: ${data.paidAmount} ${data.currency || "NGN"}\n\n` +
+              `Please help me get started. Thank you!`
+            )
+          
             window.location.href = `${process.env.NEXT_PUBLIC_WHATSAPP_URL}?text=${message}`
           }, 1500)
+          
+          // setTimeout(() => {
+          //   window.location.href = `${process.env.NEXT_PUBLIC_WHATSAPP_URL}/?text=Hello%20I%20have%20just%20completed%20a%20payment%20for%20my%20bot%20plan%20and%20I%20need%20your%20help%20to%20get%20started.%20Please%20provide%20me%20with%20the%20details%20of%20the%20bot%20so%20I%20can%20start%20using%20it.%20Thank%20you!` || ""
+          // }, 1500)
         } else {
           toast(data.error || "Payment verification failed", "error", 7000)
         }
@@ -49,15 +53,8 @@ export default function PaymentSuccessClient() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-brand-white p-4">
-      <div className="bg-brand-purple-50 text-brand-purple-700 text-center p-8 rounded-xl shadow-lg flex flex-col items-center gap-3">
-        {loading ? (
-          <>
-            <FaSpinner className="animate-spin text-3xl text-brand-purple-700" />
-            <p className="text-sm font-medium">Verifying your payment...</p>
-          </>
-        ) : (
-          <p className="text-sm font-medium">Finished! Check your WhatsApp.</p>
-        )}
+      <div className="bg-brand-purple-50 text-brand-purple-700 text-center p-8 rounded-xl shadow-lg">
+        {loading ? "Verifying payment..." : "Finished! Check chat window."}
       </div>
     </div>
   )

@@ -96,7 +96,7 @@ export default function BankTransferModal({
           toast(`✅ Payment successful: ${trx.reference}`, "success", 5000);
           onSuccess();
           onSuccess();
-          router.push(`/payment/success?reference=${trx.reference}`);
+          router.push(`/payment/success?reference=${trx.reference}?plan=${plan}?`);
         },
         onCancel: () => {
           toast("❌ Payment was cancelled", "error", 4000);
