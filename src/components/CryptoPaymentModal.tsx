@@ -1,12 +1,22 @@
-import React, { useState } from "react"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client"
+
+import React, { useState, useEffect } from "react"
 import { useToast } from "@/components/toast/useToast"
+import { FaCopy } from "react-icons/fa"
 
 interface CryptoPaymentModalProps {
   isOpen: boolean
   onClose: () => void
   plan: string
-  amount: string
-  onSuccess: () => void // NEW callback
+  amount: string // in USD
+  onSuccess: () => void
+}
+
+const wallets = {
+  BTC: "bc1qexamplewalletaddressbtc",
+  ETH: "0xExampleEthAddress",
+  USDT: "TExampleUSDTTRC20",
 }
 
 export default function CryptoPaymentModal({
@@ -16,92 +26,131 @@ export default function CryptoPaymentModal({
   amount,
   onSuccess,
 }: CryptoPaymentModalProps) {
-  const [walletAddress, setWalletAddress] = useState("")
+  const [currency, setCurrency] = useState<"BTC" | "ETH" | "USDT">("USDT")
+  const [convertedAmount, setConvertedAmount] = useState<number | null>(null)
+  const [txHash, setTxHash] = useState("")
   const [loading, setLoading] = useState(false)
   const toast = useToast()
 
-  if (!isOpen) return null
+  useEffect(() => {
+    if (!currency || !amount) return
+    const fetchRate = async () => {
+      try {
+        const res = await fetch("/api/convert", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: parseFloat(amount), currency }),
+        })
+        const data = await res.json()
+        if (data.convertedToNGN || data.convertedToNGN === 0) {
+          setConvertedAmount(data.originalAmount / data.conversionRate)
+        }
+      } catch {
+        toast("Failed to convert amount", "error", 5000)
+      }
+    }
+
+    fetchRate()
+  }, [currency, amount, toast])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!walletAddress.trim()) {
-      toast("Please enter your wallet address", "error", 4000)
+    if (!txHash.trim()) {
+      toast("Please enter your transaction hash", "error", 4000)
       return
     }
 
     setLoading(true)
     try {
-      // Simulate API call for crypto payment
-      await new Promise((r) => setTimeout(r, 2000))
-
-      toast(`Crypto payment initiated for ${plan} ($${amount})`, "success", 5000)
+      await new Promise((r) => setTimeout(r, 2000)) // simulate
+      toast(`Crypto payment submitted. We’ll verify and activate your plan.`, "success", 5000)
       onClose()
       onSuccess()
-      setWalletAddress("")
     } catch {
-      toast("Failed to initiate crypto payment", "error", 5000)
+      toast("Something went wrong", "error", 5000)
     } finally {
       setLoading(false)
     }
   }
 
+  if (!isOpen) return null
+
   return (
     <div
       className="fixed inset-0 bg-brand-slate-900/80 flex justify-center items-center p-6 z-50"
       onClick={onClose}
-      aria-modal="true"
-      role="dialog"
-      aria-labelledby="crypto-payment-title"
     >
       <div
-        className="bg-brand-white rounded-3xl w-full max-w-md p-8 shadow-2xl text-brand-purple-900"
         onClick={(e) => e.stopPropagation()}
+        className="bg-white max-w-md w-full rounded-2xl shadow-xl p-8 relative"
       >
-        <h2
-          id="crypto-payment-title"
-          className="text-2xl font-extrabold mb-6 tracking-wide"
+        <h2 className="text-2xl font-bold text-brand-purple-900 mb-4">Crypto Payment</h2>
+        <p className="mb-2">Plan: <strong>{plan}</strong></p>
+        <p className="mb-4">Amount: <strong>${amount} USD</strong></p>
+
+        <label className="block font-semibold mb-2">Select Coin</label>
+        <select
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value as any)}
+          className="w-full mb-4 px-4 py-2 border rounded-xl text-brand-slate-700"
         >
-          Pay via Crypto
-        </h2>
-        <p className="mb-8 text-lg font-semibold text-brand-purple-700">
-          Plan: <span className="text-brand-purple-900">{plan}</span> &mdash; Amount:{" "}
-          <span className="text-brand-purple-900">${amount}</span>
-        </p>
+          <option value="USDT">USDT (TRC20)</option>
+          <option value="BTC">BTC</option>
+          <option value="ETH">ETH</option>
+        </select>
+
+        <div className="mb-4">
+          <label className="block mb-1 font-medium">Wallet Address</label>
+          <div className="flex items-center justify-between bg-brand-slate-100 p-2 rounded-lg text-sm">
+            <span className="break-all">{wallets[currency]}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(wallets[currency])
+                toast("Copied to clipboard", "success", 2000)
+              }}
+            >
+              <FaCopy />
+            </button>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="block mb-1 font-medium">Send exactly:</label>
+          {convertedAmount === null ? (
+            <p className="text-sm text-brand-slate-500 italic">Calculating...</p>
+          ) : (
+            <p className="font-semibold text-lg">{convertedAmount.toFixed(6)} {currency}</p>
+          )}
+        </div>
 
         <form onSubmit={handleSubmit}>
-          <label
-            htmlFor="wallet"
-            className="block mb-2 font-semibold text-brand-purple-700"
-          >
-            Wallet Address
-          </label>
+          <label htmlFor="txhash" className="block mb-2 font-medium">Your Transaction Hash</label>
           <input
-            id="wallet"
+            id="txhash"
             type="text"
-            value={walletAddress}
-            onChange={(e) => setWalletAddress(e.target.value)}
-            placeholder="Enter your crypto wallet address"
-            className="w-full px-4 py-3 mb-6 border border-brand-slate-300 rounded-2xl text-brand-purple-900 placeholder:text-brand-purple-400 focus:outline-none focus:ring-4 focus:ring-brand-purple-400 focus:border-transparent transition"
+            value={txHash}
+            onChange={(e) => setTxHash(e.target.value)}
+            placeholder="Paste your TX hash here"
+            className="w-full px-4 py-3 mb-6 border border-brand-slate-300 rounded-xl"
             required
             disabled={loading}
           />
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-4 font-bold rounded-2xl text-white shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-purple-500 transition ${
+            className={`w-full py-4 font-bold rounded-xl text-white shadow-md transition ${
               loading
                 ? "bg-brand-purple-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-brand-purple-600 to-brand-purple-800 hover:from-brand-purple-700 hover:to-brand-purple-900 cursor-pointer"
+                : "bg-brand-purple-600 hover:bg-brand-purple-800"
             }`}
           >
-            {loading ? "Processing..." : "Pay Now"}
+            {loading ? "Submitting..." : "I’ve Sent the Crypto"}
           </button>
         </form>
 
         <button
           onClick={onClose}
-          className="mt-8 w-full py-3 text-center text-brand-purple-600 font-bold hover:underline focus:outline-none cursor-pointer"
-          type="button"
+          className="mt-6 w-full py-2 text-center text-brand-purple-500 font-semibold hover:underline"
         >
           Cancel
         </button>
