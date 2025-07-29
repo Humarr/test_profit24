@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils'
 import Dropdown from '@/components/Dropdown'
 import Announcements from '@/components/Announcements'
 import Logo from '@/components/Logo'
+import { ENDPOINT_URL } from '../../../endpoint'
 
 type User = {
   id: string
@@ -41,7 +42,10 @@ export default function DashboardLayout({
   const router = useRouter()
 
   const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' })
+    await fetch(`${ENDPOINT_URL}/api/logout`, { method: 'POST',
+      // cache: 'no-store', // ensure it's always fresh
+      credentials: 'include'
+     })
     router.push('/auth/login')
   }
 

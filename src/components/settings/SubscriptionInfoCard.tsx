@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useToast } from "@/components/toast/useToast";
+import { ENDPOINT_URL } from "../../../endpoint";
 
 interface Subscription {
   id: string;
@@ -22,7 +23,11 @@ export default function SubscriptionInfoCard() {
     const fetchSubscription = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/user/${id}`);
+        const res = await fetch(`${ENDPOINT_URL}/api/user/${id}`, {
+          method: 'GET',
+          // cache: 'no-store', // ensure it's always fresh
+          credentials: 'include'
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to load subscription");
         setSubscription(data.user.subscriptions?.[0] || null);

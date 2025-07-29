@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react"
 import { useToast } from "@/components/toast/useToast"
 import { FaCopy } from "react-icons/fa"
+import { ENDPOINT_URL } from "../../endpoint"
 
 interface CryptoPaymentModalProps {
   isOpen: boolean
@@ -36,7 +37,7 @@ export default function CryptoPaymentModal({
     if (!currency || !amount) return
     const fetchRate = async () => {
       try {
-        const res = await fetch("/api/convert", {
+        const res = await fetch(`${ENDPOINT_URL}/api/convert`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: parseFloat(amount), currency }),

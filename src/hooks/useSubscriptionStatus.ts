@@ -1,5 +1,6 @@
 'use client'
 
+import { ENDPOINT_URL } from "../../endpoint"
 import { useEffect, useState } from 'react'
 
 export default function useSubscriptionStatus() {
@@ -10,7 +11,12 @@ export default function useSubscriptionStatus() {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch('/api/user/subscription/active')
+        const res = await fetch(`${ENDPOINT_URL}/api/user/subscription/active`, {
+          method: 'GET',
+      
+          cache: 'no-store', // ensure it's always fresh
+          credentials: 'include'
+        })
         const data = await res.json()
 
         if (data.active) {

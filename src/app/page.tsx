@@ -36,6 +36,7 @@ export default async function Home() {
       {/* <Infrastructure /> */}
       {/* <Standout /> */}
       <WhyUs />
+      {/* <Pricing  /> */}
       <Pricing currentUser={currentUser} />
       <InvestmentCalculator />
       {/* <Calculation /> */}

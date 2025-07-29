@@ -4,6 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { ENDPOINT_URL } from '../../../../endpoint';
+import { useToast } from '@/components/toast/useToast';
+import Spinner from '@/components/Spinner';
 
 
 interface Webinar {
@@ -18,6 +21,8 @@ interface Webinar {
 
 export default function WebinarsPage() {
   const [webinars, setWebinars] = useState<Webinar[]>([])
+  const [fetching, setFetching] = useState(true)
+  const addToast = useToast();
 
   // const webinars = [
   //   {
@@ -59,14 +64,42 @@ export default function WebinarsPage() {
   // ];
 
   async function fetchWebinars() {
-    const res = await fetch('/api/dashboard/webinars')
+    try {
+    setFetching(true)
+    const res = await fetch(`${ENDPOINT_URL}/api/dashboard/webinars`, {
+      method: 'GET',
+      // cache: 'no-store', // ensure it's always fresh
+      credentials: 'include'
+    })
     const data = await res.json()
+    if (!data.webinars) {
+      throw new Error(data.error || "Something went wrong");
+    }
     setWebinars(data.webinars)
+  } catch (err) {
+    const error = err as Error
+    console.error(error)
+    addToast(error.message, 'error')
+  } finally {
+    setFetching(false)
   }
+}
 
   useEffect(() => {
     fetchWebinars()
   }, [])
+
+
+ if (fetching) {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <Spinner />
+    </div>
+  )
+ }
+
+
+
 
   return (
     <div className="max-w-7xl mx-auto px-4">

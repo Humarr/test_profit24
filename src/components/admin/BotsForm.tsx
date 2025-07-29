@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from 'react'
 import { useToast } from '@/components/toast/useToast'
+import { ENDPOINT_URL } from "../../../endpoint"
 
 export default function CreateBotForm() {
   const [loading, setLoading] = useState(false)
@@ -25,10 +26,11 @@ export default function CreateBotForm() {
   const handleSubmit = async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/bots', {
+      const res = await fetch(`${ENDPOINT_URL}/api/admin/bots`, {
         method: 'POST',
         body: JSON.stringify(form),
         headers: { 'Content-Type': 'application/json' },
+        credentials:'include'
       })
 
       const data = await res.json()

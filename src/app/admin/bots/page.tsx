@@ -4,6 +4,7 @@ import { useToast } from '@/components/toast/useToast'
 import { Trash2, Edit, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Spinner from '@/components/Spinner'
+import { ENDPOINT_URL } from '../../../../endpoint'
 
 
 
@@ -62,7 +63,11 @@ export default function AdminBotsPage() {
   const fetchBots = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/bots')
+      const res = await fetch(`${ENDPOINT_URL}/api/admin/bots`, {
+        method: 'GET',
+        // cache: 'no-store', // ensure it's always fresh
+        credentials: 'include'
+      })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to load')
       setBots(data.bots)
@@ -100,7 +105,7 @@ export default function AdminBotsPage() {
   async function handleDelete(id: string) {
     if (!confirm('Delete this bot?')) return
     try {
-      const res = await fetch(`/api/admin/bots/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${ENDPOINT_URL}/api/admin/bots/${id}`, { method: 'DELETE' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Delete failed')
       toast('Bot deleted', 'success')
@@ -111,7 +116,7 @@ export default function AdminBotsPage() {
   }
 
   async function handleSubmit() {
-    const url = editing ? `/api/admin/bots/${editing.id}` : '/api/admin/bots'
+    const url = editing ? `${ENDPOINT_URL}/api/admin/bots/${editing.id}` : `${ENDPOINT_URL}/api/admin/bots`
     const method = editing ? 'PATCH' : 'POST'
     try {
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })

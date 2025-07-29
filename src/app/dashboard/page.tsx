@@ -9,6 +9,7 @@ import ActivatedBots from './ActivatedBots'
 import {getCurrentUser} from '@/lib/getCurrentUser'
 
 export default async function DashboardPage() {
+  
   const currentUser = await getCurrentUser()
   const dashboardData = await getUserDashboardData()
 

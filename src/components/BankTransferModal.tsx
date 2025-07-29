@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/toast/useToast";
 import { redirect, useRouter } from "next/navigation";
+import { ENDPOINT_URL } from "../../endpoint"
+import { fetchToken } from "@/lib/api/fetchToken";
 // import router from "next/router"
 
 interface BankTransferModalProps {
@@ -26,12 +28,13 @@ export default function BankTransferModal({
   const [converting, setConverting] = useState(true);
   const toast = useToast();
   const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const convertToNGN = async () => {
       try {
         setConverting(true);
-        const res = await fetch("/api/convert", {
+        const res = await fetch(`${ENDPOINT_URL}/api/convert`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: parseFloat(amount), currency: "USD" }),
@@ -54,7 +57,14 @@ export default function BankTransferModal({
     if (isOpen) convertToNGN();
   }, [amount, isOpen, toast]);
 
-  if (!isOpen) return null;
+  
+  useEffect(() => {
+    fetchToken().then((token) => {
+      if (token) setToken(token);
+    });
+  }, []);
+  
+  if (!isOpen || !token) return null;
 
   const handleProceed = async () => {
     if (!ngnAmount) {
@@ -63,14 +73,17 @@ export default function BankTransferModal({
     }
     setLoading(true);
     try {
-      const res = await fetch("/api/paystack/initialize", {
+      const res = await fetch(`${ENDPOINT_URL}/api/paystack/initialize`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+         },
         body: JSON.stringify({
           plan,
           amount: ngnAmount.toString(),
           currency: "NGN",
         }),
+        credentials: 'include'
       });
 
       const data = await res.json();

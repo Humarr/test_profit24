@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 // import { Edit, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/toast/useToast';
 import Spinner from '@/components/Spinner';
-
+import { ENDPOINT_URL } from '../../../../endpoint'
 interface Subscription {
   id: string;
   plan: string;
@@ -20,7 +20,7 @@ export default function AdminSubscriptionsPage() {
   useEffect(() => {
     const fetchSubs = async () => {
       try {
-        const res = await fetch('/api/admin/subscriptions');
+        const res = await fetch(`${ENDPOINT_URL}/api/admin/subscriptions`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch subscriptions");
         setSubs(data.subscriptions);

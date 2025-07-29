@@ -7,6 +7,7 @@ import { Eye, EyeOff, Clock } from "lucide-react";
 import { useToast } from "@/components/toast/useToast";
 import CustomSelect from "@/components/CustomSelect";
 import CurrencyAmountInput from "@/components/CurrencyAmountInput";
+import { ENDPOINT_URL } from "../../../../endpoint";
 
 export default function RegisterPage() {
   const [activeStep, setActiveStep] = useState(0);
@@ -108,10 +109,12 @@ export default function RegisterPage() {
         phone: formData.phone,
       };
 
-      const response = await fetch("/api/register", {
+      const response = await fetch(`${ENDPOINT_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        // cache: 'no-store', // ensure it's always fresh
+        credentials: 'include'
       });
 
       const data = await response.json();
@@ -137,7 +140,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await fetch("/api/otp", {
+      await fetch(`${ENDPOINT_URL}/api/otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: formData.email }),
@@ -158,7 +161,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await fetch("/api/otp", {
+      await fetch(`${ENDPOINT_URL}/api/otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: formData.email }),
@@ -184,7 +187,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/verify-otp", {
+      const response = await fetch(`${ENDPOINT_URL}/api/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: formData.email, otp: otp.join("") }),

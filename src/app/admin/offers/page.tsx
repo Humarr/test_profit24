@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Plus, Edit, Trash2 } from 'lucide-react'
 import { useToast } from '@/components/toast/useToast'
 import Spinner from '@/components/Spinner'
+import { ENDPOINT_URL } from '../../../../endpoint'
 
 interface Offer {
   id: string
@@ -31,7 +32,11 @@ export default function AdminOffersPage() {
   const fetchOffers = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/offers')
+      const res = await fetch(`${ENDPOINT_URL}/api/admin/offers`, {
+        method: 'GET',
+        // cache: 'no-store', // ensure it's always fresh
+        credentials: 'include'
+      })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to load offers')
       setOffers(data.offers)

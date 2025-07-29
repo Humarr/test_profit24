@@ -5,11 +5,16 @@ import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { useToast } from '@/components/toast/useToast'
+import { ENDPOINT_URL } from '../../../../endpoint'
+// import { useRouter } from 'next/navigation'
+
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
+
+  // const router = useRouter()
 
   const addToast = useToast();
 
@@ -23,10 +28,11 @@ export default function LoginPage() {
       // Check for admin email
       if (form.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
         addToast('Admin login attempt detected!', 'info');
-        const response = await fetch('/api/admin/login', {
+        const response = await fetch(`${ENDPOINT_URL}/api/admin/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form),
+          credentials:"include"
         });
         console.log("Admin response: ", response);
   
@@ -38,8 +44,9 @@ export default function LoginPage() {
           addToast(`${data.name} login successful!`, 'success');
           addToast('Taking you to your dashboard, Admin!', 'info');
           window.location.href = '/admin';
+          // router.replace('/admin')
 
-          await fetch('/api/mail', {
+          await fetch(`${ENDPOINT_URL}/api/mail`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -47,6 +54,8 @@ export default function LoginPage() {
               subject: 'Admin login successful!',
               content: 'You have successfully logged in to your admin account.\nIf that was not you, please contact us at contact@profits24traders.com or reach out to our support team. Change your password as soon as possible.',
             }),
+            // cache: 'no-store', // ensure it's always fresh
+            credentials: 'include'
           });
           return; // ✅ Prevents further execution
         } else {
@@ -56,10 +65,12 @@ export default function LoginPage() {
       }
   
       // Default user login
-      const response = await fetch('/api/login', {
+
+      const response = await fetch(`${ENDPOINT_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
+        credentials: 'include'
       });
   
       const data = await response.json();
@@ -69,6 +80,8 @@ export default function LoginPage() {
         addToast('Login successful!', 'success');
         addToast('Taking you to your dashboard, User!', 'info');
         window.location.href = '/dashboard';
+        // router.replace("/dashboard")
+        console.log("Entering the dashboard...  ", window.location.href)
 
         // await fetch('/api/mail', {
         //   method: 'POST',

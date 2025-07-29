@@ -17,6 +17,7 @@ import {
 import { cn } from '@/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { ENDPOINT_URL } from '../../../endpoint';
 
 export default function DashboardLayout({
   children,
@@ -29,7 +30,7 @@ export default function DashboardLayout({
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('/api/logout', { method: 'POST' });
+    await fetch(`${ENDPOINT_URL}/api/logout`, { method: 'POST' });
     router.push('/auth/login');
   };
 

@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { useToast } from '@/components/toast/useToast'
 import { Trash2, Edit, Plus } from 'lucide-react'
 import Image from 'next/image'
-
+import { ENDPOINT_URL } from '../../../../endpoint'
 interface Webinar { id: string; title: string; videoUrl: string; thumbnail: string; duration: string }
 
 export default function AdminWebinarsPage() {
@@ -19,7 +19,7 @@ export default function AdminWebinarsPage() {
   const fetchWebinars = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/webinars')
+      const res = await fetch(`${ENDPOINT_URL}/api/admin/webinars`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to load')
       setWebinars(data.webinars)
@@ -48,7 +48,7 @@ export default function AdminWebinarsPage() {
   async function handleDelete(id: string) {
     if (!confirm('Delete this webinar?')) return
     try {
-      const res = await fetch(`/api/admin/webinars/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${ENDPOINT_URL}/api/admin/webinars/${id}`, { method: 'DELETE' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Delete failed')
       toast('Deleted', 'success')
@@ -59,7 +59,7 @@ export default function AdminWebinarsPage() {
   }
 
   async function handleSubmit() {
-    const url = editing ? `/api/admin/webinars/${editing.id}` : '/api/admin/webinars'
+    const url = editing ? `${ENDPOINT_URL}/api/admin/webinars/${editing.id}` : `${ENDPOINT_URL}/api/admin/webinars`
     const method = editing ? 'PATCH' : 'POST'
     try {
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })

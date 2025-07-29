@@ -9,6 +9,7 @@ import { User } from "@/app/api/user/[id]/route";
 import { useParams } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import { useToast } from "@/components/toast/useToast";
+import { ENDPOINT_URL } from "../../../../../endpoint";
 
 
 
@@ -43,11 +44,13 @@ export default function UserProfilePage() {
   const getUserById = useCallback(async (id: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/user/${id}`, {
+      const res = await fetch(`${ENDPOINT_URL}/api/user/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
+        // cache: 'no-store', // ensure it's always fresh
+        credentials: 'include'
       });
 
       if (!res.ok) throw new Error("Failed to fetch user");

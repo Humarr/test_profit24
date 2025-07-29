@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/components/toast/useToast";
 import BotModal from "@/components/BotModal";
 import { Bot } from "@/data/bots";
+import { ENDPOINT_URL } from "../../../../endpoint";
+// import { activateBot, fetchAllBots } from "@/lib/api/bots";
 // import Spinner from "@/components/Spinner";
 
 export default function BotsLabPage() {
@@ -21,8 +23,15 @@ export default function BotsLabPage() {
   useEffect(() => {
     const fetchBots = async () => {
       try {
-        const res = await fetch("/api/dashboard/bots/all");
+        const res = await fetch(`${ENDPOINT_URL}/api/dashboard/bots/all`, {
+          method: 'GET',
+          // cache: 'no-store', // ensure it's always fresh
+          credentials: 'include'
+        });
         const data = await res.json();
+        if (!data.bots) {
+          throw new Error(data.error || "Something went wrong");
+        }
         setBots(data.bots);
         console.log("Bots: ", data.bots)
       } catch (err) {
@@ -37,7 +46,23 @@ export default function BotsLabPage() {
   }, [addToast]);
 
 
+  // useEffect(() => {
+  //   const loadBots = async () => {
+  //     try {
+  //       const data = await fetchAllBots()
+  //       setBots(data.bots)
+  //       console.log('Bots:', data.bots)
+  //     } catch (err) {
+  //       const error = err as Error
+  //       console.error(error)
+  //       addToast(error.message, 'error')
+  //     } finally {
+  //       setFetching(false)
+  //     }
+  //   }
 
+  //   loadBots()
+  // }, [addToast])
 
 
   const handleStartCopying = async (botId: string, botName: string) => {
@@ -49,7 +74,7 @@ export default function BotsLabPage() {
 
     
     try {
-      const res = await fetch("/api/user/activate-bot", {
+      const res = await fetch(`${ENDPOINT_URL}/api/user/activate-bot`, {
         method: "POST",
         body: JSON.stringify({ botId }),
       });
@@ -65,6 +90,18 @@ export default function BotsLabPage() {
         throw new Error(result.error || "Something went wrong");
       }
 
+      // const success = await activateBot(botId);
+      // if (success === 403) {
+      //   addToast("No active subscription", "error");
+      //   // No active subscription → redirect client-side
+      //   router.push('/dashboard/offers');
+      //   return;
+      // }
+      // if (success === 500) {
+      //   addToast("Something went wrong", "error");
+      //   return;
+      // }
+
       addToast(`${botName} activated!`, "success");
       
     } catch (err) {
@@ -73,7 +110,7 @@ export default function BotsLabPage() {
     }
   };
 
-  const filteredBots = bots.filter((bot) =>
+  const filteredBots = bots?.filter((bot) =>
     bot.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -82,7 +119,7 @@ export default function BotsLabPage() {
       <h1 className="text-3xl font-bold text-brand-slate-700 mb-8">BOTS LAB</h1>
 
       {/* Search Input */}
-      {!fetching && bots.length > 0 && (
+      {!fetching && bots && bots?.length > 0 && (
         <div className="mb-6">
           <input
             type="text"

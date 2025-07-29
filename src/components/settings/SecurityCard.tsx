@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useToast } from "@/components/toast/useToast";
+import { ENDPOINT_URL } from "../../../endpoint";
 
 interface SecurityInfo {
   email: string;
@@ -21,7 +22,11 @@ export default function SecurityCard() {
     const fetchSecurity = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/user/${id}`);
+        const res = await fetch(`${ENDPOINT_URL}/api/user/${id}`, {
+          method: 'GET',
+          // cache: 'no-store', // ensure it's always fresh
+          credentials: 'include'
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to load security info");
         setSecurity({ email: data.user.email, role: data.user.role });
