@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { ENDPOINT_URL } from "../../endpoint"
+// import { ENDPOINT_URL } from "../../endpoint"
 interface Announcement {
   id: string;
   title: string;
@@ -14,7 +14,7 @@ export default function Announcements() {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const res = await fetch(`${ENDPOINT_URL}/api/dashboard/announcements`, {
+        const res = await fetch(`/api/dashboard/announcements`, {
           method: 'GET',
           // cache: 'no-store', // ensure it's always fresh
           credentials: 'include'

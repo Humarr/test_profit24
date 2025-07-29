@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { getPdfThumbnail } from '@/lib/generateThumbnail';
 import { Suspense } from 'react';
 import Spinner from '@/components/Spinner';
-import { ENDPOINT_URL } from '../../../../endpoint';
+// import { ENDPOINT_URL } from '../../../../endpoint';
 // import { getRawFileUrl } from '@/lib/getRawFileUrl';
 // Types
 type Resource = {
@@ -25,7 +25,7 @@ function groupResources(resources: Resource[]) {
 }
 
 export default async function OthersPage() {
-  const res = await fetch(`${ENDPOINT_URL}/api/admin/resources`, {
+  const res = await fetch(`/api/admin/resources`, {
     
     // cache: 'no-store',
     credentials: 'include'

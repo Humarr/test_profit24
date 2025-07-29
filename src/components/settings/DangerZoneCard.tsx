@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { ENDPOINT_URL } from "../../../endpoint";
+// import { ENDPOINT_URL } from "../../../endpoint";
 
 interface DangerZoneCardProps {
   userId: string;
@@ -20,7 +20,7 @@ export function DangerZoneCard({ userId }: DangerZoneCardProps) {
     setSuccess(false);
 
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/users/${userId}`, {
+      const res = await fetch(`/api/admin/users/${userId}`, {
         method: "DELETE",
         // cache: 'no-store', // ensure it's always fresh
         credentials: 'include'

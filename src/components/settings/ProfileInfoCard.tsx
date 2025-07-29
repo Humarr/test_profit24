@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useToast } from "@/components/toast/useToast";
-import { ENDPOINT_URL } from "../../../endpoint";
+// import { ENDPOINT_URL } from "../../../endpoint";
 
 export default function ProfileInfoCard() {
     const params = useParams(); // ✅ Not a promise
@@ -22,7 +22,7 @@ export default function ProfileInfoCard() {
         }
       try {
         setLoading(true);
-        const res = await fetch(`${ENDPOINT_URL}/api/user/${id}`, {
+        const res = await fetch(`/api/user/${id}`, {
           method: 'GET',
           // cache: 'no-store', // ensure it's always fresh
           credentials: 'include'
@@ -50,7 +50,7 @@ export default function ProfileInfoCard() {
   const handleSave = async () => {
     try {
       setSaving(true);
-      const res = await fetch(`${ENDPOINT_URL}/api/user/${id}`, {
+      const res = await fetch(`/api/user/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

@@ -5,7 +5,7 @@ import { Plus, Trash2, Edit, X } from "lucide-react";
 import Image from "next/image";
 import Spinner from "@/components/Spinner";
 import CustomSelect from "@/components/admin/CustomSelect";
-import { ENDPOINT_URL } from '../../../../endpoint'
+// import { ENDPOINT_URL } from '../../../../endpoint'
 
 interface Resource {
   id: string;
@@ -40,7 +40,7 @@ export default function AdminResourcesPage() {
   const fetchResources = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/resources`, {
+      const res = await fetch(`/api/admin/resources`, {
         method: 'GET',
         // cache: 'no-store', // ensure it's always fresh
         credentials: 'include'
@@ -75,7 +75,7 @@ export default function AdminResourcesPage() {
   async function handleDelete(id: string) {
     if (!confirm("Delete resource?")) return;
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/resources/${id}`, {
+      const res = await fetch(`/api/admin/resources/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -90,8 +90,8 @@ export default function AdminResourcesPage() {
 
   async function handleSubmit() {
     const url = editing
-      ? `${ENDPOINT_URL}/api/admin/resources/${editing.id}`
-      : `${ENDPOINT_URL}/api/admin/resources`;
+      ? `/api/admin/resources/${editing.id}`
+      : `/api/admin/resources`;
     const method = editing ? "PATCH" : "POST";
     try {
       const res = await fetch(url, {

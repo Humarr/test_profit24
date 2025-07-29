@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import {  Users, Video, FileText, Speaker, CreditCard } from 'lucide-react'
 import { useToast } from '@/components/toast/useToast'
 import Spinner from '@/components/Spinner'
-import { ENDPOINT_URL } from '../../../../endpoint'
+// import { ENDPOINT_URL } from '../../../../endpoint'
 
 export default function AdminDashboardPage() {
   const toast = useToast()
@@ -20,7 +20,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch(`${ENDPOINT_URL}/api/admin/dashboard-stats`, {
+        const res = await fetch(`/api/admin/dashboard-stats`, {
           method: 'GET',
           // cache: 'no-store', // ensure it's always fresh
           credentials: 'include'

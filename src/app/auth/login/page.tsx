@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { useToast } from '@/components/toast/useToast'
-import { ENDPOINT_URL } from '../../../../endpoint'
+// import { ENDPOINT_URL } from '../../../../endpoint'
 // import { useRouter } from 'next/navigation'
 
 
@@ -28,7 +28,7 @@ export default function LoginPage() {
       // Check for admin email
       if (form.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
         addToast('Admin login attempt detected!', 'info');
-        const response = await fetch(`${ENDPOINT_URL}/api/admin/login`, {
+        const response = await fetch(`/api/admin/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form),
@@ -46,7 +46,7 @@ export default function LoginPage() {
           window.location.href = '/admin';
           // router.replace('/admin')
 
-          await fetch(`${ENDPOINT_URL}/api/mail`, {
+          await fetch(`/api/mail`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -66,7 +66,7 @@ export default function LoginPage() {
   
       // Default user login
 
-      const response = await fetch(`${ENDPOINT_URL}/api/login`, {
+      const response = await fetch(`/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

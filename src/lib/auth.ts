@@ -2,9 +2,9 @@
 // /src/lib/auth.ts
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-// import prisma from './prisma';
+import prisma from './prisma';
 // import { compare } from 'bcryptjs';
-import { ENDPOINT_URL } from '../../endpoint';
+// import { ENDPOINT_URL } from '../../endpoint';
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export interface AuthPayload {
@@ -28,85 +28,85 @@ export function verifyToken(token: string): AuthPayload | null {
 /**
  * Get the authenticated user from cookie-based auth_token
  */
-export async function getAuthUser() {
-  const token = (await cookies()).get('auth_token')?.value;
-
-  if (!token) return null;
-
-  try {
-    const res = await fetch(`${ENDPOINT_URL}/api/user/me`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-      credentials: 'include',
-    });
-    const user = await res.json();
-    return user;
-  } catch (error) {
-    console.error("Auth token verification failed:", error);
-    return null;
-  }
-}
 // export async function getAuthUser() {
 //   const token = (await cookies()).get('auth_token')?.value;
 
 //   if (!token) return null;
 
 //   try {
-//     const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
-//     const user = await prisma.user.findUnique({
-//       where: { id: decoded.id },
+//     const res = await fetch(`${ENDPOINT_URL}/api/user/me`, {
+//       method: 'GET',
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//       },
+//       credentials: 'include',
 //     });
+//     const user = await res.json();
 //     return user;
 //   } catch (error) {
 //     console.error("Auth token verification failed:", error);
 //     return null;
 //   }
 // }
-
-/**
- * Get admin user (checks role)
- */
-export async function getAdminUser() {
-  const token = (await cookies()).get('admin_token')?.value;
+export async function getAuthUser() {
+  const token = (await cookies()).get('auth_token')?.value;
 
   if (!token) return null;
 
   try {
- const res = await fetch(`${ENDPOINT_URL}/api/admin/users/me`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-      credentials: 'include',
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
     });
-    const user = await res.json();
     return user;
   } catch (error) {
-    console.error("Admin token verification failed:", error);
+    console.error("Auth token verification failed:", error);
     return null;
   }
 }
+
+/**
+ * Get admin user (checks role)
+ */
 // export async function getAdminUser() {
 //   const token = (await cookies()).get('admin_token')?.value;
 
 //   if (!token) return null;
 
 //   try {
-//     const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
-//     const user = await prisma.user.findUnique({
-//       where: { id: decoded.id },
+//  const res = await fetch(`${ENDPOINT_URL}/api/admin/users/me`, {
+//       method: 'GET',
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//       },
+//       credentials: 'include',
 //     });
-
-//     if (!user || user.role !== 'admin') return null;
-
+//     const user = await res.json();
 //     return user;
 //   } catch (error) {
 //     console.error("Admin token verification failed:", error);
 //     return null;
 //   }
 // }
+export async function getAdminUser() {
+  const token = (await cookies()).get('admin_token')?.value;
+
+  if (!token) return null;
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+    });
+
+    if (!user || user.role !== 'admin') return null;
+
+    return user;
+  } catch (error) {
+    console.error("Admin token verification failed:", error);
+    return null;
+  }
+}
 
 
 

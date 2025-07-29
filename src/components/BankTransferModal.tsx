@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/toast/useToast";
 import { redirect, useRouter } from "next/navigation";
-import { ENDPOINT_URL } from "../../endpoint"
+// import { ENDPOINT_URL } from "../../endpoint"
 import { fetchToken } from "@/lib/api/fetchToken";
 // import router from "next/router"
 
@@ -34,7 +34,7 @@ export default function BankTransferModal({
     const convertToNGN = async () => {
       try {
         setConverting(true);
-        const res = await fetch(`${ENDPOINT_URL}/api/convert`, {
+        const res = await fetch(`/api/convert`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: parseFloat(amount), currency: "USD" }),
@@ -73,7 +73,7 @@ export default function BankTransferModal({
     }
     setLoading(true);
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/paystack/initialize`, {
+      const res = await fetch(`/api/paystack/initialize`, {
         method: "POST",
         headers: { "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`

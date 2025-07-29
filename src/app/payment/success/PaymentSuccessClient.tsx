@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { useToast } from "@/components/toast/useToast"
 import { FaSpinner } from "react-icons/fa"
 import Link from "next/link"
-import { ENDPOINT_URL } from "../../../../endpoint"
+// import { ENDPOINT_URL } from "../../../../endpoint"
 import { fetchToken } from "@/lib/api/fetchToken"
 
 export default function PaymentSuccessClient() {
@@ -36,7 +36,7 @@ export default function PaymentSuccessClient() {
       // setToken(token) // Optional: if you need token in state elsewhere
 
       try {
-        const res = await fetch(`${ENDPOINT_URL}/api/paystack/verify?reference=${reference}`, {
+        const res = await fetch(`/api/paystack/verify?reference=${reference}`, {
           method: "GET",
           credentials: "include",
           headers: {

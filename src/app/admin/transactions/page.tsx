@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/components/toast/useToast";
 import { Edit } from "lucide-react";
 import Spinner from "@/components/Spinner";
-import { ENDPOINT_URL } from '../../../../endpoint'
+// import { ENDPOINT_URL } from '../../../../endpoint'
 interface Transaction {
   id: string;
   reference: string;
@@ -24,7 +24,7 @@ export default function AdminTransactionsPage() {
   const fetchTransactions = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/transactions`);
+      const res = await fetch(`/api/admin/transactions`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load");
       setTransactions(data.transactions);
@@ -46,7 +46,7 @@ export default function AdminTransactionsPage() {
 
   const handleUpdate = async () => {
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/transactions/${editing?.id}`, {
+      const res = await fetch(`/api/admin/transactions/${editing?.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),

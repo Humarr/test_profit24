@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/components/toast/useToast";
 import BotModal from "@/components/BotModal";
 import { Bot } from "@/data/bots";
-import { ENDPOINT_URL } from "../../../../endpoint";
+// import { ENDPOINT_URL } from "../../../../endpoint";
 // import { activateBot, fetchAllBots } from "@/lib/api/bots";
 // import Spinner from "@/components/Spinner";
 
@@ -23,7 +23,7 @@ export default function BotsLabPage() {
   useEffect(() => {
     const fetchBots = async () => {
       try {
-        const res = await fetch(`${ENDPOINT_URL}/api/dashboard/bots/all`, {
+        const res = await fetch(`/api/dashboard/bots/all`, {
           method: 'GET',
           // cache: 'no-store', // ensure it's always fresh
           credentials: 'include'
@@ -74,7 +74,7 @@ export default function BotsLabPage() {
 
     
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/user/activate-bot`, {
+      const res = await fetch(`/api/user/activate-bot`, {
         method: "POST",
         body: JSON.stringify({ botId }),
       });

@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/components/toast/useToast";
 import { Edit, Trash2, Plus } from "lucide-react";
 import Spinner from "@/components/Spinner";
-import { ENDPOINT_URL } from '../../../../endpoint'
+// import { ENDPOINT_URL } from '../../../../endpoint'
 interface User {
   id: string;
   name: string;
@@ -40,7 +40,7 @@ export default function AdminUsersPage() {
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/users`);
+      const res = await fetch(`/api/admin/users`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to fetch users");
       setUsers(data.users);
@@ -88,7 +88,7 @@ export default function AdminUsersPage() {
   async function handleDelete(id: string) {
     if (!confirm("Delete this user?")) return;
     try {
-      const res = await fetch(`${ENDPOINT_URL}/api/admin/users/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/users/${id}`, { method: "DELETE" });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Delete failed");
       toast("User deleted", "success");
@@ -99,7 +99,7 @@ export default function AdminUsersPage() {
   }
 
   async function handleSubmit() {
-    const url = editing ? `${ENDPOINT_URL}/api/admin/users/${editing.id}` : `${ENDPOINT_URL}/api/admin/users`;
+    const url = editing ? `/api/admin/users/${editing.id}` : `/api/admin/users`;
     const method = editing ? "PATCH" : "POST";
     try {
       const res = await fetch(url, {
