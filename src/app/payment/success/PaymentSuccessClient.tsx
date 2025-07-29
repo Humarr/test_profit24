@@ -80,10 +80,10 @@ export default function PaymentSuccessClient() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-brand-white p-4">
-      <div className="bg-brand-purple-50 text-brand-purple-700 text-center p-8 rounded-xl shadow-lg flex flex-col items-center gap-4">
+      <div className="bg-brand-teal-50 text-brand-teal-700 text-center p-8 rounded-xl shadow-lg flex flex-col items-center gap-4">
         {loading ? (
           <>
-            <FaSpinner className="animate-spin text-3xl text-brand-purple-700" />
+            <FaSpinner className="animate-spin text-3xl text-brand-teal-700" />
             <p className="text-sm font-medium">Verifying your payment...</p>
           </>
         ) : (
@@ -96,7 +96,7 @@ export default function PaymentSuccessClient() {
                 href={whatsappURL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-brand-purple-600 text-white px-4 py-2 rounded-lg hover:bg-brand-purple-700 transition-all"
+                className="bg-brand-teal-600 text-white px-4 py-2 rounded-lg hover:bg-brand-teal-700 transition-all"
               >
                 Open WhatsApp
               </Link>
