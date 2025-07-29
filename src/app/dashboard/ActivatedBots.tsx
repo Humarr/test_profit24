@@ -2,7 +2,7 @@
 
 import { Bot } from "@/data/bots";
 import { useEffect, useState } from "react";
-import { ENDPOINT_URL } from "../../../endpoint";
+// import { ENDPOINT_URL } from "../../../endpoint";
 
 function ActivatedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
@@ -11,7 +11,7 @@ function ActivatedBots() {
   useEffect(() => {
     const fetchActivatedBots = async () => {
       try {
-        const res = await fetch(`${ENDPOINT_URL}/api/user/activated-bots`, {
+        const res = await fetch(`/api/user/activated-bots`, {
           method: 'GET',
           // cache: 'no-store', // ensure it's always fresh
           credentials: 'include'

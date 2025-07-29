@@ -4,14 +4,14 @@
 import { useEffect, useState } from 'react'
 import { Clipboard, ClipboardCheck } from 'lucide-react'
 import { User } from '@prisma/client'
-import { ENDPOINT_URL } from '../../../endpoint'
+// import { ENDPOINT_URL } from '../../../endpoint'
 
 export default function ReferralStats() {
   const [data, setData] = useState<{ count: number, users: User[] } | null>(null)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    fetch(`${ENDPOINT_URL}/api/dashboard/referrals`, {
+    fetch(`/api/dashboard/referrals`, {
       method: 'GET',
       // cache: 'no-store', // ensure it's always fresh
       credentials: 'include'
