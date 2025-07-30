@@ -588,7 +588,7 @@ export default function RegisterPage() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-brand-slate-700 font-nasal">
+                <h3 className="text-lg font-bold text-brand-slate-700 font-sans">
                   Spectra Privacy Policy
                 </h3>
                 <button
@@ -606,7 +606,7 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   Spectra, an AI-driven trading platform, is committed to protecting your privacy. This Privacy Policy explains how Spectra ("we," "us," or "our") collects, uses, discloses, and safeguards your information when you use our website, mobile application, or services (collectively, the "Services").
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">1. Information We Collect</h4>
+                <h4 className="text-md font-bold font-sans mb-2">1. Information We Collect</h4>
                 <p className="mb-4">
                   We collect the following types of information:
                 </p>
@@ -616,7 +616,7 @@ export default function RegisterPage() {
                   <li><strong>Usage Data:</strong> Interactions with our platform, including trades executed, AI model preferences, and browsing behavior.</li>
                   <li><strong>Device Information:</strong> IP address, browser type, device identifiers, and operating system to optimize and secure your experience.</li>
                 </ul>
-                <h4 className="text-md font-bold font-nasal mb-2">2. How We Use Your Information</h4>
+                <h4 className="text-md font-bold font-sans mb-2">2. How We Use Your Information</h4>
                 <p className="mb-4">
                   We use your information to:
                 </p>
@@ -626,11 +626,11 @@ export default function RegisterPage() {
                   <li>Communicate with you about account updates, promotions, or security alerts.</li>
                   <li>Analyze usage patterns to enhance our AI algorithms and platform performance.</li>
                 </ul>
-                <h4 className="text-md font-bold font-nasal mb-2">3. AI and Data Processing</h4>
+                <h4 className="text-md font-bold font-sans mb-2">3. AI and Data Processing</h4>
                 <p className="mb-4">
                   Spectra uses artificial intelligence to analyze market data and user preferences to provide trading insights. Your trading data may be used to train our AI models, but personal information is anonymized to protect your privacy.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">4. Data Sharing</h4>
+                <h4 className="text-md font-bold font-sans mb-2">4. Data Sharing</h4>
                 <p className="mb-4">
                   We may share your information with:
                 </p>
@@ -642,11 +642,11 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   We do not sell your personal information to third parties.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">5. Data Security</h4>
+                <h4 className="text-md font-bold font-sans mb-2">5. Data Security</h4>
                 <p className="mb-4">
                   We implement industry-standard security measures, including encryption and secure socket layer (SSL) technology, to protect your data. However, no system is completely secure, and you should use strong passwords and safeguard your account credentials.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">6. Your Rights</h4>
+                <h4 className="text-md font-bold font-sans mb-2">6. Your Rights</h4>
                 <p className="mb-4">
                   Depending on your jurisdiction, you may have the right to:
                 </p>
@@ -658,19 +658,19 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   To exercise these rights, contact us at privacy@spectra.ai.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">7. Cookies and Tracking</h4>
+                <h4 className="text-md font-bold font-sans mb-2">7. Cookies and Tracking</h4>
                 <p className="mb-4">
                   We use cookies to enhance your experience, such as remembering login details and tracking site usage. You can manage cookie preferences through your browser settings.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">8. International Data Transfers</h4>
+                <h4 className="text-md font-bold font-sans mb-2">8. International Data Transfers</h4>
                 <p className="mb-4">
                   Your data may be transferred to and processed in countries outside your jurisdiction, including the United States, where data protection laws may differ. We ensure appropriate safeguards are in place.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">9. Updates to This Policy</h4>
+                <h4 className="text-md font-bold font-sans mb-2">9. Updates to This Policy</h4>
                 <p className="mb-4">
                   We may update this Privacy Policy periodically. Changes will be posted on our website, and significant updates will be communicated via email.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">10. Contact Us</h4>
+                <h4 className="text-md font-bold font-sans mb-2">10. Contact Us</h4>
                 <p className="mb-4">
                   For questions or concerns, contact us at:
                   <br />
@@ -705,7 +705,7 @@ export default function RegisterPage() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-brand-slate-700 font-nasal">
+                <h3 className="text-lg font-bold text-brand-slate-700 font-sans">
                   Spectra User Agreement
                 </h3>
                 <button
@@ -723,11 +723,11 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   This User Agreement ("Agreement") governs your use of the Spectra AI trading platform ("Services"). By registering or using the Services, you agree to be bound by these terms.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">1. Eligibility</h4>
+                <h4 className="text-md font-bold font-sans mb-2">1. Eligibility</h4>
                 <p className="mb-4">
                   You must be at least 18 years old and have the legal capacity to enter into contracts to use the Services. By registering, you represent that you meet these requirements.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">2. Account Responsibilities</h4>
+                <h4 className="text-md font-bold font-sans mb-2">2. Account Responsibilities</h4>
                 <p className="mb-4">
                   You are responsible for:
                 </p>
@@ -736,7 +736,7 @@ export default function RegisterPage() {
                   <li>All activities conducted under your account, whether authorized or not.</li>
                   <li>Notifying us immediately at support@spectra.ai if you suspect unauthorized access.</li>
                 </ul>
-                <h4 className="text-md font-bold font-nasal mb-2">3. Use of Services</h4>
+                <h4 className="text-md font-bold font-sans mb-2">3. Use of Services</h4>
                 <p className="mb-4">
                   You agree to:
                 </p>
@@ -748,19 +748,19 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   Spectra's AI-driven trading tools provide recommendations based on market data and user inputs. You acknowledge that these recommendations do not guarantee profits and are subject to market risks.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">4. Risk Acknowledgment</h4>
+                <h4 className="text-md font-bold font-sans mb-2">4. Risk Acknowledgment</h4>
                 <p className="mb-4">
                   Trading involves significant financial risk. You are solely responsible for any losses incurred through the use of the Services. Spectra does not provide financial advice, and past performance is not indicative of future results.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">5. Fees and Payments</h4>
+                <h4 className="text-md font-bold font-sans mb-2">5. Fees and Payments</h4>
                 <p className="mb-4">
                   You agree to pay all applicable fees for the Services, as outlined in our fee schedule. Fees are non-refundable unless otherwise stated. Payment disputes must be reported within 30 days.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">6. Intellectual Property</h4>
+                <h4 className="text-md font-bold font-sans mb-2">6. Intellectual Property</h4>
                 <p className="mb-4">
                   All content, AI algorithms, and technology provided by Spectra are owned by us or our licensors. You may not copy, modify, or distribute any part of the Services without our prior written consent.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">7. Termination</h4>
+                <h4 className="text-md font-bold font-sans mb-2">7. Termination</h4>
                 <p className="mb-4">
                   We may suspend or terminate your account for:
                 </p>
@@ -772,19 +772,19 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   Upon termination, you must cease using the Services, and any pending trades may be canceled.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">8. Dispute Resolution</h4>
+                <h4 className="text-md font-bold font-sans mb-2">8. Dispute Resolution</h4>
                 <p className="mb-4">
                   Any disputes arising from this Agreement will be governed by the laws of the State of Delaware, USA. You agree to resolve disputes through binding arbitration in Delaware, unless otherwise required by law.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">9. Limitation of Liability</h4>
+                <h4 className="text-md font-bold font-sans mb-2">9. Limitation of Liability</h4>
                 <p className="mb-4">
                   To the fullest extent permitted by law, Spectra is not liable for any indirect, incidental, or consequential damages arising from your use of the Services, including losses from trading decisions.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">10. Updates to This Agreement</h4>
+                <h4 className="text-md font-bold font-sans mb-2">10. Updates to This Agreement</h4>
                 <p className="mb-4">
                   We may update this Agreement periodically. Changes will be posted on our website, and continued use of the Services constitutes acceptance of the updated terms.
                 </p>
-                <h4 className="text-md font-bold font-nasal mb-2">11. Contact Us</h4>
+                <h4 className="text-md font-bold font-sans mb-2">11. Contact Us</h4>
                 <p className="mb-4">
                   For questions or concerns, contact us at:
                   <br />
