@@ -25,7 +25,7 @@ export function FormattedNumberInput({ value, onChange }: { value: string; onCha
       value={formattedValue}
       onChange={handleChange}
       placeholder="How much do you want to trade with?"
-      className="flex-grow px-4 py-3 rounded-l-lg bg-transparent placeholder:text-brand-black-400 text-brand-black-700 focus:outline-none"
+      className="flex-grow px-4 py-3 rounded-l-lg bg-transparent placeholder:text-brand-slate-400 text-brand-slate-700 focus:outline-none"
     />
   );
 }
