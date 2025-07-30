@@ -3,7 +3,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Clock, X } from "lucide-react";
+import { Eye, EyeOff, Clock } from "lucide-react";
 import { useToast } from "@/components/toast/useToast";
 import CustomSelect from "@/components/CustomSelect";
 import CurrencyAmountInput from "@/components/CurrencyAmountInput";
@@ -15,8 +15,6 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
-  const [showAgreementModal, setShowAgreementModal] = useState(false);
   const otpInputs = useRef<(HTMLInputElement | null)[]>([]);
 
   const addToast = useToast();
@@ -171,7 +169,7 @@ export default function RegisterPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: formData.email }),
-      });
+      }); 
       const data = await res.json();
       if (res.ok) {
         addToast("OTP sent successfully!", "success");
@@ -267,21 +265,19 @@ export default function RegisterPage() {
                   className="text-sm text-brand-slate-500"
                 >
                   I agree to the{" "}
-                  <button
-                    type="button"
-                    onClick={() => setShowAgreementModal(true)}
-                    className="text-brand-purple-600 underline font-bold mx-1"
+                  <Link
+                    href="#"
+                    className="text-brand-purple-600 underline font-bold"
                   >
                     User Agreement
-                  </button>{" "}
+                  </Link>{" "}
                   and{" "}
-                  <button
-                    type="button"
-                    onClick={() => setShowPrivacyModal(true)}
-                    className="text-brand-purple-600 underline font-bold mx-1"
+                  <Link
+                    href="#"
+                    className="text-brand-purple-600 underline font-bold"
                   >
                     Privacy Policy
-                  </button>
+                  </Link>
                 </label>
               </div>
               <button
@@ -347,6 +343,7 @@ export default function RegisterPage() {
                     </button>
                     <button
                       onClick={() => setActiveStep(2)}
+                      // onClick={() => setShowAlert(false)}
                       className="px-4 py-2 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
                     >
                       Proceed
@@ -574,237 +571,6 @@ export default function RegisterPage() {
             >
               Go to Login
             </Link>
-          </div>
-        )}
-
-        {/* Privacy Policy Modal */}
-        {showPrivacyModal && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowPrivacyModal(false)}
-          >
-            <div
-              className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[80vh] flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-brand-slate-700 font-nasal">
-                  Spectra Privacy Policy
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setShowPrivacyModal(false)}
-                  className="text-brand-slate-400 hover:text-brand-purple-600"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="overflow-y-auto scrollbar-hide flex-grow text-brand-slate-500">
-                <p className="mb-4">
-                  Effective Date: July 30, 2025
-                </p>
-                <p className="mb-4">
-                  Spectra, an AI-driven trading platform, is committed to protecting your privacy. This Privacy Policy explains how Spectra ("we," "us," or "our") collects, uses, discloses, and safeguards your information when you use our website, mobile application, or services (collectively, the "Services").
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">1. Information We Collect</h4>
-                <p className="mb-4">
-                  We collect the following types of information:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li><strong>Personal Information:</strong> Name, email address, phone number, and other details provided during registration or account updates.</li>
-                  <li><strong>Financial Information:</strong> Trading preferences, transaction history, and funding details (e.g., linked bank accounts or cryptocurrency wallets).</li>
-                  <li><strong>Usage Data:</strong> Interactions with our platform, including trades executed, AI model preferences, and browsing behavior.</li>
-                  <li><strong>Device Information:</strong> IP address, browser type, device identifiers, and operating system to optimize and secure your experience.</li>
-                </ul>
-                <h4 className="text-md font-bold font-nasal mb-2">2. How We Use Your Information</h4>
-                <p className="mb-4">
-                  We use your information to:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li>Provide and improve the Services, including executing AI-driven trades and personalizing recommendations.</li>
-                  <li>Verify your identity and comply with anti-money laundering (AML) and know-your-customer (KYC) regulations.</li>
-                  <li>Communicate with you about account updates, promotions, or security alerts.</li>
-                  <li>Analyze usage patterns to enhance our AI algorithms and platform performance.</li>
-                </ul>
-                <h4 className="text-md font-bold font-nasal mb-2">3. AI and Data Processing</h4>
-                <p className="mb-4">
-                  Spectra uses artificial intelligence to analyze market data and user preferences to provide trading insights. Your trading data may be used to train our AI models, but personal information is anonymized to protect your privacy.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">4. Data Sharing</h4>
-                <p className="mb-4">
-                  We may share your information with:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li>Third-party service providers (e.g., payment processors, KYC verification services) to facilitate trading and compliance.</li>
-                  <li>Regulatory authorities to comply with legal obligations.</li>
-                  <li>Business partners for analytics, provided data is anonymized.</li>
-                </ul>
-                <p className="mb-4">
-                  We do not sell your personal information to third parties.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">5. Data Security</h4>
-                <p className="mb-4">
-                  We implement industry-standard security measures, including encryption and secure socket layer (SSL) technology, to protect your data. However, no system is completely secure, and you should use strong passwords and safeguard your account credentials.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">6. Your Rights</h4>
-                <p className="mb-4">
-                  Depending on your jurisdiction, you may have the right to:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li>Access, correct, or delete your personal information.</li>
-                  <li>Opt out of marketing communications.</li>
-                  <li>Request data portability or restrict processing.</li>
-                </ul>
-                <p className="mb-4">
-                  To exercise these rights, contact us at privacy@spectra.ai.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">7. Cookies and Tracking</h4>
-                <p className="mb-4">
-                  We use cookies to enhance your experience, such as remembering login details and tracking site usage. You can manage cookie preferences through your browser settings.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">8. International Data Transfers</h4>
-                <p className="mb-4">
-                  Your data may be transferred to and processed in countries outside your jurisdiction, including the United States, where data protection laws may differ. We ensure appropriate safeguards are in place.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">9. Updates to This Policy</h4>
-                <p className="mb-4">
-                  We may update this Privacy Policy periodically. Changes will be posted on our website, and significant updates will be communicated via email.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">10. Contact Us</h4>
-                <p className="mb-4">
-                  For questions or concerns, contact us at:
-                  <br />
-                  Spectra
-                  <br />
-                  Email: privacy@spectra.ai
-                  <br />
-                  Address: 123 AI Trade Lane, Tech City, TC 12345, USA
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowPrivacyModal(false)}
-                  className="px-4 py-2 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* User Agreement Modal */}
-        {showAgreementModal && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowAgreementModal(false)}
-          >
-            <div
-              className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[80vh] flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-brand-slate-700 font-nasal">
-                  Spectra User Agreement
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setShowAgreementModal(false)}
-                  className="text-brand-slate-400 hover:text-brand-purple-600"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="overflow-y-auto scrollbar-hide flex-grow text-brand-slate-500">
-                <p className="mb-4">
-                  Effective Date: July 30, 2025
-                </p>
-                <p className="mb-4">
-                  This User Agreement ("Agreement") governs your use of the Spectra AI trading platform ("Services"). By registering or using the Services, you agree to be bound by these terms.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">1. Eligibility</h4>
-                <p className="mb-4">
-                  You must be at least 18 years old and have the legal capacity to enter into contracts to use the Services. By registering, you represent that you meet these requirements.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">2. Account Responsibilities</h4>
-                <p className="mb-4">
-                  You are responsible for:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li>Maintaining the confidentiality of your account credentials.</li>
-                  <li>All activities conducted under your account, whether authorized or not.</li>
-                  <li>Notifying us immediately at support@spectra.ai if you suspect unauthorized access.</li>
-                </ul>
-                <h4 className="text-md font-bold font-nasal mb-2">3. Use of Services</h4>
-                <p className="mb-4">
-                  You agree to:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li>Use the Services only for lawful purposes.</li>
-                  <li>Not engage in fraudulent activities, market manipulation, or any conduct that violates applicable laws or regulations.</li>
-                  <li>Provide accurate information during registration and KYC verification.</li>
-                </ul>
-                <p className="mb-4">
-                  Spectra's AI-driven trading tools provide recommendations based on market data and user inputs. You acknowledge that these recommendations do not guarantee profits and are subject to market risks.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">4. Risk Acknowledgment</h4>
-                <p className="mb-4">
-                  Trading involves significant financial risk. You are solely responsible for any losses incurred through the use of the Services. Spectra does not provide financial advice, and past performance is not indicative of future results.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">5. Fees and Payments</h4>
-                <p className="mb-4">
-                  You agree to pay all applicable fees for the Services, as outlined in our fee schedule. Fees are non-refundable unless otherwise stated. Payment disputes must be reported within 30 days.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">6. Intellectual Property</h4>
-                <p className="mb-4">
-                  All content, AI algorithms, and technology provided by Spectra are owned by us or our licensors. You may not copy, modify, or distribute any part of the Services without our prior written consent.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">7. Termination</h4>
-                <p className="mb-4">
-                  We may suspend or terminate your account for:
-                </p>
-                <ul className="list-disc pl-5 mb-4">
-                  <li>Violation of this Agreement.</li>
-                  <li>Suspected fraudulent or illegal activity.</li>
-                  <li>Failure to comply with KYC/AML requirements.</li>
-                </ul>
-                <p className="mb-4">
-                  Upon termination, you must cease using the Services, and any pending trades may be canceled.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">8. Dispute Resolution</h4>
-                <p className="mb-4">
-                  Any disputes arising from this Agreement will be governed by the laws of the State of Delaware, USA. You agree to resolve disputes through binding arbitration in Delaware, unless otherwise required by law.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">9. Limitation of Liability</h4>
-                <p className="mb-4">
-                  To the fullest extent permitted by law, Spectra is not liable for any indirect, incidental, or consequential damages arising from your use of the Services, including losses from trading decisions.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">10. Updates to This Agreement</h4>
-                <p className="mb-4">
-                  We may update this Agreement periodically. Changes will be posted on our website, and continued use of the Services constitutes acceptance of the updated terms.
-                </p>
-                <h4 className="text-md font-bold font-nasal mb-2">11. Contact Us</h4>
-                <p className="mb-4">
-                  For questions or concerns, contact us at:
-                  <br />
-                  Spectra
-                  <br />
-                  Email: support@spectra.ai
-                  <br />
-                  Address: 123 AI Trade Lane, Tech City, TC 12345, USA
-                </p>
-              </div>
-              <div className="flex justify-end mt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowAgreementModal(false)}
-                  className="px-4 py-2 bg-brand-purple-500 text-white rounded-lg font-medium hover:bg-brand-purple-600"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
           </div>
         )}
       </div>
