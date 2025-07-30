@@ -589,7 +589,7 @@ export default function RegisterPage() {
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-bold text-brand-slate-700 font-sans">
-                  Spectra Privacy Policy
+                  Profits24 Scalper Privacy Policy
                 </h3>
                 <button
                   type="button"
@@ -604,7 +604,7 @@ export default function RegisterPage() {
                   Effective Date: July 30, 2025
                 </p>
                 <p className="mb-4">
-                  Spectra, an AI-driven trading platform, is committed to protecting your privacy. This Privacy Policy explains how Spectra ("we," "us," or "our") collects, uses, discloses, and safeguards your information when you use our website, mobile application, or services (collectively, the "Services").
+                  Profits24 Scalper, an AI-driven trading platform, is committed to protecting your privacy. This Privacy Policy explains how Profits24 Scalper ("we," "us," or "our") collects, uses, discloses, and safeguards your information when you use our website, mobile application, or services (collectively, the "Services").
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">1. Information We Collect</h4>
                 <p className="mb-4">
@@ -628,7 +628,7 @@ export default function RegisterPage() {
                 </ul>
                 <h4 className="text-md font-bold font-sans mb-2">3. AI and Data Processing</h4>
                 <p className="mb-4">
-                  Spectra uses artificial intelligence to analyze market data and user preferences to provide trading insights. Your trading data may be used to train our AI models, but personal information is anonymized to protect your privacy.
+                  Profits24 Scalper uses artificial intelligence to analyze market data and user preferences to provide trading insights. Your trading data may be used to train our AI models, but personal information is anonymized to protect your privacy.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">4. Data Sharing</h4>
                 <p className="mb-4">
@@ -656,7 +656,7 @@ export default function RegisterPage() {
                   <li>Request data portability or restrict processing.</li>
                 </ul>
                 <p className="mb-4">
-                  To exercise these rights, contact us at privacy@spectra.ai.
+                  To exercise these rights, contact us at privacy@profits24 scalper.ai.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">7. Cookies and Tracking</h4>
                 <p className="mb-4">
@@ -674,9 +674,9 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   For questions or concerns, contact us at:
                   <br />
-                  Spectra
+                  Profits24 Scalper
                   <br />
-                  Email: privacy@spectra.ai
+                  Email: privacy@profits24 scalper.ai
                   <br />
                   Address: 123 AI Trade Lane, Tech City, TC 12345, USA
                 </p>
@@ -706,7 +706,7 @@ export default function RegisterPage() {
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-bold text-brand-slate-700 font-sans">
-                  Spectra User Agreement
+                  Profits24 Scalper User Agreement
                 </h3>
                 <button
                   type="button"
@@ -721,7 +721,7 @@ export default function RegisterPage() {
                   Effective Date: July 30, 2025
                 </p>
                 <p className="mb-4">
-                  This User Agreement ("Agreement") governs your use of the Spectra AI trading platform ("Services"). By registering or using the Services, you agree to be bound by these terms.
+                  This User Agreement ("Agreement") governs your use of the Profits24 Scalper AI trading platform ("Services"). By registering or using the Services, you agree to be bound by these terms.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">1. Eligibility</h4>
                 <p className="mb-4">
@@ -734,7 +734,7 @@ export default function RegisterPage() {
                 <ul className="list-disc pl-5 mb-4">
                   <li>Maintaining the confidentiality of your account credentials.</li>
                   <li>All activities conducted under your account, whether authorized or not.</li>
-                  <li>Notifying us immediately at support@spectra.ai if you suspect unauthorized access.</li>
+                  <li>Notifying us immediately at support@profits24 scalper.ai if you suspect unauthorized access.</li>
                 </ul>
                 <h4 className="text-md font-bold font-sans mb-2">3. Use of Services</h4>
                 <p className="mb-4">
@@ -746,11 +746,11 @@ export default function RegisterPage() {
                   <li>Provide accurate information during registration and KYC verification.</li>
                 </ul>
                 <p className="mb-4">
-                  Spectra's AI-driven trading tools provide recommendations based on market data and user inputs. You acknowledge that these recommendations do not guarantee profits and are subject to market risks.
+                  Profits24 Scalper's AI-driven trading tools provide recommendations based on market data and user inputs. You acknowledge that these recommendations do not guarantee profits and are subject to market risks.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">4. Risk Acknowledgment</h4>
                 <p className="mb-4">
-                  Trading involves significant financial risk. You are solely responsible for any losses incurred through the use of the Services. Spectra does not provide financial advice, and past performance is not indicative of future results.
+                  Trading involves significant financial risk. You are solely responsible for any losses incurred through the use of the Services. Profits24 Scalper does not provide financial advice, and past performance is not indicative of future results.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">5. Fees and Payments</h4>
                 <p className="mb-4">
@@ -758,7 +758,7 @@ export default function RegisterPage() {
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">6. Intellectual Property</h4>
                 <p className="mb-4">
-                  All content, AI algorithms, and technology provided by Spectra are owned by us or our licensors. You may not copy, modify, or distribute any part of the Services without our prior written consent.
+                  All content, AI algorithms, and technology provided by Profits24 Scalper are owned by us or our licensors. You may not copy, modify, or distribute any part of the Services without our prior written consent.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">7. Termination</h4>
                 <p className="mb-4">
@@ -778,7 +778,7 @@ export default function RegisterPage() {
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">9. Limitation of Liability</h4>
                 <p className="mb-4">
-                  To the fullest extent permitted by law, Spectra is not liable for any indirect, incidental, or consequential damages arising from your use of the Services, including losses from trading decisions.
+                  To the fullest extent permitted by law, Profits24 Scalper is not liable for any indirect, incidental, or consequential damages arising from your use of the Services, including losses from trading decisions.
                 </p>
                 <h4 className="text-md font-bold font-sans mb-2">10. Updates to This Agreement</h4>
                 <p className="mb-4">
@@ -788,9 +788,9 @@ export default function RegisterPage() {
                 <p className="mb-4">
                   For questions or concerns, contact us at:
                   <br />
-                  Spectra
+                  Profits24 Scalper
                   <br />
-                  Email: support@spectra.ai
+                  Email: support@profits24 scalper.ai
                   <br />
                   Address: 123 AI Trade Lane, Tech City, TC 12345, USA
                 </p>
