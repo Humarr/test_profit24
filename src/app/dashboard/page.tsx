@@ -6,19 +6,21 @@ import { Bot, Stars } from 'lucide-react'
 import Pricing from '@/components/Pricing'
 import { format } from 'date-fns'
 import ActivatedBots from './ActivatedBots'
-import {getCurrentUser} from '@/lib/getCurrentUser'
+import { getCurrentUser } from '@/lib/getCurrentUser'
 
 export default async function DashboardPage() {
-  
   const currentUser = await getCurrentUser()
-  const dashboardData = await getUserDashboardData()
+  const dashboardResponse = await getUserDashboardData()
 
-  if (!dashboardData) {
+  // 🔒 Case 1: Error or unauthenticated user
+  if (!dashboardResponse.success) {
     return (
       <div className="max-w-7xl mx-auto py-12">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-brand-slate-700 mb-4">You're not logged in</h1>
-          <Link href="/auth" className="text-brand-purple-600 hover:underline">
+          <h1 className="text-2xl font-bold text-brand-slate-700 mb-4">
+            You're not logged in
+          </h1>
+          <Link href="/auth/login" className="text-brand-purple-600 hover:underline">
             Go to login
           </Link>
         </div>
@@ -26,8 +28,10 @@ export default async function DashboardPage() {
     )
   }
 
-  const { plan, botCount, expiresAt, isExpired } = dashboardData
+  // ✅ Destructure from safe `.data`
+  const { plan, botCount, expiresAt, isExpired } = dashboardResponse.data
 
+  // 🪧 Case 2: No active plan or plan expired
   if (!plan || isExpired) {
     return (
       <div className="max-w-7xl mx-auto py-12">
@@ -41,7 +45,9 @@ export default async function DashboardPage() {
             <h2 className="lg:text-3xl md:text-2xl text-xl font-bold font-sans text-slate-100 mb-2">
               Let Bots do the Trading, <br /> You reap the reward
             </h2>
-            <p className="text-brand-purple-100 mb-6">Automated trading solutions for maximum profits</p>
+            <p className="text-brand-purple-100 mb-6">
+              Automated trading solutions for maximum profits
+            </p>
             <Link
               href="/dashboard/offers"
               className="inline-block py-2 text-brand-cream-50 rounded-lg  font-medium font-sans hover:text-brand-cream-100 transition"
@@ -69,7 +75,7 @@ export default async function DashboardPage() {
     )
   }
 
-  // ✅ Active subscription state
+  // 🚀 Case 3: Active plan
   return (
     <div className="max-w-7xl mx-auto scrollbar-hide">
       {/* Subscription Card */}
@@ -108,7 +114,7 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      {/* We can dynamically load bots preview later, but leave as-is for now */}
+      {/* Bots Section */}
       <ActivatedBots />
     </div>
   )
