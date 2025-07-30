@@ -109,7 +109,7 @@ export async function sendMail({
     });
   } catch (error) {
     console.error("Error sending email:", error);
-    return false;
+    throw error
   }
 
   return true;
