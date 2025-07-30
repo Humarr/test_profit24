@@ -92,7 +92,8 @@ export default function DashboardLayout({
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 bg-white text-brand-slate-700 p-4 flex-col border-r">
         <div className="mb-8 p-4">
-          <h1 className="text-2xl font-bold text-brand-purple-600">Profit24 SCALPER</h1>
+          {/* <h1 className="text-2xl font-bold text-brand-purple-600">Profit24 SCALPER</h1> */}
+          <Logo/>
         </div>
 
         <nav className="flex-1">
@@ -141,7 +142,8 @@ export default function DashboardLayout({
           />
           <div className="relative w-72 h-full bg-white">
             <div className="flex justify-between items-center p-4 border-b">
-              <h1 className="text-xl font-bold text-brand-purple-600">Profit24 SCALPER</h1>
+              {/* <h1 className="text-xl font-bold text-brand-purple-600">Profit24 SCALPER</h1> */}
+              <Logo/>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-2 rounded-lg text-brand-slate-700"
