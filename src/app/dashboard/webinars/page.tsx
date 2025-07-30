@@ -101,7 +101,7 @@ export default function WebinarsPage() {
       {webinars.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
           <Image
-            src="/illustrations/webinars.png"
+            src="/illustrations/webinar.png"
             alt="Webinar Illustration"
             width={200}
             height={200}
