@@ -256,7 +256,7 @@ export default function RegisterPage() {
                 <input
                   type="checkbox"
                   id="agreement"
-                  className="mt-1 mr-2 cursor-pointer"
+                  className="mt-1 mr-2 text-brand-purple-500 border-brand-cream-300 rounded focus:ring-brand-purple-200 focus:ring-2 cursor-pointer"
                   checked={agreement}
                   onChange={(e) => setAgreement(e.target.checked)}
                 />
