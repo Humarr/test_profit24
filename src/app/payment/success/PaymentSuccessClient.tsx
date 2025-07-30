@@ -103,6 +103,9 @@ export default function PaymentSuccessClient() {
             )}
           </>
         )}
+          <p className="text-sm font-medium">
+            If you're not redirected automatically and the Whatsapp button is not displayed, kindly refresh this page. (NOTE: Do not leave this page until payment is approved)
+            </p>
       </div>
     </div>
   )
