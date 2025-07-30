@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/components/toast/useToast";
 import BotModal from "@/components/BotModal";
 import { Bot } from "@/data/bots";
-import Image from "next/image";
-
 // import { ENDPOINT_URL } from "../../../../endpoint";
 // import { activateBot, fetchAllBots } from "@/lib/api/bots";
 // import Spinner from "@/components/Spinner";
@@ -27,7 +25,7 @@ export default function BotsLabPage() {
       try {
         const res = await fetch(`/api/dashboard/bots/all`, {
           method: 'GET',
-          cache: 'no-store', // ensure it's always fresh
+          // cache: 'no-store', // ensure it's always fresh
           credentials: 'include'
         });
         const data = await res.json();
@@ -35,7 +33,7 @@ export default function BotsLabPage() {
           throw new Error(data.error || "Something went wrong");
         }
         setBots(data.bots);
-        console.log("Bots: ", data.bots);
+        console.log("Bots: ", data.bots)
       } catch (err) {
         const error = err as Error;
         console.error(error);
@@ -46,6 +44,7 @@ export default function BotsLabPage() {
     };
     fetchBots();
   }, [addToast]);
+
 
   // useEffect(() => {
   //   const loadBots = async () => {
@@ -61,8 +60,10 @@ export default function BotsLabPage() {
   //       setFetching(false)
   //     }
   //   }
+
   //   loadBots()
   // }, [addToast])
+
 
   const handleStartCopying = async (botId: string, botName: string) => {
     if (loading) return;
@@ -71,14 +72,15 @@ export default function BotsLabPage() {
       return router.push("/dashboard/offers");
     }
 
+    
     try {
       const res = await fetch(`/api/user/activate-bot`, {
         method: "POST",
         body: JSON.stringify({ botId }),
       });
-
+      
       const result = await res.json();
-
+      
       if (res.status === 403) {
         // No active subscription → redirect client-side
         router.push('/dashboard/offers');
@@ -91,6 +93,7 @@ export default function BotsLabPage() {
       // const success = await activateBot(botId);
       // if (success === 403) {
       //   addToast("No active subscription", "error");
+      //   // No active subscription → redirect client-side
       //   router.push('/dashboard/offers');
       //   return;
       // }
@@ -100,6 +103,7 @@ export default function BotsLabPage() {
       // }
 
       addToast(`${botName} activated!`, "success");
+      
     } catch (err) {
       const error = err as Error;
       addToast(error.message, "error");
@@ -111,8 +115,8 @@ export default function BotsLabPage() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 scrollbar-hide">
-      <h1 className="text-3xl font-bold text-brand-slate-700 mb-8 font-nasal">BOTS LAB</h1>
+    <div className="max-w-7xl mx-auto scrollbar-hide">
+      <h1 className="text-3xl font-bold text-brand-slate-700 mb-8">BOTS LAB</h1>
 
       {/* Search Input */}
       {!fetching && bots && bots?.length > 0 && (
@@ -145,27 +149,7 @@ export default function BotsLabPage() {
           ))}
         </div>
       ) : filteredBots.length === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
-          <Image
-            src="/illustrations/bot.png"
-            alt="Bot Illustration"
-            width={200}
-            height={200}
-            className="mb-6"
-          />
-          <h2 className="text-2xl font-bold text-brand-slate-700 mb-4 font-nasal">
-            We’re Cooking Up Something Big!
-          </h2>
-          <p className="text-brand-slate-500 max-w-md mb-6">
-            Our team is crafting new trading bots to supercharge your portfolio. Stay tuned for some game-changing updates!
-          </p>
-          <button
-            onClick={() => router.push('/dashboard')}
-            className="py-2 px-4 bg-brand-purple-600 text-white rounded-lg font-medium hover:bg-brand-purple-700 transition"
-          >
-            Check Back Soon
-          </button>
-        </div>
+        <p className="text-brand-slate-500">No bots found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredBots.map((bot) => (
