@@ -580,7 +580,7 @@ export default function RegisterPage() {
         {/* Privacy Policy Modal */}
         {showPrivacyModal && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
             onClick={() => setShowPrivacyModal(false)}
           >
             <div
@@ -697,7 +697,7 @@ export default function RegisterPage() {
         {/* User Agreement Modal */}
         {showAgreementModal && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
             onClick={() => setShowAgreementModal(false)}
           >
             <div
