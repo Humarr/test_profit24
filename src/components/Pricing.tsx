@@ -256,15 +256,16 @@ export default function Pricing({
                 </div>
 
                 <div className="text-center mb-6">
-                  <p className="text-lg text-brand-slate-400 line-through">
+                  <p className="text-lg text-brand-purple-400 line-through">
                     ${oldPrice}
                   </p>
                   <p className="text-3xl font-extrabold text-brand-purple-700">
-                    ${price}/{validity}
+                    ${price}
+                    {/* ${price}/{validity} */}
                   </p>
-                  {/* <p className="text-sm text-brand-purple-700 mt-2">
+                  <p className="text-sm text-brand-purple-700 mt-2">
                     {validity}
-                  </p> */}
+                  </p>
                 </div>
 
                 <ul className="flex-1 mb-6 space-y-3 text-sm font-medium text-brand-purple-800">
