@@ -78,6 +78,8 @@ const plans = [
       "Dedicated 1-on-1 Support",
       "Direct Call Access to Technical Team (24/7)",
       "Optimized Risk Strategy",
+      "Unlimited Trades",
+      "Priority Email Support",
     ],
     icon: ShieldIcon,
     popular: false,
