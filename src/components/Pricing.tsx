@@ -20,11 +20,12 @@ import useRedirectWithLoading from "@/hooks/useRedirectWithLoading ";
 
 const plans = [
   {
-    id: "standard",
-    title: "Standard Plan",
+    id: "trial",
+    title: "Trial Plan",
     subtitle: "Perfect for beginners who want a simple, guided way to start trading with automation.",
     oldPrice: 99,
     price: 49,
+    validity: "30 days",
     features: [
       "Minimum Capital: $500 (via a regulated broker)",
       "24/7 Customer Support",
@@ -34,11 +35,12 @@ const plans = [
     popular: false,
   },
   {
-    id: "special",
-    title: "Special Package",
+    id: "recommended",
+    title: "Recommended Plan",
     subtitle: "Ideal for those who want hands-on support and smarter strategies with moderate capital.",
-    oldPrice: 129,
-    price: 39,
+    oldPrice: 297,
+    price: 129,
+    validity: "3 months",
     features: [
       "Minimum Capital: $1,000 (via a regulated broker)",
       "1-on-1 Customer Support",
@@ -49,11 +51,12 @@ const plans = [
     popular: true,
   },
   {
-    id: "investor",
-    title: "Investor Package",
+    id: "institutional",
+    title: "Institutional Plan",
     subtitle: "Best suited for serious investors looking for deeper support, lower fees, and maximum performance.",
-    oldPrice: 229,
-    price: 29,
+    oldPrice: 594,
+    price: 229,
+    validity: "6 months",
     features: [
       "Minimum Capital: $3,000 (via a regulated broker)",
       "Dedicated 1-on-1 Support",
@@ -61,6 +64,22 @@ const plans = [
       "Optimized Risk Strategy",
     ],
     icon: Building2,
+    popular: false,
+  },
+  {
+    id: "elite",
+    title: "Elite Plan",
+    subtitle: "Best suited for serious investors looking for deeper support, lower fees, and maximum performance.",
+    oldPrice: 1150,
+    price: 360,
+    validity: "12 months",
+    features: [
+      "Minimum Capital: $5,000 (via a regulated broker)",
+      "Dedicated 1-on-1 Support",
+      "Direct Call Access to Technical Team (24/7)",
+      "Optimized Risk Strategy",
+    ],
+    icon: ShieldIcon,
     popular: false,
   },
 ];
@@ -202,6 +221,7 @@ export default function Pricing({
                 subtitle,
                 price,
                 oldPrice,
+                validity,
                 features,
                 icon: Icon,
                 popular,
@@ -239,6 +259,9 @@ export default function Pricing({
                   </p>
                   <p className="text-3xl font-extrabold text-brand-purple-700">
                     ${price}/month
+                  </p>
+                  <p className="text-sm text-brand-purple-700 mt-2">
+                    {validity}
                   </p>
                 </div>
 

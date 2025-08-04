@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   await prisma.transaction.update({ where: { reference }, data: { status: "success" } })
 
   const expiresAt = new Date()
-  const length = plan === 'standard' ? 30 : plan === 'special' ? 90 : plan === 'investor' ? 180 : 365
+  const length = plan === 'trial' ? 30 : plan === 'recommended' ? 90 : plan === 'institutional' ? 180 : 365
   expiresAt.setDate(expiresAt.getDate() + length)
 
   await prisma.subscription.upsert({
