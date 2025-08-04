@@ -264,7 +264,7 @@ export default function Pricing({
                     {/* ${price}/{validity} */}
                   </p>
                   <p className="text-sm text-brand-purple-700 mt-2">
-                    {validity}
+                    {"/"}{validity}
                   </p>
                 </div>
 
